@@ -1,0 +1,88 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Nelso\\Escritorio\\Proyecto_Deteccion_Fraude_ACIF104\\Proyecto_Deteccion_Fraude_ACIF104\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{5FB1F116-6B03-4DDD-A8DB-3A68783A5001}|Proyecto_Deteccion_Fraude_ACIF104\\Proyecto_Deteccion_Fraude_ACIF104.csproj|c:\\users\\nelso\\escritorio\\proyecto_deteccion_fraude_acif104\\proyecto_deteccion_fraude_acif104\\proyecto_deteccion_fraude_acif104\\generados\\proyecto c#\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{5FB1F116-6B03-4DDD-A8DB-3A68783A5001}|Proyecto_Deteccion_Fraude_ACIF104\\Proyecto_Deteccion_Fraude_ACIF104.csproj|solutionrelative:proyecto_deteccion_fraude_acif104\\generados\\proyecto c#\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5FB1F116-6B03-4DDD-A8DB-3A68783A5001}|Proyecto_Deteccion_Fraude_ACIF104\\Proyecto_Deteccion_Fraude_ACIF104.csproj|c:\\users\\nelso\\escritorio\\proyecto_deteccion_fraude_acif104\\proyecto_deteccion_fraude_acif104\\proyecto_deteccion_fraude_acif104\\logica\\dashboardengine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5FB1F116-6B03-4DDD-A8DB-3A68783A5001}|Proyecto_Deteccion_Fraude_ACIF104\\Proyecto_Deteccion_Fraude_ACIF104.csproj|solutionrelative:proyecto_deteccion_fraude_acif104\\logica\\dashboardengine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5FB1F116-6B03-4DDD-A8DB-3A68783A5001}|Proyecto_Deteccion_Fraude_ACIF104\\Proyecto_Deteccion_Fraude_ACIF104.csproj|C:\\Users\\Nelso\\Escritorio\\Proyecto_Deteccion_Fraude_ACIF104\\Proyecto_Deteccion_Fraude_ACIF104\\proyecto_deteccion_fraude_acif104\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{5FB1F116-6B03-4DDD-A8DB-3A68783A5001}|Proyecto_Deteccion_Fraude_ACIF104\\Proyecto_Deteccion_Fraude_ACIF104.csproj|solutionrelative:proyecto_deteccion_fraude_acif104\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5FB1F116-6B03-4DDD-A8DB-3A68783A5001}|Proyecto_Deteccion_Fraude_ACIF104\\Proyecto_Deteccion_Fraude_ACIF104.csproj|c:\\users\\nelso\\escritorio\\proyecto_deteccion_fraude_acif104\\proyecto_deteccion_fraude_acif104\\proyecto_deteccion_fraude_acif104\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5FB1F116-6B03-4DDD-A8DB-3A68783A5001}|Proyecto_Deteccion_Fraude_ACIF104\\Proyecto_Deteccion_Fraude_ACIF104.csproj|solutionrelative:proyecto_deteccion_fraude_acif104\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "DashboardEngine.cs",
+              "DocumentMoniker": "C:\\Users\\Nelso\\Escritorio\\Proyecto_Deteccion_Fraude_ACIF104\\Proyecto_Deteccion_Fraude_ACIF104\\Proyecto_Deteccion_Fraude_ACIF104\\Logica\\DashboardEngine.cs",
+              "RelativeDocumentMoniker": "Proyecto_Deteccion_Fraude_ACIF104\\Logica\\DashboardEngine.cs",
+              "ToolTip": "C:\\Users\\Nelso\\Escritorio\\Proyecto_Deteccion_Fraude_ACIF104\\Proyecto_Deteccion_Fraude_ACIF104\\Proyecto_Deteccion_Fraude_ACIF104\\Logica\\DashboardEngine.cs",
+              "RelativeToolTip": "Proyecto_Deteccion_Fraude_ACIF104\\Logica\\DashboardEngine.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-28T02:19:57.149Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Main.cs [Dise\u00F1o]",
+              "DocumentMoniker": "C:\\Users\\Nelso\\Escritorio\\Proyecto_Deteccion_Fraude_ACIF104\\Proyecto_Deteccion_Fraude_ACIF104\\Proyecto_Deteccion_Fraude_ACIF104\\generados\\Proyecto C#\\Main.cs",
+              "RelativeDocumentMoniker": "Proyecto_Deteccion_Fraude_ACIF104\\generados\\Proyecto C#\\Main.cs",
+              "ToolTip": "C:\\Users\\Nelso\\Escritorio\\Proyecto_Deteccion_Fraude_ACIF104\\Proyecto_Deteccion_Fraude_ACIF104\\Proyecto_Deteccion_Fraude_ACIF104\\generados\\Proyecto C#\\Main.cs [Dise\u00F1o]",
+              "RelativeToolTip": "Proyecto_Deteccion_Fraude_ACIF104\\generados\\Proyecto C#\\Main.cs [Dise\u00F1o]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-28T02:19:52.628Z",
+              "EditorCaption": " [Dise\u00F1o]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Main.cs",
+              "DocumentMoniker": "C:\\Users\\Nelso\\Escritorio\\Proyecto_Deteccion_Fraude_ACIF104\\Proyecto_Deteccion_Fraude_ACIF104\\Proyecto_Deteccion_Fraude_ACIF104\\Main.cs",
+              "RelativeDocumentMoniker": "Proyecto_Deteccion_Fraude_ACIF104\\Main.cs",
+              "ToolTip": "C:\\Users\\Nelso\\Escritorio\\Proyecto_Deteccion_Fraude_ACIF104\\Proyecto_Deteccion_Fraude_ACIF104\\Proyecto_Deteccion_Fraude_ACIF104\\Main.cs",
+              "RelativeToolTip": "Proyecto_Deteccion_Fraude_ACIF104\\Main.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-28T02:19:27.284Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Main.cs [Dise\u00F1o]",
+              "DocumentMoniker": "C:\\Users\\Nelso\\Escritorio\\Proyecto_Deteccion_Fraude_ACIF104\\Proyecto_Deteccion_Fraude_ACIF104\\Proyecto_Deteccion_Fraude_ACIF104\\Main.cs",
+              "RelativeDocumentMoniker": "Proyecto_Deteccion_Fraude_ACIF104\\Main.cs",
+              "ToolTip": "C:\\Users\\Nelso\\Escritorio\\Proyecto_Deteccion_Fraude_ACIF104\\Proyecto_Deteccion_Fraude_ACIF104\\Proyecto_Deteccion_Fraude_ACIF104\\Main.cs [Dise\u00F1o]",
+              "RelativeToolTip": "Proyecto_Deteccion_Fraude_ACIF104\\Main.cs [Dise\u00F1o]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-28T01:12:00.351Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
