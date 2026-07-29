@@ -1,0 +1,12 @@
+# Dependencias observadas en los scripts actuales.
+# Las versiones exactas quedan pendientes de confirmar con el entorno del modelo final.
+pandas
+SQLAlchemy
+pyodbc
+matplotlib
+seaborn
+scikit-learn
+imbalanced-learn
+xgboost
+joblib
+openpyxl

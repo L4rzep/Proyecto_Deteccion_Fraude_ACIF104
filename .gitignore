@@ -129,7 +129,7 @@ celerybeat.pid
 
 # Environments
 .env
-.venv
+.venv/
 env/
 venv/
 ENV/
@@ -178,6 +178,27 @@ cython_debug/
 #  exclude from AI features like autocomplete and code analysis. Recommended for sensitive data
 #  refer to https://docs.cursor.com/context/ignore-files
 .cursorignore
-.cursorindexingignore"data/" 
+.cursorindexingignore
+
+# Visual Studio - archivos locales y de usuario
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.csproj.user
+*.vsidx
+*.dtbcache*
+
+# Respaldos y archivos de datos pesados
+*.rar
+*.bak
+
+# Archivos temporales de Office y editores
+~$*
+*.tmp
+*.temp
+
+# Compilación .NET
 [Bb]in/
 [Oo]bj/
