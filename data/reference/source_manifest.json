@@ -1,0 +1,86 @@
+{
+  "dataset_name": "Transactions Fraud Datasets",
+  "public_source": "https://www.kaggle.com/datasets/computingvictor/transactions-fraud-datasets/data",
+  "source_files": [
+    {
+      "name": "transactions_data.csv",
+      "size_bytes": 1258531040,
+      "sha256": "26a5365ffa3423b41080989afcbeaa7f838d2cb504c21c6bf13471b2c13872d6",
+      "row_count": 13305915,
+      "loaded_table": "transactions_data",
+      "loaded_row_count": 13305915
+    },
+    {
+      "name": "users_data.csv",
+      "size_bytes": 164831,
+      "sha256": "5d0e5f5a1bc49ade9bd2d2de2ad98b9fba78e79d3d777895074af48decef02b6",
+      "row_count": 2000,
+      "loaded_table": "users_data",
+      "loaded_row_count": 2000
+    },
+    {
+      "name": "cards_data.csv",
+      "size_bytes": 509860,
+      "sha256": "894f52fbe1a2d4ea71c98256d51ea95ed5d1b9fb5348c0ccacca4fc6af633cd0",
+      "row_count": 6146,
+      "loaded_table": "cards_data",
+      "loaded_row_count": 6146
+    },
+    {
+      "name": "train_fraud_labels.json",
+      "size_bytes": 159083088,
+      "sha256": "7f66b38200764f0c5658127f6fe8077fa2e520d1b93570548ce2347d685da1c8",
+      "row_count": 8914963,
+      "loaded_table": "fraud_labels",
+      "loaded_row_count": 8914963
+    },
+    {
+      "name": "mcc_codes.json",
+      "size_bytes": 4716,
+      "sha256": "ebe6c6869188b1af6cf4c8a904d4b59a6863b4fd7a63424d945d6789e122df1c",
+      "row_count": 109,
+      "loaded_table": "mcc_codes",
+      "loaded_row_count": 109
+    }
+  ],
+  "generated_at_utc": "2026-08-16T07:14:09+00:00",
+  "database": {
+    "logical_name": "FraudeDB",
+    "sql_server_version": "17.0.1125.2",
+    "transactions_total": 13305915,
+    "linked_labeled_transactions": 8914963,
+    "frauds": 13332,
+    "reconstruction_note": "Reconstrucción funcional desde fuentes públicas; no es una copia binaria del respaldo original incompleto."
+  },
+  "snapshot": {
+    "version": "finan-1500k-seed42-v1",
+    "size": 1500000,
+    "seed": 42,
+    "split_counts": {
+      "test": 225000,
+      "train": 1050000,
+      "validation": 225000
+    },
+    "hash_sha256": "f84c68e90352b3ce4d4c33eeb50ee590fd2ddafb523dd0dcc6c2a42a9dc040cc",
+    "selection_method": "selección estratificada por hash CHECKSUM determinista y asignación persistida por transaction_id"
+  },
+  "small_sample": {
+    "name": "finan_sample_10000.csv",
+    "row_count": 10000,
+    "source_split": "train",
+    "purpose": "smoke tests y demostraciones; no evaluación representativa",
+    "sanitization": "excluye número de tarjeta, CVV, domicilio, coordenadas e identificadores de cliente, tarjeta y comercio"
+  },
+  "software": {
+    "python_version": "3.11.9",
+    "pyodbc_version": "5.3.0",
+    "sql_driver": "ODBC Driver 17 for SQL Server",
+    "sql_driver_version": "17.10.6.1"
+  },
+  "mcc_rows": 109,
+  "reproducibility_notes": [
+    "El dataset completo, la base, el respaldo y el snapshot de 1,5M no se versionan.",
+    "El conjunto test queda reservado y no fue utilizado para selección o modelado.",
+    "Las variables candidatas no constituyen una selección predictiva definitiva."
+  ]
+}

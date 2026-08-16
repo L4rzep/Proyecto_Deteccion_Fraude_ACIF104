@@ -1,0 +1,53 @@
+﻿column_name,source_table,data_type,description,role,sensitive,available_at_inference,notes
+id,cards_data,int,Identificador de la tarjeta.,identifier,no,yes,Definición basada en el esquema y nombre de la fuente; validar semántica de negocio.
+client_id,cards_data,int,Identificador del titular asociado.,identifier,no,yes,Definición basada en el esquema y nombre de la fuente; validar semántica de negocio.
+card_brand,cards_data,nvarchar(40),Marca de la tarjeta.,predictor_candidate,no,yes,Definición basada en el esquema y nombre de la fuente; validar semántica de negocio.
+card_type,cards_data,nvarchar(40),Tipo de tarjeta.,predictor_candidate,no,yes,Definición basada en el esquema y nombre de la fuente; validar semántica de negocio.
+card_number,cards_data,varchar(32),Número completo de tarjeta; dato sensible excluido.,excluded,yes,no,Definición basada en el esquema y nombre de la fuente; validar semántica de negocio.
+expires,cards_data,varchar(16),Mes y año de expiración registrados.,predictor_candidate,no,yes,Definición basada en el esquema y nombre de la fuente; validar semántica de negocio.
+cvv,cards_data,varchar(8),Código de verificación; dato sensible excluido.,excluded,yes,no,Definición basada en el esquema y nombre de la fuente; validar semántica de negocio.
+has_chip,cards_data,varchar(8),Indicador de disponibilidad de chip.,predictor_candidate,no,yes,Definición basada en el esquema y nombre de la fuente; validar semántica de negocio.
+num_cards_issued,cards_data,int,Cantidad de tarjetas emitidas para la cuenta.,predictor_candidate,no,yes,Definición basada en el esquema y nombre de la fuente; validar semántica de negocio.
+credit_limit,cards_data,varchar(32),Límite de crédito registrado.,predictor_candidate,no,yes,Definición basada en el esquema y nombre de la fuente; validar semántica de negocio.
+acct_open_date,cards_data,varchar(16),Mes y año de apertura de la cuenta.,predictor_candidate,no,yes,Definición basada en el esquema y nombre de la fuente; validar semántica de negocio.
+year_pin_last_changed,cards_data,int,Año del último cambio de PIN registrado.,predictor_candidate,no,yes,Definición basada en el esquema y nombre de la fuente; validar semántica de negocio.
+card_on_dark_web,cards_data,varchar(8),Indicador de la fuente; disponibilidad temporal por confirmar.,predictor_candidate,no,yes,Definición basada en el esquema y nombre de la fuente; validar semántica de negocio.
+transaction_id,fraud_labels,bigint,Identificador de la transacción etiquetada.,identifier,no,yes,Definición basada en el esquema y nombre de la fuente; validar semántica de negocio.
+is_fraud,fraud_labels,bit,Etiqueta binaria de fraude.,target,no,no,Definición basada en el esquema y nombre de la fuente; validar semántica de negocio.
+mcc,mcc_codes,int,Código de categoría del comercio.,identifier,no,yes,Definición basada en el esquema y nombre de la fuente; validar semántica de negocio.
+description,mcc_codes,nvarchar(255),Descripción del código MCC.,predictor_candidate,no,yes,Definición basada en el esquema y nombre de la fuente; validar semántica de negocio.
+id,transactions_data,bigint,Identificador único de la transacción.,identifier,no,yes,Definición basada en el esquema y nombre de la fuente; validar semántica de negocio.
+date,transactions_data,datetime2,Fecha y hora registradas para la transacción.,predictor_candidate,no,yes,Definición basada en el esquema y nombre de la fuente; validar semántica de negocio.
+client_id,transactions_data,int,Identificador del cliente asociado.,identifier,no,yes,Definición basada en el esquema y nombre de la fuente; validar semántica de negocio.
+card_id,transactions_data,int,Identificador de la tarjeta asociada.,identifier,no,yes,Definición basada en el esquema y nombre de la fuente; validar semántica de negocio.
+amount,transactions_data,varchar(32),Monto registrado por la transacción.,predictor_candidate,no,yes,Definición basada en el esquema y nombre de la fuente; validar semántica de negocio.
+use_chip,transactions_data,nvarchar(64),Canal o mecanismo de uso de la tarjeta.,predictor_candidate,no,yes,Definición basada en el esquema y nombre de la fuente; validar semántica de negocio.
+merchant_id,transactions_data,bigint,Identificador del comercio.,identifier,no,yes,Definición basada en el esquema y nombre de la fuente; validar semántica de negocio.
+merchant_city,transactions_data,nvarchar(160),Ciudad registrada para el comercio.,predictor_candidate,no,yes,Definición basada en el esquema y nombre de la fuente; validar semántica de negocio.
+merchant_state,transactions_data,nvarchar(80),Estado o región registrada para el comercio.,predictor_candidate,no,yes,Definición basada en el esquema y nombre de la fuente; validar semántica de negocio.
+zip,transactions_data,varchar(32),Código postal registrado para el comercio.,predictor_candidate,no,yes,Definición basada en el esquema y nombre de la fuente; validar semántica de negocio.
+mcc,transactions_data,int,Código de categoría del comercio.,predictor_candidate,no,yes,Definición basada en el esquema y nombre de la fuente; validar semántica de negocio.
+errors,transactions_data,nvarchar(500),Semántica exacta y momento de disponibilidad por confirmar.,predictor_candidate,no,no,Definición basada en el esquema y nombre de la fuente; validar semántica de negocio.
+id,users_data,int,Identificador del cliente.,identifier,no,yes,Definición basada en el esquema y nombre de la fuente; validar semántica de negocio.
+current_age,users_data,int,Edad incluida en la fuente; fecha de referencia por confirmar.,predictor_candidate,no,yes,Definición basada en el esquema y nombre de la fuente; validar semántica de negocio.
+retirement_age,users_data,int,Edad de retiro registrada.,predictor_candidate,no,yes,Definición basada en el esquema y nombre de la fuente; validar semántica de negocio.
+birth_year,users_data,int,Año de nacimiento registrado.,predictor_candidate,no,yes,Definición basada en el esquema y nombre de la fuente; validar semántica de negocio.
+birth_month,users_data,int,Mes de nacimiento registrado.,predictor_candidate,no,yes,Definición basada en el esquema y nombre de la fuente; validar semántica de negocio.
+gender,users_data,nvarchar(32),Categoría de género incluida en la fuente.,predictor_candidate,no,yes,Definición basada en el esquema y nombre de la fuente; validar semántica de negocio.
+address,users_data,nvarchar(255),Domicilio incluido en la fuente.,excluded,yes,no,Definición basada en el esquema y nombre de la fuente; validar semántica de negocio.
+latitude,users_data,"decimal(10,6)",Latitud asociada al cliente.,excluded,yes,no,Definición basada en el esquema y nombre de la fuente; validar semántica de negocio.
+longitude,users_data,"decimal(10,6)",Longitud asociada al cliente.,excluded,yes,no,Definición basada en el esquema y nombre de la fuente; validar semántica de negocio.
+per_capita_income,users_data,varchar(32),Ingreso per cápita incluido en la fuente.,predictor_candidate,no,yes,Definición basada en el esquema y nombre de la fuente; validar semántica de negocio.
+yearly_income,users_data,varchar(32),Ingreso anual incluido en la fuente.,predictor_candidate,no,yes,Definición basada en el esquema y nombre de la fuente; validar semántica de negocio.
+total_debt,users_data,varchar(32),Deuda total incluida en la fuente.,predictor_candidate,no,yes,Definición basada en el esquema y nombre de la fuente; validar semántica de negocio.
+credit_score,users_data,int,Puntaje crediticio incluido en la fuente.,predictor_candidate,no,yes,Definición basada en el esquema y nombre de la fuente; validar semántica de negocio.
+num_credit_cards,users_data,int,Cantidad de tarjetas de crédito registrada.,predictor_candidate,no,yes,Definición basada en el esquema y nombre de la fuente; validar semántica de negocio.
+transaction_hour,derived,derived,Hora derivada de transaction_date.,predictor_candidate,no,yes,Cálculo versionado en dbo.vw_finan_features.
+day_of_week,derived,derived,Día de semana derivado de transaction_date; lunes=1.,predictor_candidate,no,yes,Cálculo versionado en dbo.vw_finan_features.
+is_weekend,derived,derived,Indicador derivado de sábado o domingo.,predictor_candidate,no,yes,Cálculo versionado en dbo.vw_finan_features.
+transaction_month,derived,derived,Mes derivado de transaction_date.,predictor_candidate,no,yes,Cálculo versionado en dbo.vw_finan_features.
+age_at_transaction,derived,derived,Edad aproximada derivada para la fecha de transacción.,predictor_candidate,no,yes,Cálculo versionado en dbo.vw_finan_features.
+amount_to_credit_limit,derived,derived,Monto dividido por límite de crédito.,predictor_candidate,no,yes,Cálculo versionado en dbo.vw_finan_features.
+amount_to_yearly_income,derived,derived,Monto dividido por ingreso anual.,predictor_candidate,no,yes,Cálculo versionado en dbo.vw_finan_features.
+card_account_age_years,derived,derived,Antigüedad aproximada de la cuenta en años.,predictor_candidate,no,yes,Cálculo versionado en dbo.vw_finan_features.
+months_to_card_expiration,derived,derived,Meses entre transacción y expiración de la tarjeta.,predictor_candidate,no,yes,Cálculo versionado en dbo.vw_finan_features.

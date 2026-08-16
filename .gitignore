@@ -193,6 +193,15 @@ cython_debug/
 # Respaldos y archivos de datos pesados
 *.rar
 *.bak
+*.mdf
+*.ndf
+*.ldf
+transactions-fraud-datasets.zip
+data/transactions_data.csv
+data/users_data.csv
+data/cards_data.csv
+data/train_fraud_labels.json
+data/mcc_codes.json
 
 # Archivos temporales de Office y editores
 ~$*

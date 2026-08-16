@@ -1,0 +1,50 @@
+﻿feature,source_table,data_type,candidate_status,available_at_inference,leakage_risk,cardinality,missing_percentage,reason
+transaction_id,transactions_data,bigint,identifier_only,yes,low,13305915,0.0,Trazabilidad; se excluye del modelo.
+transaction_date,transactions_data,datetime2,requires_engineering,yes,low,4140085,0.0,Usar componentes temporales reproducibles.
+client_id,transactions_data,int,identifier_only,yes,high,1205,0.0,Identificador; riesgo de memorización.
+card_id,transactions_data,int,identifier_only,yes,high,4149,0.0,Identificador; riesgo de memorización.
+amount,transactions_data,varchar(32),candidate,yes,low,82908,0.0,Variable transaccional disponible.
+use_chip,transactions_data,nvarchar(64),candidate,yes,low,3,0.0,Canal de transacción usado en trabajos previos.
+merchant_id,transactions_data,bigint,identifier_only,yes,high,75529,0.0,Alta cardinalidad; no usar directamente.
+merchant_city,transactions_data,nvarchar(160),requires_engineering,yes,medium,12389,0.0,Alta cardinalidad; requiere tratamiento.
+merchant_state,transactions_data,nvarchar(80),candidate,yes,low,198,11.751916,Ubicación comercial agregada.
+merchant_zip,transactions_data,varchar(32),requires_review,yes,medium,25171,12.420837,Granularidad geográfica y cardinalidad por revisar.
+mcc,transactions_data,int,candidate,yes,low,109,0.0,Categoría comercial disponible.
+errors,transactions_data,nvarchar(500),requires_review,por confirmar,high,22,98.411286,Momento de disponibilidad no documentado; posible fuga.
+current_age,users_data,int,requires_review,yes,medium,79,0.0,Fecha de referencia no documentada; preferir age_at_transaction.
+retirement_age,users_data,int,candidate,yes,low,29,0.0,Dato de perfil disponible.
+birth_year,users_data,int,requires_engineering,yes,medium,81,0.0,Usar solo para derivar edad; cuasi-identificador.
+birth_month,users_data,int,requires_engineering,yes,medium,12,0.0,Usar solo para derivar edad; cuasi-identificador.
+gender,users_data,nvarchar(32),requires_review,yes,medium,2,0.0,Requiere evaluación de equidad; no está en la vista oficial.
+address,users_data,nvarchar(255),excluded,no,high,2017,0.0,Dato personal directo.
+latitude,users_data,"decimal(10,6)",excluded,no,high,981,0.0,Ubicación personal.
+longitude,users_data,"decimal(10,6)",excluded,no,high,1219,0.0,Ubicación personal.
+per_capita_income,users_data,varchar(32),candidate,yes,medium,1768,0.0,Dato financiero; vigencia temporal por revisar.
+yearly_income,users_data,varchar(32),candidate,yes,medium,1927,0.0,Dato financiero; vigencia temporal por revisar.
+total_debt,users_data,varchar(32),candidate,yes,medium,1890,0.0,Dato financiero; vigencia temporal por revisar.
+credit_score,users_data,int,candidate,yes,medium,316,0.0,Dato financiero; vigencia temporal por revisar.
+num_credit_cards,users_data,int,candidate,yes,low,9,0.0,Dato de perfil disponible.
+card_brand,cards_data,nvarchar(40),candidate,yes,low,4,0.0,Categoría de tarjeta disponible.
+card_type,cards_data,nvarchar(40),candidate,yes,low,3,0.0,Categoría de tarjeta disponible.
+card_number,cards_data,varchar(32),excluded,no,high,6178,0.0,Dato financiero sensible.
+expires,cards_data,varchar(16),requires_engineering,yes,medium,258,0.0,Usar solo para meses hasta expiración.
+cvv,cards_data,varchar(8),excluded,no,high,1000,0.0,Dato financiero sensible.
+has_chip,cards_data,varchar(8),candidate,yes,low,2,0.0,Capacidad de chip disponible.
+num_cards_issued,cards_data,int,candidate,yes,low,3,0.0,Dato de cuenta disponible.
+credit_limit,cards_data,varchar(32),candidate,yes,medium,3767,0.0,Dato financiero disponible.
+acct_open_date,cards_data,varchar(16),requires_engineering,yes,low,299,0.0,Usar para antigüedad de cuenta.
+year_pin_last_changed,cards_data,int,requires_engineering,por confirmar,medium,19,0.0,Evitar valores posteriores a la transacción.
+card_on_dark_web,cards_data,varchar(8),requires_review,por confirmar,high,1,0.0,Disponibilidad temporal y riesgo de proxy por confirmar.
+is_fraud,fraud_labels,bit,excluded,no,high,2,0.0,Variable objetivo; nunca predictor.
+mcc_description,mcc_codes,nvarchar(255),requires_review,yes,low,109,0.0,Redundante con mcc; útil para interpretación.
+transaction_hour,derived,derived,candidate,yes,low,por confirmar,por confirmar,Derivada reproducible en la vista oficial.
+day_of_week,derived,derived,candidate,yes,low,por confirmar,por confirmar,Derivada reproducible en la vista oficial.
+is_weekend,derived,derived,candidate,yes,low,por confirmar,por confirmar,Derivada reproducible en la vista oficial.
+transaction_month,derived,derived,candidate,yes,low,por confirmar,por confirmar,Derivada reproducible en la vista oficial.
+age_at_transaction,derived,derived,candidate,yes,low,por confirmar,por confirmar,Derivada reproducible en la vista oficial.
+amount_to_credit_limit,derived,derived,candidate,yes,low,por confirmar,por confirmar,Derivada reproducible en la vista oficial.
+amount_to_yearly_income,derived,derived,candidate,yes,low,por confirmar,por confirmar,Derivada reproducible en la vista oficial.
+card_account_age_years,derived,derived,candidate,yes,low,por confirmar,por confirmar,Derivada reproducible en la vista oficial.
+months_to_card_expiration,derived,derived,candidate,yes,low,por confirmar,por confirmar,Derivada reproducible en la vista oficial.
+frecuencia_reciente,derived,derived,requires_engineering,yes,medium,por confirmar,por confirmar,Requiere ventana basada solo en eventos anteriores.
+desviacion_comportamiento,derived,derived,requires_engineering,yes,medium,por confirmar,por confirmar,Requiere baseline histórico sin información futura.
