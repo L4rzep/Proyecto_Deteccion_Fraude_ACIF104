@@ -202,3 +202,10 @@ cython_debug/
 # Compilación .NET
 [Bb]in/
 [Oo]bj/
+
+# Ignorar configuraciones de VS Code y extensiones
+.vscode/
+
+# Ignorar entornos virtuales
+.venv/
+node_modules/
