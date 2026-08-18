@@ -1,0 +1,34 @@
+{
+  "database": "FraudeDB",
+  "seed": 42,
+  "sample_modulo": 9,
+  "sample_rows": 990261,
+  "sample_frauds": 1413,
+  "split": {
+    "train": {
+      "rows": 693182,
+      "frauds": 989,
+      "non_frauds": 692193
+    },
+    "validation": {
+      "rows": 148539,
+      "frauds": 212,
+      "non_frauds": 148327
+    },
+    "test_reserved": {
+      "rows": 148540,
+      "frauds": 212,
+      "non_frauds": 148328
+    }
+  },
+  "configurations_compared": 4,
+  "screening_model": "XGBoost común a las cuatro configuraciones con ponderación de clase; no corresponde al experimento final de balanceo.",
+  "test_policy": "El conjunto de prueba fue separado y contado, pero no fue transformado, predicho ni utilizado para seleccionar variables.",
+  "package_versions": {
+    "numpy": "2.4.6",
+    "pandas": "3.0.5",
+    "pyodbc": "5.3.0",
+    "scikit-learn": "1.9.0",
+    "xgboost": "3.2.0"
+  }
+}

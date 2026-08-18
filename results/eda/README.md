@@ -111,6 +111,52 @@ necesariamente la que tiene el mayor porcentaje. Esta información permitirá
 evaluar si el código MCC aporta al modelo sin sacar conclusiones solamente por
 el nombre del comercio.
 
+## Evaluación de variables previa al modelamiento
+
+Después del EDA se revisaron 32 variables mediante una muestra determinística
+de 990.261 transacciones, con 1.413 fraudes. Esta revisión no entrenó modelos:
+comparó la completitud, la cantidad de valores distintos y las diferencias
+observadas entre fraude y no fraude. Por ese motivo, sus resultados sirven para
+formar los conjuntos candidatos, pero la decisión final debe confirmarse con
+las métricas de validación.
+
+El monto presentó la mayor diferencia entre las variables numéricas. Se
+mantendrá el valor original y también se probará, como alternativa, una
+transformación logarítmica que conserva el signo de las devoluciones. Ambas
+versiones no se utilizarán juntas en una misma configuración.
+
+La modalidad de la transacción, el código MCC y la hora mostraron diferencias
+claras entre fraude y no fraude. En cambio, `merchant_city`, `merchant_state` y
+`merchant_zip` parecían aportar una señal elevada principalmente porque sus
+valores `ONLINE` o nulos repiten la información ya expresada por `use_chip`.
+Además, ciudad y código postal generan miles de categorías. Por estas razones,
+se utilizará `use_chip` y se excluirá la ubicación detallada del conjunto
+principal.
+
+`current_age` y `age_at_transaction` entregaron diferencias prácticamente
+iguales. Se seleccionó `age_at_transaction`, porque representa la edad del
+cliente cuando ocurrió la operación y mantiene mejor la coherencia temporal.
+La variable `gender` mostró una diferencia mínima y, además, requiere una
+revisión de equidad; por ello no se incorporará al modelo.
+
+Las variables financieras provenientes del perfil del cliente, como ingresos,
+deuda, puntaje y límite de crédito, se conservarán en un conjunto ampliado. Se
+compararán con el conjunto principal porque todavía debe confirmarse que sus
+valores corresponden temporalmente a la fecha de cada transacción.
+
+Para evitar repetir la extracción y el procesamiento, la siguiente etapa
+comparará en una sola ejecución cuatro configuraciones:
+
+1. conjunto principal con el monto original;
+2. conjunto principal con el monto transformado;
+3. conjunto ampliado con el monto original; y
+4. conjunto ampliado con el monto transformado.
+
+Las cuatro configuraciones utilizarán la misma división estratificada de 70 %
+para entrenamiento, 15 % para validación y 15 % reservado para prueba. La
+configuración se escogerá únicamente con validación; el conjunto de prueba no
+se utilizará durante esta selección.
+
 ## Uso de una muestra para los gráficos de montos
 
 Las cantidades generales, las modalidades y las categorías MCC se calcularon
@@ -140,6 +186,9 @@ entrenar los modelos.
 | `amount_distribution_log.png` | Distribución transformada de la magnitud del monto. |
 | `amount_boxplot_by_fraud.png` | Comparación de montos entre fraude y no fraude. |
 | `eda_run_metadata.json` | Parámetros utilizados para repetir la ejecución. |
+| `feature_candidate_assessment.csv` | Calidad, señal individual y decisión provisional de cada variable. |
+| `feature_category_rates.csv` | Cantidad y tasa de fraude de las categorías analizadas. |
+| `feature_assessment_metadata.json` | Parámetros utilizados para repetir la evaluación de variables. |
 
 Las capturas de SQL Server y VS Code se mantienen como respaldo interno de la
 revisión, pero no forman parte de los resultados oficiales que se propone

@@ -1,0 +1,5 @@
+﻿configuration,feature_set,amount_variant,numeric_features,categorical_features,encoded_features,validation_threshold,validation_precision,validation_recall,validation_f1,validation_roc_auc,validation_pr_auc,true_negatives,false_positives,false_negatives,true_positives,test_used
+principal_amount_raw,principal,raw,7,8,172,0.95865184,0.15511551,0.22169811,0.18252427,0.9419749,0.09618189,148071,256,165,47,no
+principal_amount_signed_log,principal,signed_log,7,8,172,0.95865184,0.15511551,0.22169811,0.18252427,0.9419749,0.09618189,148071,256,165,47,no
+extended_amount_raw,extended,raw,14,8,180,0.95138037,0.17857143,0.28301887,0.2189781,0.94451393,0.14702204,148051,276,152,60,no
+extended_amount_signed_log,extended,signed_log,14,8,180,0.95138037,0.17857143,0.28301887,0.2189781,0.94451393,0.14702204,148051,276,152,60,no

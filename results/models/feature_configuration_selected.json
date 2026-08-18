@@ -1,0 +1,32 @@
+{
+  "configuration": "extended_amount_raw",
+  "selection_rule": "highest_validation_pr_auc_then_f1_then_recall",
+  "numeric_features": [
+    "amount",
+    "age_at_transaction",
+    "num_credit_cards",
+    "num_cards_issued",
+    "card_account_age_years",
+    "months_to_card_expiration",
+    "years_since_pin_change",
+    "credit_limit",
+    "per_capita_income",
+    "yearly_income",
+    "total_debt",
+    "credit_score",
+    "amount_to_credit_limit",
+    "amount_to_yearly_income"
+  ],
+  "categorical_features": [
+    "transaction_hour",
+    "day_of_week",
+    "transaction_month",
+    "use_chip",
+    "mcc",
+    "card_brand",
+    "card_type",
+    "has_chip"
+  ],
+  "validation_threshold": 0.95138037,
+  "test_used": false
+}
