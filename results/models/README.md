@@ -110,5 +110,45 @@ una sola vez el conjunto de prueba reservado.
 - `balancing_strategy_metadata.json`: muestra, división, variables, versiones
   y confirmación de que el conjunto de prueba no fue utilizado.
 
-El siguiente paso es comparar tres técnicas de aprendizaje automático con la
-configuración ampliada y sin balanceo.
+## Comparación de técnicas de aprendizaje automático
+
+Se compararon las tres técnicas planteadas en los informes formativos:
+Regresión Logística, Random Forest y XGBoost. Todas recibieron las mismas
+693.182 filas de entrenamiento, las mismas 178 columnas preparadas y los
+mismos 148.539 casos de validación. No se aplicó balanceo y el conjunto de
+prueba permaneció reservado.
+
+| Modelo | Precisión | Recall | F1 | ROC-AUC | PR-AUC | Entrenamiento |
+|---|---:|---:|---:|---:|---:|---:|
+| Regresión Logística | 0,1303 | 0,2028 | 0,1587 | 0,9000 | 0,0704 | 251,06 s |
+| Random Forest | 0,7500 | 0,4104 | 0,5305 | 0,9224 | 0,4569 | 44,12 s |
+| XGBoost | 0,6970 | 0,3255 | 0,4437 | 0,9362 | 0,3803 | 6,03 s |
+
+Random Forest fue seleccionado como el mejor modelo de ML porque obtuvo el
+PR-AUC y el F1 más altos. Con el umbral ajustado en validación identificó 87 de
+los 212 fraudes, con 29 falsas alarmas. XGBoost fue más rápido y tuvo el mejor
+ROC-AUC, pero quedó por debajo de Random Forest en las métricas principales
+para esta clase minoritaria.
+
+La precisión, el recall y el F1 de la tabla utilizan el umbral que produjo el
+mejor F1 para cada modelo en validación. Esto evita juzgar los modelos solo con
+el umbral general de 0,5, que en un problema tan desbalanceado puede ocultar
+fraudes. PR-AUC se utilizó como criterio principal porque resume mejor el
+equilibrio entre detectar fraudes y evitar falsas alarmas cuando la clase de
+interés es muy pequeña.
+
+El umbral de 0,0633 de Random Forest todavía no corresponde a la aplicación.
+Primero se compararán las tres arquitecturas de Deep Learning. Después se
+confirmará el modelo final y se utilizará una sola vez el conjunto de prueba.
+
+### Archivos de evidencia de ML
+
+- `ml_model_comparison.csv`: métricas, tiempos y matrices de confusión de los
+  tres modelos.
+- `ml_model_comparison.png`: gráfico comparativo de las métricas principales.
+- `ml_model_selected.json`: modelo ML seleccionado y umbral de validación.
+- `ml_model_metadata.json`: variables, parámetros, división, versiones y
+  confirmación de que el test no fue utilizado.
+
+El siguiente paso es comparar tres arquitecturas de Deep Learning bajo la
+misma división y con el conjunto de prueba todavía reservado.

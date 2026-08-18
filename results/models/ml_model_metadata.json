@@ -1,0 +1,109 @@
+{
+  "database": "FraudeDB",
+  "seed": 42,
+  "sample_modulo": 9,
+  "sample_rows": 990261,
+  "sample_frauds": 1413,
+  "split": {
+    "train": {
+      "rows": 693182,
+      "frauds": 989,
+      "non_frauds": 692193
+    },
+    "validation": {
+      "rows": 148539,
+      "frauds": 212,
+      "non_frauds": 148327
+    },
+    "test_reserved": {
+      "rows": 148540,
+      "frauds": 212,
+      "non_frauds": 148328
+    }
+  },
+  "feature_configuration": "feature_configuration_selected.json",
+  "balancing_configuration": "balancing_strategy_selected.json",
+  "balancing_strategy": "no_balancing",
+  "numeric_features": [
+    "amount",
+    "age_at_transaction",
+    "num_credit_cards",
+    "num_cards_issued",
+    "card_account_age_years",
+    "months_to_card_expiration",
+    "years_since_pin_change",
+    "credit_limit",
+    "per_capita_income",
+    "yearly_income",
+    "total_debt",
+    "credit_score",
+    "amount_to_credit_limit",
+    "amount_to_yearly_income"
+  ],
+  "categorical_features": [
+    "transaction_hour",
+    "day_of_week",
+    "transaction_month",
+    "use_chip",
+    "mcc",
+    "card_brand",
+    "card_type",
+    "has_chip"
+  ],
+  "preprocessing": {
+    "numeric_imputation": "median",
+    "numeric_scaling": "standard",
+    "categorical_imputation": "most_frequent",
+    "categorical_encoding": "ordinal_then_one_hot",
+    "matrix_columns": 178
+  },
+  "models": [
+    "logistic_regression",
+    "random_forest",
+    "xgboost"
+  ],
+  "model_parameters": {
+    "logistic_regression": {
+      "solver": "saga",
+      "max_iter": 1000,
+      "tol": 0.001,
+      "C": 1.0,
+      "class_weight": null,
+      "random_state": 42
+    },
+    "random_forest": {
+      "n_estimators": 100,
+      "max_depth": 12,
+      "min_samples_leaf": 2,
+      "max_features": "sqrt",
+      "bootstrap": true,
+      "class_weight": null,
+      "random_state": 42,
+      "n_jobs": -1
+    },
+    "xgboost": {
+      "n_estimators": 100,
+      "max_depth": 4,
+      "learning_rate": 0.1,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "objective": "binary:logistic",
+      "eval_metric": "aucpr",
+      "tree_method": "hist",
+      "random_state": 42,
+      "n_jobs": -1,
+      "verbosity": 0
+    }
+  },
+  "selection_rule": "highest_validation_pr_auc_then_tuned_f1_then_recall",
+  "test_policy": "El conjunto de prueba fue separado y contado, pero no fue transformado, predicho ni utilizado para seleccionar el modelo ML.",
+  "package_versions": {
+    "numpy": "2.4.6",
+    "pandas": "3.0.5",
+    "pyodbc": "5.3.0",
+    "scipy": "1.17.1",
+    "scikit-learn": "1.9.0",
+    "xgboost": "3.2.0",
+    "matplotlib": "3.11.1"
+  }
+}
