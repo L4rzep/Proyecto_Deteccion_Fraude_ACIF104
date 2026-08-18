@@ -1,0 +1,58 @@
+{
+  "evidence": [
+    "ml_model_comparison.csv",
+    "dl_architecture_comparison.csv",
+    "ml_model_selected.json",
+    "dl_architecture_selected.json",
+    "ml_model_metadata.json",
+    "dl_architecture_metadata.json"
+  ],
+  "sample_rows": 990261,
+  "sample_frauds": 1413,
+  "split": {
+    "train": {
+      "rows": 693182,
+      "frauds": 989,
+      "non_frauds": 692193
+    },
+    "validation": {
+      "rows": 148539,
+      "frauds": 212,
+      "non_frauds": 148327
+    },
+    "test_reserved": {
+      "rows": 148540,
+      "frauds": 212,
+      "non_frauds": 148328
+    }
+  },
+  "numeric_features": [
+    "amount",
+    "age_at_transaction",
+    "num_credit_cards",
+    "num_cards_issued",
+    "card_account_age_years",
+    "months_to_card_expiration",
+    "years_since_pin_change",
+    "credit_limit",
+    "per_capita_income",
+    "yearly_income",
+    "total_debt",
+    "credit_score",
+    "amount_to_credit_limit",
+    "amount_to_yearly_income"
+  ],
+  "categorical_features": [
+    "transaction_hour",
+    "day_of_week",
+    "transaction_month",
+    "use_chip",
+    "mcc",
+    "card_brand",
+    "card_type",
+    "has_chip"
+  ],
+  "balancing_strategy": "no_balancing",
+  "selection_rule": "highest_validation_pr_auc_then_tuned_f1_then_recall",
+  "test_policy": "Este paso solo compara resultados de validacion. El test sigue reservado y no fue cargado ni utilizado."
+}

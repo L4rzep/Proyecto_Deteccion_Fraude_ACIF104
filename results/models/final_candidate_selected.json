@@ -1,0 +1,9 @@
+{
+  "family": "ML",
+  "candidate": "random_forest",
+  "validation_threshold": 0.06326728,
+  "selection_rule": "highest_validation_pr_auc_then_tuned_f1_then_recall",
+  "balancing_strategy": "no_balancing",
+  "test_used": false,
+  "next_step": "refine_selected_candidate_without_using_test"
+}

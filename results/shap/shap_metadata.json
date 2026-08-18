@@ -1,0 +1,13 @@
+{
+  "model_file": "finan_fraud_pipeline.joblib",
+  "model_sha256": "3b7d4d0d0b557dddd4ff13fa2865ac32365efd5377da059a5cb96db1db1ad178",
+  "source_partition": "validation_development_only",
+  "explained_rows": 1000,
+  "explained_frauds": 212,
+  "local_transaction_id": 7984042,
+  "local_true_label": 1,
+  "local_probability": 0.5384582398,
+  "top_features": 20,
+  "test_used": false,
+  "note": "Las explicaciones se generaron con registros de desarrollo; el test final no fue cargado ni utilizado."
+}

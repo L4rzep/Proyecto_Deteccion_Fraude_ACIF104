@@ -1,0 +1,146 @@
+{
+  "database": "FraudeDB",
+  "seed": 42,
+  "sample_modulo": 9,
+  "sample_rows": 990261,
+  "sample_frauds": 1413,
+  "split": {
+    "train": {
+      "rows": 693182,
+      "frauds": 989,
+      "non_frauds": 692193
+    },
+    "validation": {
+      "rows": 148539,
+      "frauds": 212,
+      "non_frauds": 148327
+    },
+    "test_reserved": {
+      "rows": 148540,
+      "frauds": 212,
+      "non_frauds": 148328
+    }
+  },
+  "feature_configuration": "feature_configuration_selected.json",
+  "balancing_configuration": "balancing_strategy_selected.json",
+  "balancing_strategy": "no_balancing",
+  "ml_reference": {
+    "model": "random_forest",
+    "selection_rule": "highest_validation_pr_auc_then_tuned_f1_then_recall",
+    "validation_threshold": 0.06326728,
+    "balancing_strategy": "no_balancing",
+    "test_used": false,
+    "note": "El modelo y el umbral deben confirmarse después de la comparación con Deep Learning y antes de evaluar una sola vez el test final."
+  },
+  "numeric_features": [
+    "amount",
+    "age_at_transaction",
+    "num_credit_cards",
+    "num_cards_issued",
+    "card_account_age_years",
+    "months_to_card_expiration",
+    "years_since_pin_change",
+    "credit_limit",
+    "per_capita_income",
+    "yearly_income",
+    "total_debt",
+    "credit_score",
+    "amount_to_credit_limit",
+    "amount_to_yearly_income"
+  ],
+  "categorical_features": [
+    "transaction_hour",
+    "day_of_week",
+    "transaction_month",
+    "use_chip",
+    "mcc",
+    "card_brand",
+    "card_type",
+    "has_chip"
+  ],
+  "preprocessing": {
+    "numeric_imputation": "median",
+    "numeric_scaling": "standard",
+    "categorical_imputation": "most_frequent",
+    "categorical_encoding": "ordinal_then_one_hot",
+    "matrix_columns": 178
+  },
+  "device": {
+    "requested": "cuda",
+    "used": "cuda",
+    "name": "NVIDIA GeForce GTX 970M",
+    "compute_capability": [
+      5,
+      2
+    ],
+    "memory_mib": 6143.9,
+    "torch_cuda_version": "12.1"
+  },
+  "batch_size": 4096,
+  "architectures": [
+    "mlp_basic_64",
+    "mlp_deep_l2_128_64_32",
+    "mlp_wide_adam_256_128_64"
+  ],
+  "architecture_parameters": {
+    "mlp_basic_64": {
+      "activation": "relu",
+      "optimizer": "adam",
+      "learning_rate_init": 0.001,
+      "random_state": 42,
+      "hidden_layer_sizes": [
+        64
+      ],
+      "dropout": 0.0,
+      "weight_decay_l2": 0.0001,
+      "adaptive_scheduler": false
+    },
+    "mlp_deep_l2_128_64_32": {
+      "activation": "relu",
+      "optimizer": "adam",
+      "learning_rate_init": 0.001,
+      "random_state": 42,
+      "hidden_layer_sizes": [
+        128,
+        64,
+        32
+      ],
+      "dropout": 0.2,
+      "weight_decay_l2": 0.001,
+      "adaptive_scheduler": false
+    },
+    "mlp_wide_adam_256_128_64": {
+      "activation": "relu",
+      "optimizer": "adam",
+      "learning_rate_init": 0.0005,
+      "random_state": 42,
+      "hidden_layer_sizes": [
+        256,
+        128,
+        64
+      ],
+      "dropout": 0.1,
+      "weight_decay_l2": 0.0005,
+      "adaptive_scheduler": true
+    }
+  },
+  "training_control": {
+    "max_epochs": 15,
+    "min_epochs": 4,
+    "patience": 3,
+    "min_delta": 0.0001,
+    "best_state_restored": true,
+    "selection_metric": "validation_pr_auc"
+  },
+  "selection_rule": "highest_validation_pr_auc_then_tuned_f1_then_recall",
+  "test_policy": "El conjunto de prueba fue separado y contado, pero no fue transformado, predicho ni utilizado para seleccionar la arquitectura DL.",
+  "package_versions": {
+    "numpy": "2.4.6",
+    "pandas": "3.0.5",
+    "pyodbc": "5.3.0",
+    "scipy": "1.17.1",
+    "scikit-learn": "1.9.0",
+    "matplotlib": "3.11.1",
+    "torch": "2.5.1+cu121"
+  }
+}

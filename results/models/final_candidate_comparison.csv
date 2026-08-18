@@ -1,0 +1,3 @@
+﻿family,candidate,validation_pr_auc,validation_roc_auc,tuned_threshold,tuned_precision,tuned_recall,tuned_f1,training_seconds,test_used
+ML,random_forest,0.45687906,0.92241131,0.06326728,0.75,0.41037736,0.5304878,44.1162,no
+DL,mlp_basic_64,0.16568584,0.90803005,0.05179813,0.29901961,0.28773585,0.29326923,281.5591,no

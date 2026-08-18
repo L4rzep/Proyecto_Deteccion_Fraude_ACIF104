@@ -1,0 +1,2 @@
+threshold,test_rows,test_frauds,test_non_frauds,precision,recall,f1,specificity,accuracy,balanced_accuracy,pr_auc,roc_auc,true_negatives,false_positives,false_negatives,true_positives,prediction_seconds
+0.07217143,148540,212,148328,0.73728814,0.41037736,0.52727273,0.999791,0.99894978,0.70508418,0.47819759,0.93974817,148297,31,125,87,1.735362

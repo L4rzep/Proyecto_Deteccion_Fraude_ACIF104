@@ -1,0 +1,8 @@
+{
+  "architecture": "mlp_basic_64",
+  "selection_rule": "highest_validation_pr_auc_then_tuned_f1_then_recall",
+  "validation_threshold": 0.05179813,
+  "balancing_strategy": "no_balancing",
+  "test_used": false,
+  "note": "La arquitectura DL debe compararse con el modelo ML seleccionado antes de evaluar una sola vez el test final."
+}
