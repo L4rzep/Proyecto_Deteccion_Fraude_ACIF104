@@ -1,0 +1,8 @@
+{
+  "mode": "full",
+  "database": "FraudeDB",
+  "seed": 42,
+  "sample_modulo": 9,
+  "sample_rows": 990261,
+  "warning": null
+}
