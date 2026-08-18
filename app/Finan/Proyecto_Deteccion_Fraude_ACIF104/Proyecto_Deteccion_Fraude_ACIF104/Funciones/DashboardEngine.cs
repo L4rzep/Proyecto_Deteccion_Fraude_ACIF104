@@ -1,13 +1,27 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.IO;
+using System.Text.Json;
 
 namespace Proyecto_Deteccion_Fraude_ACIF104.Funciones
 {
     public class DashboardEngine
     {
         // Renderiza en tiempo real el Dashboard visual sobre un PictureBox
-        public Bitmap RenderizarDashboard(int ancho, int alto, long totalTransacciones, long totalFraudes, double precision)
+        public double ObtenerF1Final()
+        {
+            string path = Path.Combine(
+                AppDomain.CurrentDomain.BaseDirectory,
+                "runtime",
+                "final_test_metrics.json"
+            );
+            if (!File.Exists(path)) return 0;
+            using JsonDocument document = JsonDocument.Parse(File.ReadAllText(path));
+            return document.RootElement.GetProperty("f1").GetDouble() * 100.0;
+        }
+
+        public Bitmap RenderizarDashboard(int ancho, int alto, long totalTransacciones, long totalFraudes, double f1Score)
         {
             Bitmap bmp = new Bitmap(ancho > 0 ? ancho : 800, alto > 0 ? alto : 400);
             using (Graphics g = Graphics.FromImage(bmp))
@@ -18,16 +32,16 @@ namespace Proyecto_Deteccion_Fraude_ACIF104.Funciones
                 Font fontTitulo = new Font("Arial", 12, FontStyle.Bold);
 
                 // Tarjetas KPI arriba
-                DibujarTarjetaKPI(g, 20, 20, 240, 80, Color.FromArgb(30, 41, 59), Color.FromArgb(56, 189, 248), "TOTAL REGISTROS", totalTransacciones.ToString("N0"), "SQL Server DW");
-                DibujarTarjetaKPI(g, 280, 20, 240, 80, Color.FromArgb(30, 41, 59), Color.FromArgb(244, 63, 94), "FRAUDES DETECTADOS", totalFraudes.ToString("N0"), "Modelo XGBoost");
-                DibujarTarjetaKPI(g, 540, 20, 240, 80, Color.FromArgb(30, 41, 59), Color.FromArgb(74, 222, 128), "PRECISIÓN IA", $"{precision:F1}%", "Métrica F1-Score");
+                DibujarTarjetaKPI(g, 20, 20, 240, 80, Color.FromArgb(30, 41, 59), Color.FromArgb(56, 189, 248), "TRANSACCIONES ETIQUETADAS", totalTransacciones.ToString("N0"), "FraudeDB");
+                DibujarTarjetaKPI(g, 280, 20, 240, 80, Color.FromArgb(30, 41, 59), Color.FromArgb(244, 63, 94), "FRAUDES REALES", totalFraudes.ToString("N0"), "Conjunto etiquetado");
+                DibujarTarjetaKPI(g, 540, 20, 240, 80, Color.FromArgb(30, 41, 59), Color.FromArgb(74, 222, 128), "F1 TEST FINAL", $"{f1Score:F1}%", "Random Forest");
 
                 // Contenedor del Gráfico de Barras
                 int chartX = 20, chartY = 120, chartW = 760, chartH = 240;
                 g.FillRectangle(new SolidBrush(Color.FromArgb(30, 41, 59)), chartX, chartY, chartW, chartH);
                 g.DrawString("Análisis de Transacciones: Legítimas vs. Fraudulentas", fontTitulo, Brushes.White, chartX + 15, chartY + 15);
 
-                long legitimos = totalTransacciones - totalFraudes;
+                long legitimos = Math.Max(0, totalTransacciones - totalFraudes);
                 long maxVal = Math.Max(legitimos, totalFraudes);
                 if (maxVal == 0) maxVal = 1;
 

@@ -35,15 +35,13 @@ namespace Proyecto_Deteccion_Fraude_ACIF104.Funciones
             File.WriteAllText(rutaArchivo, encabezados + Environment.NewLine, Encoding.UTF8);
         }
 
-        // Lee un CSV y lo convierte a DataTable para previsualizar en DataGridView
-        // Lee un CSV como un profesional, ignorando las comas dentro de las comillas
-        // Lee un CSV detectando automáticamente el delimitador y limpiando los títulos
+        // Lee un CSV y lo prepara para mostrarlo antes de cargarlo.
         public DataTable CargarCSV(string rutaArchivo)
         {
             DataTable dt = new DataTable();
 
-            // MAGIA 1: Auto-detectar si Excel guardó el CSV con punto y coma (;) o coma (,)
-            string primeraLinea = File.ReadLines(rutaArchivo).FirstOrDefault();
+            // Admite archivos separados por coma o punto y coma.
+            string? primeraLinea = File.ReadLines(rutaArchivo).FirstOrDefault();
             string delimitador = (primeraLinea != null && primeraLinea.Contains(";") && !primeraLinea.Contains(",")) ? ";" : ",";
 
             using (TextFieldParser parser = new TextFieldParser(rutaArchivo))
@@ -55,10 +53,9 @@ namespace Proyecto_Deteccion_Fraude_ACIF104.Funciones
                 // 1. Leer los encabezados
                 if (!parser.EndOfData)
                 {
-                    string[] encabezados = parser.ReadFields();
+                    string[] encabezados = parser.ReadFields() ?? Array.Empty<string>();
                     foreach (string col in encabezados)
                     {
-                        // MAGIA 2: Quitar espacios invisibles que rompen la subida a SQL
                         string colLimpia = col.Trim().Replace("\"", "");
                         dt.Columns.Add(colLimpia);
                     }
@@ -69,7 +66,7 @@ namespace Proyecto_Deteccion_Fraude_ACIF104.Funciones
                 {
                     try
                     {
-                        string[] campos = parser.ReadFields();
+                        string[]? campos = parser.ReadFields();
 
                         // Asegurar que solo suban filas que estén perfectas (no rotas)
                         if (campos != null && campos.Length == dt.Columns.Count)

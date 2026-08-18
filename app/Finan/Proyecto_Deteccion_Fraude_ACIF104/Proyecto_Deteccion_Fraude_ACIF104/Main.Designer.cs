@@ -100,7 +100,7 @@
             // 
             Config_BT2.Location = new Point(151, 235);
             Config_BT2.Name = "Config_BT2";
-            Config_BT2.Size = new Size(75, 23);
+            Config_BT2.Size = new Size(120, 23);
             Config_BT2.TabIndex = 15;
             Config_BT2.Text = "Activar";
             Config_BT2.UseVisualStyleBackColor = true;
@@ -156,6 +156,7 @@
             Config_BT1.TabIndex = 9;
             Config_BT1.Text = "Guardar";
             Config_BT1.UseVisualStyleBackColor = true;
+            Config_BT1.Click += Config_BT1_Click;
             // 
             // Config_LB5
             // 

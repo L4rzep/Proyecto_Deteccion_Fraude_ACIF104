@@ -6,6 +6,7 @@ import argparse
 import hashlib
 import json
 import os
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 
@@ -16,6 +17,14 @@ def parse_args() -> argparse.Namespace:
     source = parser.add_mutually_exclusive_group(required=True)
     source.add_argument("--transaction-id", type=int)
     source.add_argument("--input-json", type=Path)
+    source.add_argument(
+        "--new-transaction-json",
+        type=Path,
+        help=(
+            "JSON con client_id, card_id, amount, transaction_date, "
+            "use_chip y mcc. Las demás variables se obtienen desde FraudeDB."
+        ),
+    )
     parser.add_argument(
         "--server",
         default=os.getenv("FINAN_SQL_SERVER", r"(localdb)\MSSQLLocalDB"),
@@ -48,7 +57,7 @@ def parse_args() -> argparse.Namespace:
 
 
 def read_json(path: Path) -> dict[str, Any]:
-    with path.resolve().open("r", encoding="utf-8") as stream:
+    with path.resolve().open("r", encoding="utf-8-sig") as stream:
         return json.load(stream)
 
 
@@ -98,6 +107,147 @@ def load_from_database(
         return dict(zip(ordered_features, rows[0], strict=True))
     finally:
         connection.close()
+
+
+def parse_money(value: Any) -> float | None:
+    if value is None:
+        return None
+    cleaned = str(value).replace("$", "").replace(",", "").strip()
+    return float(cleaned) if cleaned else None
+
+
+def parse_month_year(value: Any, field: str) -> tuple[int, int]:
+    parts = str(value or "").strip().split("/")
+    if len(parts) != 2:
+        raise ValueError(f"Formato inválido en {field}; se esperaba MM/AAAA")
+    month, year = int(parts[0]), int(parts[1])
+    if month < 1 or month > 12 or year < 1900:
+        raise ValueError(f"Fecha inválida en {field}")
+    return month, year
+
+
+def load_new_transaction(
+    args: argparse.Namespace,
+    ordered_features: list[str],
+) -> dict[str, Any]:
+    import pyodbc
+
+    raw = read_json(args.new_transaction_json)
+    required = (
+        "client_id",
+        "card_id",
+        "amount",
+        "transaction_date",
+        "use_chip",
+        "mcc",
+    )
+    missing = [name for name in required if raw.get(name) in (None, "")]
+    if missing:
+        raise ValueError("Faltan datos de la nueva transacción: " + ", ".join(missing))
+
+    client_id = int(raw["client_id"])
+    card_id = int(raw["card_id"])
+    amount = parse_money(raw["amount"])
+    if amount is None:
+        raise ValueError("El monto de la nueva transacción no es válido")
+    transaction_date = datetime.fromisoformat(
+        str(raw["transaction_date"]).replace("Z", "+00:00")
+    ).replace(tzinfo=None)
+
+    connection_string = (
+        f"DRIVER={{{args.driver}}};SERVER={args.server};"
+        f"DATABASE={args.database};Trusted_Connection=yes;"
+        "TrustServerCertificate=yes;"
+    )
+    connection = pyodbc.connect(connection_string, autocommit=True, timeout=30)
+    try:
+        row = connection.execute(
+            """
+            SELECT
+                u.birth_year, u.birth_month, u.per_capita_income,
+                u.yearly_income, u.total_debt, u.credit_score,
+                u.num_credit_cards, c.card_brand, c.card_type, c.has_chip,
+                c.num_cards_issued, c.credit_limit, c.acct_open_date,
+                c.year_pin_last_changed, c.expires
+            FROM dbo.cards_data AS c
+            INNER JOIN dbo.users_data AS u ON u.id = c.client_id
+            WHERE c.id = ? AND c.client_id = ?
+            """,
+            card_id,
+            client_id,
+        ).fetchone()
+    finally:
+        connection.close()
+    if row is None:
+        raise LookupError("La tarjeta no existe o no pertenece al cliente indicado")
+
+    (
+        birth_year,
+        birth_month,
+        per_capita_income,
+        yearly_income,
+        total_debt,
+        credit_score,
+        num_credit_cards,
+        card_brand,
+        card_type,
+        has_chip,
+        num_cards_issued,
+        credit_limit,
+        account_open_date,
+        year_pin_last_changed,
+        expires,
+    ) = row
+    yearly_income_value = parse_money(yearly_income)
+    credit_limit_value = parse_money(credit_limit)
+    open_month, open_year = parse_month_year(account_open_date, "acct_open_date")
+    expiration_month, expiration_year = parse_month_year(expires, "expires")
+
+    age_at_transaction = None
+    if birth_year is not None:
+        age_at_transaction = transaction_date.year - int(birth_year)
+        if birth_month is not None and transaction_date.month < int(birth_month):
+            age_at_transaction -= 1
+    years_since_pin_change = None
+    if year_pin_last_changed is not None and int(year_pin_last_changed) <= transaction_date.year:
+        years_since_pin_change = transaction_date.year - int(year_pin_last_changed)
+
+    values = {
+        "amount": amount,
+        "age_at_transaction": age_at_transaction,
+        "num_credit_cards": num_credit_cards,
+        "num_cards_issued": num_cards_issued,
+        "card_account_age_years": (
+            ((transaction_date.year - open_year) * 12 + transaction_date.month - open_month)
+            / 12.0
+        ),
+        "months_to_card_expiration": (
+            (expiration_year - transaction_date.year) * 12
+            + expiration_month
+            - transaction_date.month
+        ),
+        "years_since_pin_change": years_since_pin_change,
+        "credit_limit": credit_limit_value,
+        "per_capita_income": parse_money(per_capita_income),
+        "yearly_income": yearly_income_value,
+        "total_debt": parse_money(total_debt),
+        "credit_score": credit_score,
+        "amount_to_credit_limit": (
+            amount / credit_limit_value if credit_limit_value not in (None, 0) else None
+        ),
+        "amount_to_yearly_income": (
+            amount / yearly_income_value if yearly_income_value not in (None, 0) else None
+        ),
+        "transaction_hour": transaction_date.hour,
+        "day_of_week": transaction_date.weekday() + 1,
+        "transaction_month": transaction_date.month,
+        "use_chip": str(raw["use_chip"]),
+        "mcc": int(raw["mcc"]),
+        "card_brand": card_brand,
+        "card_type": card_type,
+        "has_chip": has_chip,
+    }
+    return {name: values[name] for name in ordered_features}
 
 
 def validate_input(
@@ -222,10 +372,14 @@ def main() -> int:
     if ordered_features != numeric_features + categorical_features:
         raise ValueError("El orden de variables del esquema es inconsistente")
 
-    if args.input_json:
-        raw_values = read_json(args.input_json)
+    if args.new_transaction_json:
+        raw_values = load_new_transaction(args, ordered_features)
         source = "new_transaction"
         identifier: int | str = "new"
+    elif args.input_json:
+        raw_values = read_json(args.input_json)
+        source = "new_transaction"
+        identifier = "new"
     else:
         raw_values = load_from_database(args, ordered_features)
         source = "database"
