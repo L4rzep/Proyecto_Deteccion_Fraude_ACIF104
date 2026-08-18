@@ -1,7 +1,6 @@
 using Proyecto_Deteccion_Fraude_ACIF104.Funciones;
 using System.Data;
-using System.Threading.Tasks;
-using System.Text;
+using System.IO;
 
 namespace Proyecto_Deteccion_Fraude_ACIF104
 {
@@ -15,6 +14,7 @@ namespace Proyecto_Deteccion_Fraude_ACIF104
 
         private int paginaActualExplo = 1;
         private PictureBox picDashboard = new PictureBox();
+        private TabPage? tabPrediccion;
 
 
         public Main()
@@ -22,6 +22,15 @@ namespace Proyecto_Deteccion_Fraude_ACIF104
             InitializeComponent();
             InicializarEstructura();
             Main_TC1.Dock = DockStyle.Fill;
+            StartPosition = FormStartPosition.CenterScreen;
+            Size = new Size(1200, 800);
+            MinimumSize = new Size(1000, 650);
+            Shown += Main_Shown;
+        }
+
+        private void Main_Shown(object? sender, EventArgs e)
+        {
+            CargarDashboard();
         }
         private void InicializarEstructura()
         {
@@ -33,52 +42,70 @@ namespace Proyecto_Deteccion_Fraude_ACIF104
             Carlo_CB1.DataSource = tablas;
             Explo_CB1.DataSource = tablas;
 
+            // La carga masiva se conserva en el código, pero no forma parte
+            // de la interfaz final porque los datos se cargan con el proceso oficial.
+            Main_TC1.TabPages.Remove(TC_Carlo);
+
             // Crear PictureBox para el Dashboard dinámico dentro de TC_Dash
             picDashboard.Dock = DockStyle.Fill;
             picDashboard.SizeMode = PictureBoxSizeMode.StretchImage;
             TC_Dash.Controls.Add(picDashboard);
 
+            // La pestaña de predicción conecta la interfaz con el pipeline final.
+            tabPrediccion = new TabPage
+            {
+                Text = "🤖 Predicción",
+                BackColor = System.Drawing.Color.FromArgb(15, 23, 42),
+            };
+            tabPrediccion.Controls.Add(new PanelPrediccion(pythonEngine, dbManager));
+            Main_TC1.TabPages.Add(tabPrediccion);
+
             // Cargar configuración previa
             Config_TB1.Text = Properties.Settings.Default.CadenaConexion;
             Config_TB2.Text = Properties.Settings.Default.RutaPython;
-            if (Properties.Settings.Default.UmbralFraude > 0)
-                Config_NUD1.Value = Properties.Settings.Default.UmbralFraude;
+            Config_LB2.Text = "Cadena de conexión:";
+            Config_LB3.Text = "Ejecutable de Python:";
+            Config_LB4.Text = "Umbral validado del modelo:";
+            Config_LB5.Text = "Porcentaje (solo lectura):";
+            Config_NUD1.DecimalPlaces = 2;
+            Config_NUD1.Value = 7.22m;
+            Config_NUD1.Enabled = false;
+            Config_LB6.Text = "Modelo final: Random Forest";
+            Config_LB7.Text = "Abrir evaluación:";
+            Config_BT2.Text = "Ir a Predicción";
         }
 
-        // ==========================================
-        // 📊 TAB 1: DASHBOARD (AHORA 100% REAL)
-        // ==========================================
+        // Dashboard
         private void Main_TC1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (Main_TC1.SelectedTab == TC_Dash)
             {
-                // 1. Ir a SQL Server y contar los datos REALES
-                long totalTransacciones = dbManager.ObtenerTotalRegistros("transactions_data");
-                long totalFraudes = dbManager.ObtenerTotalFraudes();
-
-                // 2. Calcular la precisión de forma dinámica (Evitar división por cero)
-                double precision = 0;
-                if (totalTransacciones > 0)
-                {
-                    long transaccionesLegitimas = totalTransacciones - totalFraudes;
-                    precision = ((double)transaccionesLegitimas / totalTransacciones) * 100;
-                }
-
-                // 3. Generar gráfico dinámico con la data real
-                picDashboard.Image = dashEngine.RenderizarDashboard(
-                    picDashboard.Width, picDashboard.Height,
-                    totalTransacciones, totalFraudes, precision
-                );
+                CargarDashboard();
             }
         }
 
-        // ==========================================
-        // 📥 TAB 2: CARGA & LOTES (Carlo_)
-        // ==========================================
+        private void CargarDashboard()
+        {
+            long totalTransacciones = dbManager.ObtenerTotalRegistros("fraud_labels");
+            long totalFraudes = dbManager.ObtenerTotalFraudes();
+            double f1Final = dashEngine.ObtenerF1Final();
+
+            Image? previousImage = picDashboard.Image;
+            picDashboard.Image = dashEngine.RenderizarDashboard(
+                picDashboard.Width,
+                picDashboard.Height,
+                totalTransacciones,
+                totalFraudes,
+                f1Final
+            );
+            previousImage?.Dispose();
+        }
+
+        // Carga y lotes. La pestaña se conserva para trazabilidad, pero está oculta.
         private void Carlo_BT1_Click(object sender, EventArgs e)
         {
             // Botón Exportar Plantilla
-            string tabla = Carlo_CB1.SelectedItem.ToString();
+            if (Carlo_CB1.SelectedItem is not string tabla) return;
             SaveFileDialog sfd = new SaveFileDialog { Filter = "CSV|*.csv", FileName = $"Plantilla_{tabla}.csv" };
             if (sfd.ShowDialog() == DialogResult.OK)
             {
@@ -104,7 +131,7 @@ namespace Proyecto_Deteccion_Fraude_ACIF104
             // Botón Guardar en SQL Server
             if (Carlo_DGV1.DataSource is DataTable dt && dt.Rows.Count > 0)
             {
-                string tabla = Carlo_CB1.SelectedItem.ToString();
+                if (Carlo_CB1.SelectedItem is not string tabla) return;
                 Carlo_PB1.Value = 50;
 
                 if (dbManager.GuardarLoteBulk(dt, tabla))
@@ -112,9 +139,12 @@ namespace Proyecto_Deteccion_Fraude_ACIF104
                     Carlo_PB1.Value = 100;
                     MessageBox.Show("Datos insertados correctamente en SQL Server.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    // Ejecutar inferencia de Python automáticamente
-                    string resultado = pythonEngine.EjecutarModeloInferencia(1, dt.Rows.Count);
-                    MessageBox.Show($"Respuesta del Motor IA:\n{resultado}", "Log de Python", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(
+                        "Los datos quedaron disponibles. Utilice la pestaña Predicción para evaluarlos con el modelo final.",
+                        "Carga completada",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information
+                    );
                 }
                 Carlo_PB1.Value = 0;
             }
@@ -127,9 +157,7 @@ namespace Proyecto_Deteccion_Fraude_ACIF104
             Carlo_LB4.Text = "Carga cancelada.";
             Carlo_PB1.Value = 0;
         }
-        // ==========================================
-        // 🔍 TAB 3: EXPLORADOR (Explo_)
-        // ==========================================
+        // Explorador
 
         private void Explo_CB1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -156,115 +184,42 @@ namespace Proyecto_Deteccion_Fraude_ACIF104
 
         private void CargarDatosExplorador()
         {
-            if (Explo_CB1.SelectedItem == null) return;
-
-            string tabla = Explo_CB1.SelectedItem.ToString();
+            if (Explo_CB1.SelectedItem is not string tabla) return;
             DataTable dt = dbManager.ObtenerDatosPaginados(tabla, paginaActualExplo, 1000);
             Explo_DGV1.DataSource = dt;
             Explo_LB2.Text = $"Página: {paginaActualExplo}";
         }
 
-        // ==========================================
-        // ⚙️ TAB 4: CONFIGURACIÓN (Config_)
-        // ==========================================
+        // Configuración
         private void Config_BT1_Click(object sender, EventArgs e)
         {
             // Botón Guardar Configuración
             string cadena = Config_TB1.Text;
 
+            if (!File.Exists(Config_TB2.Text))
+            {
+                MessageBox.Show(
+                    "Seleccione un ejecutable de Python válido.",
+                    "Configuración incompleta",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                return;
+            }
+
             if (dbManager.ProbarConexion(cadena))
             {
                 Properties.Settings.Default.CadenaConexion = Config_TB1.Text;
                 Properties.Settings.Default.RutaPython = Config_TB2.Text;
-                Properties.Settings.Default.UmbralFraude = Config_NUD1.Value ;
                 Properties.Settings.Default.Save();
 
                 MessageBox.Show("Configuración guardada y conexión probada con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
-        // Fíjate que ahora dice "async void"
-        private async void Config_BT2_Click(object sender, EventArgs e)
+        private void Config_BT2_Click(object sender, EventArgs e)
         {
-            int ultimoProcesado = dbManager.ObtenerUltimoIDProcesado();
-            int totalTransacciones = dbManager.ObtenerMaximoIDTransacciones();
-
-            if (ultimoProcesado >= totalTransacciones)
-            {
-                MessageBox.Show("FINAN ya analizó todas las transacciones. No hay datos nuevos.", "Sistema Actualizado", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-
-            int tamanoLote = 1000000; // Paquetes de 1 Millón de registros
-            int idInicio = ultimoProcesado + 1;
-
-            // =========================================================
-            // 🎨 CREACIÓN DEL RECUADRO DE ESPERA (Cargando...)
-            // =========================================================
-            Form formEspera = new Form
-            {
-                Text = "IA FINAN Trabajando...",
-                Size = new System.Drawing.Size(350, 150),
-                StartPosition = FormStartPosition.CenterScreen,
-                FormBorderStyle = FormBorderStyle.FixedDialog,
-                ControlBox = false, // Quita la 'X' para que no lo puedan cerrar a la fuerza
-                BackColor = System.Drawing.Color.FromArgb(15, 23, 42) // Fondo oscuro elegante
-            };
-
-            Label lblEstado = new Label
-            {
-                Text = $"Iniciando motor de IA...\nTransacciones pendientes: {totalTransacciones - ultimoProcesado:N0}",
-                AutoSize = false,
-                TextAlign = System.Drawing.ContentAlignment.MiddleCenter,
-                Dock = DockStyle.Fill,
-                Font = new System.Drawing.Font("Arial", 11, System.Drawing.FontStyle.Bold),
-                ForeColor = System.Drawing.Color.White
-            };
-            formEspera.Controls.Add(lblEstado);
-
-            // Deshabilitar el botón para que no hagan doble clic
-            Config_BT2.Enabled = false;
-
-            // Mostrar el recuadro sin congelar la app
-            formEspera.Show(this);
-
-            // =========================================================
-            // ⚙️ BUCLE MÁGICO EN SEGUNDO PLANO (Task.Run)
-            // =========================================================
-            await Task.Run(() =>
-            {
-                StringBuilder logFinal = new StringBuilder(); // Para guardar todos los reportes
-
-                while (idInicio <= totalTransacciones)
-                {
-                    int idFin = idInicio + tamanoLote - 1;
-
-                    if (idFin > totalTransacciones)
-                    {
-                        idFin = totalTransacciones;
-                    }
-
-                    // Actualizar el recuadro de espera en tiempo real (Invoke es necesario al usar hilos secundarios)
-                    lblEstado.Invoke((MethodInvoker)delegate {
-                        lblEstado.Text = $"Analizando lote de datos:\n{idInicio:N0} al {idFin:N0}\n\n¡Por favor, no cierre el sistema!";
-                    });
-
-                    // Llama a Python silenciosamente
-                    string log = pythonEngine.EjecutarModeloInferencia(idInicio, idFin);
-                    logFinal.AppendLine($"Lote {idInicio:N0}-{idFin:N0} completado.");
-
-                    idInicio = idFin + 1;
-                }
-            });
-
-            // =========================================================
-            // ✅ FINALIZACIÓN
-            // =========================================================
-            // Cerrar el recuadro de espera y rehabilitar el botón
-            formEspera.Close();
-            Config_BT2.Enabled = true;
-
-            // Mostrar mensaje final de éxito
-            MessageBox.Show("¡Todos los datos han sido analizados por FINAN y guardados en SQL exitosamente!", "Proceso Completado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (tabPrediccion is null) return;
+            Main_TC1.SelectedTab = tabPrediccion;
         }
 
     }

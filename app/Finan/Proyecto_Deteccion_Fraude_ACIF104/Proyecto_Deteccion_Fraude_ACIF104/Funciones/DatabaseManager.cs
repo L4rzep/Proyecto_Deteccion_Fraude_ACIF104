@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
-using System.Data.SqlClient;
+using System.Globalization;
+using Microsoft.Data.SqlClient;
 using System.Windows.Forms;
 
 namespace Proyecto_Deteccion_Fraude_ACIF104.Funciones
@@ -61,7 +62,7 @@ namespace Proyecto_Deteccion_Fraude_ACIF104.Funciones
                 using (SqlConnection conn = new SqlConnection(ObtenerCadenaConexion()))
                 {
                     conn.Open();
-                    string query = "SELECT ISNULL(MAX(transaction_id), 0) FROM transactions_data";
+                    string query = "SELECT ISNULL(MAX(id), 0) FROM transactions_data";
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
                         return Convert.ToInt32(cmd.ExecuteScalar());
@@ -164,7 +165,7 @@ namespace Proyecto_Deteccion_Fraude_ACIF104.Funciones
                 using (SqlConnection conn = new SqlConnection(ObtenerCadenaConexion()))
                 {
                     conn.Open();
-                    // COUNT_BIG se usa porque tienes más de 2 millones de registros (int se quedaría corto)
+                    // COUNT_BIG permite contar tablas con varios millones de registros.
                     string query = $"SELECT COUNT_BIG(*) FROM {nombreTabla}";
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
@@ -197,6 +198,50 @@ namespace Proyecto_Deteccion_Fraude_ACIF104.Funciones
             {
                 return 0;
             }
+        }
+
+        public NuevaTransaccion ObtenerDatosBaseTransaccion(long transactionId)
+        {
+            using SqlConnection conn = new SqlConnection(ObtenerCadenaConexion());
+            conn.Open();
+            const string query = @"
+                SELECT client_id, card_id, amount, [date], use_chip, mcc
+                FROM dbo.transactions_data
+                WHERE id = @TransactionId";
+            using SqlCommand cmd = new SqlCommand(query, conn);
+            cmd.Parameters.Add("@TransactionId", SqlDbType.BigInt).Value = transactionId;
+            using SqlDataReader reader = cmd.ExecuteReader();
+            if (!reader.Read())
+            {
+                throw new InvalidOperationException(
+                    $"No existe la transacción {transactionId}."
+                );
+            }
+
+            string amountText = Convert.ToString(reader["amount"], CultureInfo.InvariantCulture)
+                ?.Replace("$", string.Empty)
+                .Replace(",", string.Empty)
+                .Trim() ?? string.Empty;
+            if (!decimal.TryParse(
+                amountText,
+                NumberStyles.Number | NumberStyles.AllowLeadingSign,
+                CultureInfo.InvariantCulture,
+                out decimal amount
+            ))
+            {
+                throw new InvalidOperationException("El monto de la transacción no es válido.");
+            }
+
+            return new NuevaTransaccion
+            {
+                ClientId = Convert.ToInt32(reader["client_id"]),
+                CardId = Convert.ToInt32(reader["card_id"]),
+                Amount = amount,
+                TransactionDate = Convert.ToDateTime(reader["date"])
+                    .ToString("yyyy-MM-ddTHH:mm:ss", CultureInfo.InvariantCulture),
+                UseChip = Convert.ToString(reader["use_chip"]) ?? string.Empty,
+                Mcc = Convert.ToInt32(reader["mcc"]),
+            };
         }
 
     }
