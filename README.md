@@ -2,7 +2,7 @@
 
 Repositorio académico para el desarrollo de una solución de detección de fraude en transacciones mediante aprendizaje automático.
 
-> Estado preliminar: la estructura del repositorio se está alineando con la rúbrica de la Evaluación Sumativa 1. La definición del entrenamiento, la inferencia y la aplicación oficiales todavía debe ser confirmada por el equipo.
+> Estado: la preparación y carga de datos y las vistas analíticas de FINAN están verificadas. El entrenamiento, la evaluación, la inferencia y la aplicación finales continúan en consolidación.
 
 ## Estructura
 
@@ -28,7 +28,7 @@ docs/
 legacy/                Material histórico no oficial
 ```
 
-Los scripts Python, el modelo PKL, la aplicación C#, los archivos SQL y sus recursos mantienen temporalmente sus ubicaciones actuales hasta que el equipo confirme cuáles serán las fuentes oficiales.
+Los scripts oficiales de preparación de datos se encuentran en `src/data/`. El modelo PKL, la aplicación C# y los scripts históricos de modelamiento mantienen temporalmente sus ubicaciones actuales hasta completar su revisión.
 
 ## Requisitos preliminares
 
@@ -49,7 +49,7 @@ python -m pip install -r requirements.txt
 
 ## Datos
 
-La política y la estructura esperada se describen en `data/README.md`. Los datasets completos, respaldos SQL, credenciales y archivos comprimidos no deben incorporarse al repositorio.
+El procedimiento verificado de obtención, validación, carga y preparación analítica se describe en [`data/README.md`](data/README.md). Los datasets completos, respaldos SQL, credenciales y archivos comprimidos no deben incorporarse al repositorio.
 
 ## Ejecución
 

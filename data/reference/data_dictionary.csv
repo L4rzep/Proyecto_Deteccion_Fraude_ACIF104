@@ -1,0 +1,39 @@
+column_name,source_reference,sql_type,role,available_before_prediction,initial_model_use,description
+transaction_id,transactions_data.id,bigint,identifier,yes,exclude,Identificador unico conservado para trazabilidad y union de resultados
+transaction_date,transactions_data.date,datetime2,temporal,yes,derive_then_exclude,Fecha y hora original usada para generar variables temporales
+transaction_hour,derived_from_transaction_date,int,predictor,yes,candidate,Hora de la transaccion entre 0 y 23
+day_of_week,derived_from_transaction_date,int,predictor,yes,candidate,Dia de la semana con lunes igual a 1 y domingo igual a 7
+is_weekend,derived_from_transaction_date,bit,predictor,yes,candidate,Indica si la transaccion ocurrio en sabado o domingo
+transaction_month,derived_from_transaction_date,int,predictor,yes,candidate,Mes calendario de la transaccion entre 1 y 12
+client_id,transactions_data.client_id,int,identifier,yes,exclude,Identificador del cliente usado solo para integrar las tablas
+card_id,transactions_data.card_id,int,identifier,yes,exclude,Identificador de la tarjeta usado solo para integrar las tablas
+amount,transactions_data.amount,"decimal(18,2)",predictor,yes,candidate,Monto convertido desde texto monetario a valor numerico
+use_chip,transactions_data.use_chip,nvarchar(64),predictor,yes,candidate,Canal o modalidad utilizada para procesar la transaccion
+merchant_id,transactions_data.merchant_id,bigint,identifier,yes,exclude_high_cardinality,Identificador del comercio con cardinalidad elevada
+merchant_city,transactions_data.merchant_city,nvarchar(160),predictor,yes,review_high_cardinality,Ciudad del comercio sujeta a evaluacion de cardinalidad y aporte predictivo
+merchant_state,transactions_data.merchant_state,nvarchar(80),predictor,yes,review,Estado o region del comercio
+merchant_zip,transactions_data.zip,varchar(32),predictor,yes,review_high_cardinality,Codigo postal del comercio sujeto a evaluacion de cardinalidad
+mcc,transactions_data.mcc,int,predictor,yes,candidate,Codigo de categoria del comercio
+current_age,users_data.current_age,int,profile_snapshot,yes,review_temporal,Edad de la fuente en su fecha de referencia mantenida para comparar con informes anteriores
+age_at_transaction,derived_from_birth_year_and_month,int,predictor,yes,candidate,Edad aproximada del cliente en la fecha de la transaccion
+retirement_age,users_data.retirement_age,int,predictor,yes,review,Edad de jubilacion registrada para el cliente
+gender,users_data.gender,nvarchar(32),demographic,yes,audit_before_use,Variable demografica mantenida para EDA y revision de equidad antes de decidir su uso
+per_capita_income,users_data.per_capita_income,"decimal(18,2)",profile_snapshot,yes,review_temporal,Ingreso per capita convertido desde texto monetario
+yearly_income,users_data.yearly_income,"decimal(18,2)",profile_snapshot,yes,review_temporal,Ingreso anual convertido desde texto monetario
+total_debt,users_data.total_debt,"decimal(18,2)",profile_snapshot,yes,review_temporal,Deuda total convertida desde texto monetario
+credit_score,users_data.credit_score,int,profile_snapshot,yes,review_temporal,Puntaje crediticio de la fuente en su fecha de referencia
+num_credit_cards,users_data.num_credit_cards,int,predictor,yes,candidate,Cantidad de tarjetas de credito asociadas al cliente
+card_brand,cards_data.card_brand,nvarchar(40),predictor,yes,candidate,Marca de la tarjeta
+card_type,cards_data.card_type,nvarchar(40),predictor,yes,candidate,Tipo de tarjeta
+has_chip,cards_data.has_chip,varchar(8),predictor,yes,candidate,Indica si la tarjeta dispone de chip
+num_cards_issued,cards_data.num_cards_issued,int,predictor,yes,candidate,Cantidad de tarjetas emitidas para la cuenta
+credit_limit,cards_data.credit_limit,"decimal(18,2)",profile_snapshot,yes,review_temporal,Limite de credito convertido desde texto monetario
+account_open_month,derived_from_cards_data.acct_open_date,int,temporal,yes,derive_then_review,Mes de apertura de la cuenta de la tarjeta
+account_open_year,derived_from_cards_data.acct_open_date,int,temporal,yes,derive_then_review,Ano de apertura de la cuenta de la tarjeta
+years_since_pin_change,derived_from_year_pin_last_changed,int,predictor,yes,review,Anos transcurridos desde el ultimo cambio de PIN hasta la transaccion
+mcc_description,mcc_codes.description,nvarchar(255),interpretation,yes,review_with_mcc,Descripcion del rubro comercial mantenida para EDA e interpretacion
+amount_to_credit_limit,derived_from_amount_and_credit_limit,"decimal(18,6)",predictor,yes,candidate,Proporcion del monto respecto del limite de credito
+amount_to_yearly_income,derived_from_amount_and_yearly_income,"decimal(18,6)",predictor,yes,review_temporal,Proporcion del monto respecto del ingreso anual
+card_account_age_years,derived_from_acct_open_date,decimal,predictor,yes,candidate,Antiguedad aproximada de la cuenta en anos a la fecha de la transaccion
+months_to_card_expiration,derived_from_cards_data.expires,int,predictor,yes,candidate,Meses entre la transaccion y el vencimiento de la tarjeta
+is_fraud,fraud_labels.is_fraud,bit,target,no,target_only,Etiqueta objetivo disponible solo para EDA entrenamiento y evaluacion

@@ -20,6 +20,10 @@ Fuente pública:
 | `src/data/inspect_source_data.py` | Comprueba la presencia y estructura de los cinco archivos fuente, cuenta sus registros y calcula sus huellas SHA-256. |
 | `src/data/sql/01_create_source_tables.sql` | Crea las cinco tablas fuente con sus claves primarias si todavía no existen. |
 | `src/data/load_source_data.py` | Carga los archivos CSV y JSON por lotes en SQL Server y omite las tablas que ya contienen registros. |
+| `src/data/sql/02_create_vw_finan_features.sql` | Integra las tablas y prepara variables disponibles antes de conocer la etiqueta. |
+| `src/data/sql/03_create_vw_dataset_maestro.sql` | Agrega `is_fraud` a la vista analítica para EDA, entrenamiento y evaluación. |
+| `src/data/sql/04_validate_analytical_views.sql` | Comprueba la estructura, exclusión de datos sensibles y cantidades resultantes. |
+| `data/reference/data_dictionary.csv` | Describe las 38 variables de la vista etiquetada, su origen, tipo, rol y decisión inicial de uso. |
 
 ## Correspondencia de datos
 
@@ -159,6 +163,54 @@ mcc_codes                109
 Ejecutar nuevamente el comando del paso 4. Las cinco tablas deben aparecer como
 `omitida; ya contiene ... filas`, sin alterar las cantidades verificadas.
 
+### 7. Crear las vistas analíticas
+
+En SSMS, con `FraudeDB` seleccionada en el desplegable de la barra superior,
+ejecutar en este orden:
+
+1. `src/data/sql/02_create_vw_finan_features.sql`;
+2. `src/data/sql/03_create_vw_dataset_maestro.sql`; y
+3. `src/data/sql/04_validate_analytical_views.sql`.
+
+`vw_finan_features` contiene las variables disponibles para una transacción sin
+incorporar la etiqueta. `vw_dataset_maestro` mantiene la misma preparación y
+agrega `is_fraud` para las etapas que requieren datos etiquetados.
+
+La vista conserva `current_age` y `gender` para mantener trazabilidad con los
+análisis formativos. Su incorporación al modelo final no se asume: deberá
+decidirse después del perfilamiento de variables. También se incorpora
+`age_at_transaction`, que evita utilizar directamente una edad calculada en una
+fecha de referencia distinta de la transacción.
+
+Las vistas no exponen domicilio, coordenadas personales, número de tarjeta ni
+CVV. Tampoco incorporan `errors` como predictor porque aún debe verificarse si
+esa información está disponible antes de emitir una predicción.
+
+El diccionario de datos separa las variables candidatas de los identificadores,
+la etiqueta y los campos que requieren una revisión adicional. La marca
+`candidate` no significa que una variable ya esté aprobada para el modelo: su
+aporte predictivo, cardinalidad, completitud y riesgo de fuga temporal deben
+medirse durante el EDA. En particular, `current_age` se mantiene para comparar
+los resultados con los informes anteriores, pero se priorizará
+`age_at_transaction` si las pruebas confirman su calidad.
+
+El tratamiento de montos atípicos no se fija en esta etapa. Se definirá después
+de medir su distribución y su relación con `is_fraud`, comparando al menos la
+conservación del monto original y una transformación logarítmica. No se
+eliminarán transacciones únicamente por tener montos altos, porque podrían
+contener señal legítima de fraude.
+
+Resultado esperado de la validación:
+
+```text
+vw_finan_features       37 columnas
+vw_dataset_maestro      38 columnas
+control_datos_sensibles OK
+transacciones_integradas 13.305.915
+transacciones_etiquetadas 8.914.963
+fraudes 13.332
+```
+
 ## Validación realizada
 
 El procedimiento completo fue ejecutado sobre una `FraudeDB` vacía y produjo
@@ -180,9 +232,11 @@ El flujo técnico del proyecto sigue esta secuencia:
 5. serializar el modelo seleccionado; y
 6. integrar el modelo y la base de datos con la aplicación FINAN.
 
-Este README documenta el primer punto. La base resultante proporciona la entrada
-necesaria para construir `vw_dataset_maestro`, utilizada posteriormente para el
-análisis exploratorio, el modelamiento y la inferencia.
+Este README documenta los dos primeros puntos. La vista
+`vw_dataset_maestro` proporciona la entrada etiquetada que se utilizará
+posteriormente para el análisis exploratorio y el modelamiento; la vista
+`vw_finan_features` entrega la misma preparación sin la etiqueta para la futura
+integración de inferencia.
 
 Las tablas fuente conservan los nombres originales: `transactions_data.id`,
 `transactions_data.date` y `mcc_codes.description`. La vista analítica
@@ -195,7 +249,8 @@ estable a los componentes siguientes.
 Se incluyen en el repositorio:
 
 - los scripts Python de validación y carga;
-- el script SQL de creación de tablas; y
+- los scripts SQL de creación de tablas y vistas analíticas;
+- el diccionario de variables; y
 - la documentación necesaria para repetir el procedimiento.
 
 No se incluyen los CSV y JSON completos, los archivos locales de SQL Server
