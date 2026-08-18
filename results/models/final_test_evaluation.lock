@@ -1,0 +1,7 @@
+{
+  "status": "completed",
+  "evaluated_at_utc": "2026-08-18T20:46:08.396130+00:00",
+  "pipeline_sha256": "3b7d4d0d0b557dddd4ff13fa2865ac32365efd5377da059a5cb96db1db1ad178",
+  "metrics_sha256": "ff25a057a32bd7f7d76999ae495454864008ef5824a72bb2ba1892b5fed8b59b",
+  "warning": "La evaluación final ya fue realizada. No ejecutar nuevamente ni utilizar el test para ajustar decisiones."
+}

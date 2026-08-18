@@ -1,0 +1,4 @@
+﻿use_chip,transacciones,fraudes,porcentaje_fraude
+Chip Transaction,3202776,3176,0.099164
+Online Transaction,1043975,8779,0.840921
+Swipe Transaction,4668212,1377,0.029497

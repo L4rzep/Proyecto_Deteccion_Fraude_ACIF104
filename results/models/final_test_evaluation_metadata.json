@@ -1,0 +1,65 @@
+{
+  "evaluated_at_utc": "2026-08-18T20:46:08.396130+00:00",
+  "evaluation_scope": "reserved_test_only",
+  "confirmation_flag": "--confirm-final-test",
+  "pipeline_file": "D:\\Documentos\\GitHub\\Proyecto_Deteccion_Fraude_ACIF104\\models\\finan_fraud_pipeline.joblib",
+  "pipeline_sha256": "3b7d4d0d0b557dddd4ff13fa2865ac32365efd5377da059a5cb96db1db1ad178",
+  "schema_file": "D:\\Documentos\\GitHub\\Proyecto_Deteccion_Fraude_ACIF104\\models\\finan_feature_schema.json",
+  "schema_sha256": "60771ed0a49bb2eff4135de05c387913b2b83301268c0c815d2c1c3628782270",
+  "training_metadata_file": "D:\\Documentos\\GitHub\\Proyecto_Deteccion_Fraude_ACIF104\\results\\models\\final_model_training_metadata.json",
+  "training_metadata_sha256": "96450aa5d9c269008e9f89cbe48bf70aa2fee5c2c32de81a15b732b5135f925a",
+  "seed": 42,
+  "sample_modulo": 9,
+  "ordered_features": [
+    "amount",
+    "age_at_transaction",
+    "num_credit_cards",
+    "num_cards_issued",
+    "card_account_age_years",
+    "months_to_card_expiration",
+    "years_since_pin_change",
+    "credit_limit",
+    "per_capita_income",
+    "yearly_income",
+    "total_debt",
+    "credit_score",
+    "amount_to_credit_limit",
+    "amount_to_yearly_income",
+    "transaction_hour",
+    "day_of_week",
+    "transaction_month",
+    "use_chip",
+    "mcc",
+    "card_brand",
+    "card_type",
+    "has_chip"
+  ],
+  "threshold_source": "finan_feature_schema.json",
+  "threshold_adjusted_on_test": false,
+  "model_refit_on_test": false,
+  "split": {
+    "train": {
+      "rows": 693182,
+      "frauds": 989,
+      "non_frauds": 692193
+    },
+    "validation": {
+      "rows": 148539,
+      "frauds": 212,
+      "non_frauds": 148327
+    },
+    "test_reserved": {
+      "rows": 148540,
+      "frauds": 212,
+      "non_frauds": 148328
+    }
+  },
+  "metrics_file": "final_test_metrics.json",
+  "software_versions": {
+    "joblib": "1.5.3",
+    "numpy": "2.4.6",
+    "pandas": "3.0.5",
+    "pyodbc": "5.3.0",
+    "scikit-learn": "1.9.0"
+  }
+}

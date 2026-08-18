@@ -1,0 +1,19 @@
+{
+  "threshold": 0.07217143,
+  "test_rows": 148540,
+  "test_frauds": 212,
+  "test_non_frauds": 148328,
+  "precision": 0.73728814,
+  "recall": 0.41037736,
+  "f1": 0.52727273,
+  "specificity": 0.999791,
+  "accuracy": 0.99894978,
+  "balanced_accuracy": 0.70508418,
+  "pr_auc": 0.47819759,
+  "roc_auc": 0.93974817,
+  "true_negatives": 148297,
+  "false_positives": 31,
+  "false_negatives": 125,
+  "true_positives": 87,
+  "prediction_seconds": 1.735362
+}

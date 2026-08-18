@@ -1,0 +1,12 @@
+{
+  "database": "FraudeDB",
+  "seed": 42,
+  "sample_modulo": 9,
+  "sample_rows": 990261,
+  "fraud_rows": 1413,
+  "fraud_rate_pct": 0.14269,
+  "minimum_category_rows": 5000,
+  "numeric_signal": "standardized_mean_difference",
+  "categorical_signal": "relative_rate_variation",
+  "scope": "Análisis univariado previo al modelamiento; no entrena modelos ni aprueba automáticamente variables."
+}

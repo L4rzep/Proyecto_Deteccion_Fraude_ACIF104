@@ -40,6 +40,7 @@ legacy/                   Material histórico no oficial
 ```
 
 ## Requisitos
+Los scripts oficiales de preparación de datos se encuentran en `src/data/`. El modelo PKL, la aplicación C# y los scripts históricos de modelamiento mantienen temporalmente sus ubicaciones actuales hasta completar su revisión.
 
 - **Python 3.12+** (probado en Python 3.14).
 - **SQL Server LocalDB** (o instancia completa de SQL Server) accesible localmente.

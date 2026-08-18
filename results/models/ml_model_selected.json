@@ -1,0 +1,8 @@
+{
+  "model": "random_forest",
+  "selection_rule": "highest_validation_pr_auc_then_tuned_f1_then_recall",
+  "validation_threshold": 0.06326728,
+  "balancing_strategy": "no_balancing",
+  "test_used": false,
+  "note": "El modelo y el umbral deben confirmarse después de la comparación con Deep Learning y antes de evaluar una sola vez el test final."
+}

@@ -1,0 +1,89 @@
+{
+  "created_at_utc": "2026-08-18T20:24:44.859934+00:00",
+  "database": "FraudeDB",
+  "seed": 42,
+  "sample_modulo": 9,
+  "sample_rows": 990261,
+  "split": {
+    "train": {
+      "rows": 693182,
+      "frauds": 989,
+      "non_frauds": 692193
+    },
+    "validation": {
+      "rows": 148539,
+      "frauds": 212,
+      "non_frauds": 148327
+    },
+    "test_reserved": {
+      "rows": 148540,
+      "frauds": 212,
+      "non_frauds": 148328
+    }
+  },
+  "final_training": {
+    "rows": 841721,
+    "frauds": 1201,
+    "non_frauds": 840520
+  },
+  "candidate": "random_forest",
+  "selection_file": "rf_refinement_selected.json",
+  "selected_parameters": {
+    "n_estimators": 200,
+    "max_depth": 16,
+    "min_samples_leaf": 2,
+    "max_features": "sqrt",
+    "bootstrap": true,
+    "class_weight": null,
+    "random_state": 42,
+    "n_jobs": -1,
+    "warm_start": false
+  },
+  "training_parameters": {
+    "bootstrap": true,
+    "ccp_alpha": 0.0,
+    "class_weight": null,
+    "criterion": "gini",
+    "max_depth": 16,
+    "max_features": "sqrt",
+    "max_leaf_nodes": null,
+    "max_samples": null,
+    "min_impurity_decrease": 0.0,
+    "min_samples_leaf": 2,
+    "min_samples_split": 2,
+    "min_weight_fraction_leaf": 0.0,
+    "monotonic_cst": null,
+    "n_estimators": 200,
+    "n_jobs": -1,
+    "oob_score": false,
+    "random_state": 42,
+    "verbose": 0,
+    "warm_start": false
+  },
+  "training_seconds": 198.0825,
+  "preprocessing": {
+    "numeric_imputation": "median",
+    "numeric_scaling": "standard",
+    "categorical_imputation": "most_frequent",
+    "categorical_encoding": "ordinal_then_one_hot",
+    "matrix_columns": 178
+  },
+  "validation_threshold": 0.07217143,
+  "threshold_policy": "Se conserva el umbral elegido durante el refinamiento con validacion; no se recalcula con el test.",
+  "test_used": false,
+  "test_policy": "El test se separo con el mismo split, pero se excluyo del preprocesamiento y del entrenamiento final.",
+  "pipeline_file": "finan_fraud_pipeline.joblib",
+  "schema_file": "finan_feature_schema.json",
+  "model_sha256": "3b7d4d0d0b557dddd4ff13fa2865ac32365efd5377da059a5cb96db1db1ad178",
+  "pipeline_steps": [
+    "preprocessor",
+    "model"
+  ],
+  "package_versions": {
+    "joblib": "1.5.3",
+    "numpy": "2.4.6",
+    "pandas": "3.0.5",
+    "pyodbc": "5.3.0",
+    "scikit-learn": "1.9.0"
+  }
+}
