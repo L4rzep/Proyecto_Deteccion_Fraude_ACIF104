@@ -70,16 +70,42 @@ def preprocesar_datos(df):
     print("\n--- 3. INGENIERIA DE CARACTERISTICAS ---")
     
     # Feature Selection: Se eliminan identificadores unicos y variables geograficas de 
-    # alta cardinalidad (ej. merchant_city) para evitar la Maldicion de la Dimensionalidad
-    columnas_inutiles = ['transaction_id', 'client_id', 'card_id', 'transaction_date', 'merchant_id', 'merchant_city', 'merchant_state']
+    # alta cardinalidad (ej. merchant_city) para evitar la Maldicion de la Dimensionalidad.
+    # Se incluye 'errors' porque es texto libre (ej. 'Insufficient Balance') que no se
+    # codifica como categorica; dejarla suelta rompe SMOTE/XGBoost mas adelante.
+    # Se incluyen tambien columnas de cards_data que son texto/alta cardinalidad y no
+    # deben usarse como feature directa: 'card_number', 'cvv', 'expires', 'acct_open_date', 'zip'.
+    columnas_inutiles = ['transaction_id', 'client_id', 'card_id', 'transaction_date', 'merchant_id', 'merchant_city', 'merchant_state', 'errors',
+                          'card_number', 'cvv', 'expires', 'acct_open_date', 'zip', 'address']
     df = df.drop(columns=columnas_inutiles, errors='ignore')
-    
+
+    # MAPEO DE INDICADORES BINARIOS DE TEXTO A NUMERICO
+    # has_chip y card_on_dark_web vienen como 'Yes'/'No' (varchar) desde cards_data.
+    # Son senales potencialmente muy predictivas para fraude, asi que se convierten
+    # explicitamente a 1/0 ANTES de la limpieza generica de texto, que de otro modo
+    # las descartaria por completo.
+    columnas_binarias_si_no = ['has_chip', 'card_on_dark_web']
+    for col in columnas_binarias_si_no:
+        if col in df.columns:
+            df[col] = (
+                df[col].astype(str).str.strip().str.upper()
+                .map({'YES': 1, 'NO': 0, 'TRUE': 1, 'FALSE': 0, '1': 1, '0': 0})
+            )
+            df[col] = df[col].fillna(0).astype(int)
+
     # Imputacion basica de valores nulos
     df = df.fillna(0)
 
     # Transformacion de variables categoricas de baja cardinalidad a representacion binaria (One-Hot Encoding)
     variables_categoricas = ['use_chip', 'gender', 'card_brand', 'card_type', 'mcc_description']
     df_encoded = pd.get_dummies(df, columns=variables_categoricas, drop_first=True)
+
+    # Verificacion de seguridad: cualquier columna de texto que haya quedado sin codificar
+    # se elimina aqui para evitar errores tipo "could not convert string to float" en SMOTE.
+    columnas_texto_restantes = df_encoded.select_dtypes(include='object').columns.tolist()
+    if columnas_texto_restantes:
+        print(f"⚠️ Columnas de texto sin convertir detectadas y eliminadas: {columnas_texto_restantes}")
+        df_encoded = df_encoded.drop(columns=columnas_texto_restantes)
     
     print(f"Transformacion completada. Columnas resultantes: {df_encoded.shape[1]}")
     return df_encoded

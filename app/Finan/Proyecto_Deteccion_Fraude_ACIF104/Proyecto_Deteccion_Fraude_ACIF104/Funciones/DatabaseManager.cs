@@ -61,7 +61,7 @@ namespace Proyecto_Deteccion_Fraude_ACIF104.Funciones
                 using (SqlConnection conn = new SqlConnection(ObtenerCadenaConexion()))
                 {
                     conn.Open();
-                    string query = "SELECT ISNULL(MAX(transaction_id), 0) FROM transactions_data";
+                    string query = "SELECT ISNULL(MAX(id), 0) FROM transactions_data";
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
                         return Convert.ToInt32(cmd.ExecuteScalar());

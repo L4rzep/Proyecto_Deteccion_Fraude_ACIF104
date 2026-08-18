@@ -1,0 +1,3 @@
+timestamp,id_inicio,id_fin,transacciones_procesadas,fraudes_detectados,duracion_segundos,estado,mensaje
+2026-08-17 19:11:26,1,1000,0,0,1.2,SIN_DATOS,No se encontraron transacciones en el rango
+2026-08-17 19:14:08,7475327,7476327,843,0,0.46,OK,

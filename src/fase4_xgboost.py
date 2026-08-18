@@ -20,12 +20,33 @@ df = pd.read_sql(query, con=engine)
 print(f"✅ Dataset extraído: {df.shape[0]} filas y {df.shape[1]} columnas.")
 
 print("\n--- 2. INGENIERÍA DE CARACTERÍSTICAS (PREPROCESAMIENTO) ---")
-# 1. Eliminamos IDs, fechas y variables de ALTA CARDINALIDAD que explotan la memoria RAM
+# 1. Eliminamos IDs, fechas y variables de ALTA CARDINALIDAD que explotan la memoria RAM.
+#    Se incluye 'errors' porque es texto libre (ej. 'Insufficient Balance') y no aporta
+#    valor si no se codifica explícitamente; de lo contrario revienta en SMOTE/XGBoost.
+#    Se incluyen también columnas de cards_data que son texto/alta cardinalidad y no
+#    deben usarse como feature directa: 'card_number', 'cvv', 'expires', 'acct_open_date', 'zip'.
 columnas_inutiles = [
     'transaction_id', 'client_id', 'card_id', 'transaction_date', 
-    'merchant_id', 'merchant_city', 'merchant_state' # <- Las movimos aquí para salvar tu RAM
+    'merchant_id', 'merchant_city', 'merchant_state', 'errors',
+    'card_number', 'cvv', 'expires', 'acct_open_date', 'zip', 'address'
 ]
 df = df.drop(columns=columnas_inutiles, errors='ignore')
+
+# 1.b MAPEO DE INDICADORES BINARIOS DE TEXTO A NUMÉRICO
+#     has_chip y card_on_dark_web vienen como 'Yes'/'No' (varchar) desde cards_data.
+#     Son señales potencialmente muy predictivas para fraude, así que se convierten
+#     explícitamente a 1/0 ANTES de que caigan en la limpieza de texto genérica,
+#     que de otro modo las descartaría por completo.
+columnas_binarias_si_no = ['has_chip', 'card_on_dark_web']
+for col in columnas_binarias_si_no:
+    if col in df.columns:
+        df[col] = (
+            df[col].astype(str).str.strip().str.upper()
+            .map({'YES': 1, 'NO': 0, 'TRUE': 1, 'FALSE': 0, '1': 1, '0': 0})
+        )
+        # Si algún valor no calzó con el mapeo (nulo, formato inesperado), se asume 0
+        # de forma conservadora en vez de dejarlo como texto o NaN.
+        df[col] = df[col].fillna(0).astype(int)
 
 # 2. PARCHE FUERZA BRUTA: Limpiamos el dinero
 columnas_dinero = ['amount', 'yearly_income', 'total_debt', 'credit_limit']
@@ -43,6 +64,15 @@ variables_categoricas = [
 
 # 5. Transformamos el texto
 df_encoded = pd.get_dummies(df, columns=variables_categoricas, drop_first=True)
+
+# 6. Verificación de seguridad: cualquier columna de texto que haya quedado sin codificar
+#    se elimina aquí para evitar que SMOTE/XGBoost fallen más adelante con un error
+#    críptico como "could not convert string to float".
+columnas_texto_restantes = df_encoded.select_dtypes(include='object').columns.tolist()
+if columnas_texto_restantes:
+    print(f"⚠️ Columnas de texto sin convertir detectadas y eliminadas: {columnas_texto_restantes}")
+    df_encoded = df_encoded.drop(columns=columnas_texto_restantes)
+
 print(f"✅ Transformación lista. El dataset ahora tiene {df_encoded.shape[1]} columnas numéricas.")
 
 print("\n--- 3. PARTICIÓN DE DATOS Y BALANCEO (SMOTE) ---")
