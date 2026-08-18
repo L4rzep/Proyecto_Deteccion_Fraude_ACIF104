@@ -67,5 +67,48 @@ balanceos y evaluación final.
 - `feature_configuration_metadata.json`: muestra, división, política del test
   y versiones utilizadas.
 
-El siguiente paso es utilizar esta única configuración para comparar los
-escenarios sin balanceo, submuestreo y SMOTE bajo las mismas condiciones.
+## Comparación de estrategias de balanceo
+
+Con la configuración de variables seleccionada se compararon las tres
+estrategias solicitadas en la retroalimentación: datos sin balanceo,
+submuestreo aleatorio y SMOTE. Todas utilizaron el mismo conjunto de
+entrenamiento, la misma validación y el mismo XGBoost, por lo que la diferencia
+entre los resultados corresponde al tratamiento del desbalance.
+
+Para comparar las estrategias se ajustó el umbral solamente con los datos de
+validación. El conjunto de prueba continuó reservado.
+
+| Estrategia | Precision | Recall | F1 | ROC-AUC | PR-AUC |
+|---|---:|---:|---:|---:|---:|
+| Sin balanceo | 0,6970 | 0,3255 | 0,4437 | 0,9362 | 0,3803 |
+| Submuestreo aleatorio | 0,0986 | 0,1651 | 0,1235 | 0,9389 | 0,0543 |
+| SMOTE | 0,0815 | 0,2925 | 0,1274 | 0,9305 | 0,0685 |
+
+Se seleccionó el escenario sin balanceo porque presentó el mejor PR-AUC y el
+mejor F1 en validación. El submuestreo y SMOTE lograron detectar más fraudes
+al utilizar el umbral estándar de 0,5, pero también produjeron muchas más
+falsas alarmas. Después de ajustar el umbral de cada alternativa en
+validación, ninguna superó al entrenamiento con los datos originales.
+
+Esta elección no significa que el desbalance se haya ignorado. Las tres
+alternativas fueron implementadas y medidas bajo las mismas condiciones. En
+este conjunto de datos, conservar todos los casos normales entregó más
+información útil al modelo que eliminar registros o crear casos sintéticos.
+
+El umbral de 0,1442 pertenece a esta comparación y todavía no es el umbral
+definitivo de la aplicación. Primero se deben comparar las técnicas de ML y
+las arquitecturas de DL; recién después se seleccionará un modelo y se usará
+una sola vez el conjunto de prueba reservado.
+
+### Archivos de evidencia del balanceo
+
+- `balancing_strategy_comparison.csv`: métricas completas de las tres
+  estrategias, incluidos los errores y aciertos de cada una.
+- `balancing_strategy_comparison.png`: comparación gráfica de sus métricas.
+- `balancing_strategy_selected.json`: estrategia seleccionada y regla de
+  selección.
+- `balancing_strategy_metadata.json`: muestra, división, variables, versiones
+  y confirmación de que el conjunto de prueba no fue utilizado.
+
+El siguiente paso es comparar tres técnicas de aprendizaje automático con la
+configuración ampliada y sin balanceo.

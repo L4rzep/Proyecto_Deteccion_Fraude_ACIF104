@@ -1,0 +1,7 @@
+{
+  "scenario": "no_balancing",
+  "selection_rule": "highest_validation_pr_auc_then_tuned_f1_then_recall",
+  "validation_threshold": 0.14415549,
+  "test_used": false,
+  "note": "El umbral y el escenario todavía deben confirmarse al comparar todos los modelos antes de evaluar el test final."
+}

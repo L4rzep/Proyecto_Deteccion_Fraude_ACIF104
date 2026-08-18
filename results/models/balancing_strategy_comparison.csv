@@ -1,0 +1,4 @@
+﻿scenario,training_rows_before,training_frauds_before,training_rows_after,training_frauds_after,validation_roc_auc,validation_pr_auc,default_threshold,default_precision,default_recall,default_f1,default_true_negatives,default_false_positives,default_false_negatives,default_true_positives,tuned_threshold,tuned_precision,tuned_recall,tuned_f1,tuned_true_negatives,tuned_false_positives,tuned_false_negatives,tuned_true_positives,test_used
+no_balancing,693182,989,693182,989,0.93616806,0.38028851,0.5,1.0,0.17924528,0.304,148327,0,174,38,0.14415549,0.6969697,0.3254717,0.4437299,148297,30,143,69,no
+random_undersampling,693182,989,1978,989,0.93890184,0.05425033,0.5,0.01179554,0.8490566,0.02326784,133247,15080,32,180,0.9669798,0.09859155,0.16509434,0.12345679,148007,320,177,35,no
+smote,693182,989,1384386,692193,0.93054769,0.06846471,0.5,0.03175566,0.74056604,0.06089992,143540,4787,55,157,0.91805798,0.08147175,0.29245283,0.1274409,147628,699,150,62,no
