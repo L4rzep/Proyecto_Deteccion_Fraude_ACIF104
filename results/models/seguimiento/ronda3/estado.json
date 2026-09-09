@@ -1,0 +1,8 @@
+{
+  "status": "completed_exploratory_round3",
+  "completed_fits": 6,
+  "candidates_per_window": 13,
+  "metric_rows": 195,
+  "independent_final_test": false,
+  "official_model_replaced": false
+}

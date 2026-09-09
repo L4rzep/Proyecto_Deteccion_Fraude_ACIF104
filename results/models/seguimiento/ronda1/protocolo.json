@@ -1,0 +1,240 @@
+{
+  "created_at_utc": "2026-09-08T18:13:57.193139+00:00",
+  "scope": "historical_development_backtest_not_independent_final_test",
+  "source": {
+    "status": "development_only",
+    "file_sha256": "1eea96761a6898694f57cae413e77e5a74b72256b93410873eced9a83a2a568a",
+    "rows": 841721,
+    "frauds": 1201,
+    "original_split": {
+      "train": {
+        "rows": 693182,
+        "frauds": 989
+      },
+      "validation": {
+        "rows": 148539,
+        "frauds": 212
+      },
+      "test": {
+        "rows": 148540,
+        "frauds": 212
+      }
+    },
+    "test_excluded": true,
+    "excluded_test_ids_sha256": "3ef703a97097fe3f62d68220d894c2d89cd5a2f9bcfe8104e3cfe0259dfb4a08",
+    "split_procedure": "CHECKSUM(id,42)%9=0; ORDER BY id; stratified 70/15/15 seed42",
+    "sklearn_version": "1.9.0",
+    "numpy_version": "2.4.6",
+    "pandas_version": "3.0.5",
+    "source_commit": "deb64c1d630b4c97d1318ff9a727dc1e1c377c04",
+    "note": "Partición reconstruida con el procedimiento S9; no se entrenó ni evaluó ningún modelo."
+  },
+  "configuration": {
+    "last_folds": 3,
+    "min_positives": 30,
+    "sampling_ratio": 0.1,
+    "trees": 200,
+    "jobs": 8
+  },
+  "strategies": [
+    "sin_balanceo",
+    "submuestreo",
+    "smotenc",
+    "pesos_clase"
+  ],
+  "cost_fp": 1,
+  "cost_fn_scenarios": [
+    5,
+    10,
+    25,
+    50,
+    100
+  ],
+  "costs_are_hypothetical": true,
+  "train_resampling_only": true,
+  "no_refit_after_threshold_selection": true,
+  "support_floor_note": "30 fraudes por segmento es un control operativo propuesto, no una exigencia del profesor ni garantía de precisión estadística.",
+  "selection": "Validación únicamente; costo mínimo, menos alertas y mayor umbral en empates. Evaluación posterior descriptiva.",
+  "folds": [
+    {
+      "evaluation_year": 2015,
+      "validation_year": 2014,
+      "train_years_before": 2014,
+      "counts": {
+        "train": {
+          "rows": 329390,
+          "frauds": 453,
+          "non_frauds": 328937
+        },
+        "validation": {
+          "rows": 86663,
+          "frauds": 53,
+          "non_frauds": 86610
+        },
+        "evaluation": {
+          "rows": 88070,
+          "frauds": 190,
+          "non_frauds": 87880
+        }
+      }
+    },
+    {
+      "evaluation_year": 2016,
+      "validation_year": 2015,
+      "train_years_before": 2015,
+      "counts": {
+        "train": {
+          "rows": 416053,
+          "frauds": 506,
+          "non_frauds": 415547
+        },
+        "validation": {
+          "rows": 88070,
+          "frauds": 190,
+          "non_frauds": 87880
+        },
+        "evaluation": {
+          "rows": 87785,
+          "frauds": 226,
+          "non_frauds": 87559
+        }
+      }
+    },
+    {
+      "evaluation_year": 2019,
+      "validation_year": 2018,
+      "train_years_before": 2018,
+      "counts": {
+        "train": {
+          "rows": 680227,
+          "frauds": 942,
+          "non_frauds": 679285
+        },
+        "validation": {
+          "rows": 88046,
+          "frauds": 136,
+          "non_frauds": 87910
+        },
+        "evaluation": {
+          "rows": 73448,
+          "frauds": 123,
+          "non_frauds": 73325
+        }
+      }
+    }
+  ],
+  "excluded_years": [
+    {
+      "evaluation_year": 2010,
+      "reason": "Soporte de clases insuficiente",
+      "counts": {
+        "train": {
+          "rows": 0,
+          "frauds": 0,
+          "non_frauds": 0
+        },
+        "validation": {
+          "rows": 0,
+          "frauds": 0,
+          "non_frauds": 0
+        },
+        "evaluation": {
+          "rows": 78323,
+          "frauds": 249,
+          "non_frauds": 78074
+        }
+      }
+    },
+    {
+      "evaluation_year": 2011,
+      "reason": "Soporte de clases insuficiente",
+      "counts": {
+        "train": {
+          "rows": 0,
+          "frauds": 0,
+          "non_frauds": 0
+        },
+        "validation": {
+          "rows": 78323,
+          "frauds": 249,
+          "non_frauds": 78074
+        },
+        "evaluation": {
+          "rows": 81522,
+          "frauds": 3,
+          "non_frauds": 81519
+        }
+      }
+    },
+    {
+      "evaluation_year": 2012,
+      "reason": "Soporte de clases insuficiente",
+      "counts": {
+        "train": {
+          "rows": 78323,
+          "frauds": 249,
+          "non_frauds": 78074
+        },
+        "validation": {
+          "rows": 81522,
+          "frauds": 3,
+          "non_frauds": 81519
+        },
+        "evaluation": {
+          "rows": 83557,
+          "frauds": 98,
+          "non_frauds": 83459
+        }
+      }
+    },
+    {
+      "evaluation_year": 2017,
+      "reason": "Soporte de clases insuficiente",
+      "counts": {
+        "train": {
+          "rows": 504123,
+          "frauds": 696,
+          "non_frauds": 503427
+        },
+        "validation": {
+          "rows": 87785,
+          "frauds": 226,
+          "non_frauds": 87559
+        },
+        "evaluation": {
+          "rows": 88319,
+          "frauds": 20,
+          "non_frauds": 88299
+        }
+      }
+    },
+    {
+      "evaluation_year": 2018,
+      "reason": "Soporte de clases insuficiente",
+      "counts": {
+        "train": {
+          "rows": 591908,
+          "frauds": 922,
+          "non_frauds": 590986
+        },
+        "validation": {
+          "rows": 88319,
+          "frauds": 20,
+          "non_frauds": 88299
+        },
+        "evaluation": {
+          "rows": 88046,
+          "frauds": 136,
+          "non_frauds": 87910
+        }
+      }
+    }
+  ],
+  "software": {
+    "python": "3.12.13",
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "sklearn": "1.8.0",
+    "imbalanced_learn": "0.15.dev0"
+  }
+}

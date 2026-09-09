@@ -1,0 +1,42 @@
+[
+  {
+    "candidate": "isolation_forest",
+    "policy": "costo_capacidad_50",
+    "threshold": 1.0000000000000002,
+    "fn_cost": 62.83793598233996,
+    "validation_cost": 3330.4106070640178,
+    "validation_tp": 0,
+    "validation_fp": 0,
+    "validation_recall": 0.0
+  },
+  {
+    "candidate": "isolation_forest",
+    "policy": "f1_validacion",
+    "threshold": 0.3928300654138631,
+    "fn_cost": 62.83793598233996,
+    "validation_cost": 3795.7347350993377,
+    "validation_tp": 2,
+    "validation_fp": 195,
+    "validation_recall": 0.03773584905660377
+  },
+  {
+    "candidate": "rf_actualizado",
+    "policy": "costo_capacidad_50",
+    "threshold": 0.04657407529033145,
+    "fn_cost": 62.83793598233996,
+    "validation_cost": 1457.9207836644591,
+    "validation_tp": 34,
+    "validation_fp": 54,
+    "validation_recall": 0.6415094339622641
+  },
+  {
+    "candidate": "rf_actualizado",
+    "policy": "f1_validacion",
+    "threshold": 0.164467250955841,
+    "fn_cost": 62.83793598233996,
+    "validation_cost": 1780.6242715231788,
+    "validation_tp": 26,
+    "validation_fp": 2,
+    "validation_recall": 0.49056603773584906
+  }
+]

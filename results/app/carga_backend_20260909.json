@@ -1,0 +1,232 @@
+{
+  "scope": "synthetic_python_process_with_shap_only",
+  "date_utc": "2026-09-09T02:43:14Z",
+  "platform": "Linux-6.18.35-x86_64-with-glibc2.39",
+  "python": "3.12.13",
+  "includes_process_startup_and_model_loading": true,
+  "sql_and_winforms_tested": false,
+  "availability_not_measured": true,
+  "proposed_p95_limit_seconds": 15,
+  "model_sha256": "3b7d4d0d0b557dddd4ff13fa2865ac32365efd5377da059a5cb96db1db1ad178",
+  "results": [
+    {
+      "concurrency": 1,
+      "requests": 12,
+      "errors": 0,
+      "timeouts": 0,
+      "p50_seconds": 1.7474849869977334,
+      "p95_seconds": 2.057882882989361,
+      "elapsed_seconds": 21.37381415600248,
+      "throughput_requests_per_second": 0.5614346560896806,
+      "proposed_p95_15s_met": true,
+      "measurements": [
+        {
+          "seconds": 1.6956213750090683,
+          "ok": true,
+          "timeout": false
+        },
+        {
+          "seconds": 1.8853336879983544,
+          "ok": true,
+          "timeout": false
+        },
+        {
+          "seconds": 1.6722928890085313,
+          "ok": true,
+          "timeout": false
+        },
+        {
+          "seconds": 1.6149367480102228,
+          "ok": true,
+          "timeout": false
+        },
+        {
+          "seconds": 1.9787108370073838,
+          "ok": true,
+          "timeout": false
+        },
+        {
+          "seconds": 1.5321224000072107,
+          "ok": true,
+          "timeout": false
+        },
+        {
+          "seconds": 1.7407956780079985,
+          "ok": true,
+          "timeout": false
+        },
+        {
+          "seconds": 1.7205380830127979,
+          "ok": true,
+          "timeout": false
+        },
+        {
+          "seconds": 1.808066940997378,
+          "ok": true,
+          "timeout": false
+        },
+        {
+          "seconds": 1.7541742959874682,
+          "ok": true,
+          "timeout": false
+        },
+        {
+          "seconds": 2.057882882989361,
+          "ok": true,
+          "timeout": false
+        },
+        {
+          "seconds": 1.9097089930000948,
+          "ok": true,
+          "timeout": false
+        }
+      ]
+    },
+    {
+      "concurrency": 2,
+      "requests": 12,
+      "errors": 0,
+      "timeouts": 0,
+      "p50_seconds": 2.280616084499343,
+      "p95_seconds": 2.5917767110076966,
+      "elapsed_seconds": 13.443161796007189,
+      "throughput_requests_per_second": 0.8926471452247321,
+      "proposed_p95_15s_met": true,
+      "measurements": [
+        {
+          "seconds": 2.39966423799342,
+          "ok": true,
+          "timeout": false
+        },
+        {
+          "seconds": 2.34070411400171,
+          "ok": true,
+          "timeout": false
+        },
+        {
+          "seconds": 1.920719015004579,
+          "ok": true,
+          "timeout": false
+        },
+        {
+          "seconds": 1.684769914005301,
+          "ok": true,
+          "timeout": false
+        },
+        {
+          "seconds": 2.481791988000623,
+          "ok": true,
+          "timeout": false
+        },
+        {
+          "seconds": 2.5917767110076966,
+          "ok": true,
+          "timeout": false
+        },
+        {
+          "seconds": 2.092827935004607,
+          "ok": true,
+          "timeout": false
+        },
+        {
+          "seconds": 2.2371917060081614,
+          "ok": true,
+          "timeout": false
+        },
+        {
+          "seconds": 2.037164430003031,
+          "ok": true,
+          "timeout": false
+        },
+        {
+          "seconds": 2.0220629510004073,
+          "ok": true,
+          "timeout": false
+        },
+        {
+          "seconds": 2.33312317400123,
+          "ok": true,
+          "timeout": false
+        },
+        {
+          "seconds": 2.3240404629905242,
+          "ok": true,
+          "timeout": false
+        }
+      ]
+    },
+    {
+      "concurrency": 4,
+      "requests": 12,
+      "errors": 0,
+      "timeouts": 0,
+      "p50_seconds": 2.0382821104940376,
+      "p95_seconds": 2.5489304419897962,
+      "elapsed_seconds": 6.89117674100271,
+      "throughput_requests_per_second": 1.7413571659829354,
+      "proposed_p95_15s_met": true,
+      "measurements": [
+        {
+          "seconds": 2.0603242329962086,
+          "ok": true,
+          "timeout": false
+        },
+        {
+          "seconds": 1.982313852000516,
+          "ok": true,
+          "timeout": false
+        },
+        {
+          "seconds": 2.175513750000391,
+          "ok": true,
+          "timeout": false
+        },
+        {
+          "seconds": 2.0154121660016244,
+          "ok": true,
+          "timeout": false
+        },
+        {
+          "seconds": 1.8484295709931757,
+          "ok": true,
+          "timeout": false
+        },
+        {
+          "seconds": 1.8629373349976959,
+          "ok": true,
+          "timeout": false
+        },
+        {
+          "seconds": 2.5489304419897962,
+          "ok": true,
+          "timeout": false
+        },
+        {
+          "seconds": 2.495942033987376,
+          "ok": true,
+          "timeout": false
+        },
+        {
+          "seconds": 1.9662600280134939,
+          "ok": true,
+          "timeout": false
+        },
+        {
+          "seconds": 2.0162399879918667,
+          "ok": true,
+          "timeout": false
+        },
+        {
+          "seconds": 2.1435821560007753,
+          "ok": true,
+          "timeout": false
+        },
+        {
+          "seconds": 2.2155070950102527,
+          "ok": true,
+          "timeout": false
+        }
+      ]
+    }
+  ]
+}

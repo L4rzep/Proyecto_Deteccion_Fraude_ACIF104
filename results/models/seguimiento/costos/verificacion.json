@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "business_rule_tests": 4,
+  "input_files_verified": 81,
+  "curves_verified": 39,
+  "curve_points_verified": 1878142,
+  "validation_and_evaluation_decisions_recalculated": 225,
+  "candidate_cost_optima_verified": 1755,
+  "sensitivity_pool_winners_verified": 135,
+  "recall_frontier_winners_verified": 60,
+  "new_fits": 0,
+  "s9_test_excluded": true,
+  "decisions_unchanged_after_evaluation": true,
+  "independent_final_test": false
+}

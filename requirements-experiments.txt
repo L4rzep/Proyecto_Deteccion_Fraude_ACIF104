@@ -1,0 +1,10 @@
+numpy==2.3.5
+pandas==2.2.3
+scikit-learn==1.8.0
+joblib==1.5.3
+scipy==1.17.0
+threadpoolctl==3.6.0
+packaging==26.3
+matplotlib==3.10.8
+# Ronda 1 uses the verified source snapshot in third_party/ronda1:
+# imbalanced-learn 0.15.dev0 + sklearn_compat. Its entrypoint loads it locally.

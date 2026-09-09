@@ -1,0 +1,7 @@
+{
+  "status": "completed_historical_study",
+  "folds": 3,
+  "fits": 12,
+  "final_model_selected": false,
+  "independent_final_test_evaluated": false
+}

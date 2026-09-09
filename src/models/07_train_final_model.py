@@ -378,6 +378,14 @@ def package_versions() -> dict[str, str]:
 
 def main() -> int:
     args = parse_args()
+    outputs = [args.pipeline_file.resolve(), args.schema_file.resolve(), args.metadata_file.resolve()]
+    if len(set(outputs)) != 3:
+        raise ValueError("Pipeline, esquema y metadatos deben tener rutas diferentes")
+    if any(path.exists() for path in outputs):
+        raise FileExistsError(
+            "Se conservan los artefactos existentes. Indique --pipeline-file, "
+            "--schema-file y --metadata-file en una carpeta de reproducción nueva."
+        )
     if args.sample_modulo <= 0 or args.fetch_size <= 0 or args.tree_step <= 0:
         raise ValueError("Muestra, bloques y paso de arboles deben ser positivos")
 

@@ -1,0 +1,47 @@
+{
+  "scope": "retrospective_development_comparison",
+  "data_sha256": "1eea96761a6898694f57cae413e77e5a74b72256b93410873eced9a83a2a568a",
+  "s9_test_excluded": true,
+  "max_new_fits": 3,
+  "estimator": "IsolationForest",
+  "parameters": {
+    "n_estimators": 200,
+    "max_samples": 4096,
+    "contamination": "auto",
+    "max_features": 1.0,
+    "bootstrap": false,
+    "random_state": 42,
+    "n_jobs": 8
+  },
+  "fit_uses_labels": false,
+  "score": "negative score_samples; not a probability",
+  "preprocessing": "same numeric/ordinal/one-hot pipeline as rf_actualizado; fitted on training only",
+  "windows": [
+    [
+      2015,
+      "2014-01-01"
+    ],
+    [
+      2016,
+      "2015-07-01"
+    ],
+    [
+      2019,
+      "2018-07-01"
+    ]
+  ],
+  "selection": "validation cost minimum; ties fewer alerts and higher threshold",
+  "review_cost": 3,
+  "fn_cost": "0.5 * mean(max(amount,0)) of training frauds",
+  "capacity_per_10000": 50,
+  "rf_reference": "archived R2 rf_actualizado predictions",
+  "no_model_promotion": true,
+  "independent_final_test": false,
+  "software": {
+    "python": "3.12.13",
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "sklearn": "1.8.0",
+    "joblib": "1.5.3"
+  }
+}

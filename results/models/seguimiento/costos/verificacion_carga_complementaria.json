@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "monthly_rows": 34,
+  "policy_alert_sums_preserved": true,
+  "2019_months_exceeding_capacity": 6,
+  "2019_months": 10,
+  "2019_peak_per_10000": 65.67915036333147,
+  "thresholds_unchanged": true
+}

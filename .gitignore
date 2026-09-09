@@ -209,3 +209,9 @@ cython_debug/
 # Ignorar entornos virtuales
 .venv/
 node_modules/
+# Datos y salidas de ejecución locales
+data/experimentos/
+data/raw/
+.venv-*/
+*.mdf
+*.ldf

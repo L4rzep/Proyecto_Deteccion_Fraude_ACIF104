@@ -1,0 +1,14 @@
+{
+  "scope": "artifact_integrity",
+  "regenerated_file": "predicciones_2019_isolation_forest_evaluation.csv.gz",
+  "reason": "compressed export ended before the last rows and gzip footer",
+  "regenerated_from_existing_saved_model": true,
+  "complete_previous_rows_matched": 66235,
+  "restored_rows": 73448,
+  "restored_frauds": 123,
+  "absolute_score_tolerance": 1e-12,
+  "comparison_metrics_unchanged": true,
+  "validation_decisions_unchanged": true,
+  "new_fits": 0,
+  "future_exports_use_atomic_complete_gzip": true
+}

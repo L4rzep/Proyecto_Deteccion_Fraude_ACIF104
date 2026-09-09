@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "comparison_rows_recomputed": 12,
+  "validation_choices_verified": 12,
+  "saved_models_sha256_verified": 3,
+  "reloaded_predictions_per_model": 256,
+  "absolute_tolerance": 1e-12,
+  "new_fits": 0,
+  "s9_test_reopened": false
+}

@@ -1,85 +1,79 @@
-# Proyecto de detección de fraude - ACIF104
+# FINAN · Detección de fraude · ACIF104
 
-FINAN es una solución académica para detectar posibles fraudes en transacciones. El repositorio contiene el proceso reproducible de datos, el análisis exploratorio, la comparación de modelos, la evaluación final, las explicaciones SHAP y una aplicación de escritorio.
+FINAN integra preparación de datos, comparación de modelos, explicaciones SHAP y una aplicación C# Windows Forms. Su alcance es académico: apoyar la revisión humana de transacciones.
 
-> Estado: el flujo técnico y la aplicación están integrados y verificados. El informe final debe utilizar las métricas y evidencias versionadas en `results/`.
+El modelo oficial es el **Random Forest evaluado en Semana 9**. El seguimiento estudia costos, balanceo y estabilidad temporal; no justifica reemplazar automáticamente ese artefacto ni acredita operación bancaria autónoma.
 
-## Estructura
+## Modelo, evaluación y aplicación
 
-```text
-data/                  Datos de referencia y guía de obtención
-src/
-  data/sql/            SQL asociado al flujo de datos
-  models/              Entrenamiento y selección de modelos
-  evaluation/          EDA, balanceos y evaluación
-  inference/           Inferencia del modelo final
-app/Finan/             Aplicación de escritorio FINAN
-models/                Modelos y metadatos versionados
-results/
-  eda/                 Resultados del análisis exploratorio
-  models/              Métricas, tablas y curvas
-  shap/                Explicaciones globales y locales
-  app/                 Evidencia de funcionamiento de la aplicación
-tests/                 Pruebas y validaciones mínimas
-docs/
-  formativas/          Entregas formativas S2, S3 y S4
-  informe_final/       Informe sumativo y PDF final
-  aportes/             Evidencia de contribuciones del equipo
-legacy/                Material histórico no oficial
-```
+| Elemento | Fuente oficial |
+|---|---|
+| Identidad y rutas | [MODELO_OFICIAL.json](models/MODELO_OFICIAL.json) |
+| Pipeline | [finan_fraud_pipeline.joblib](models/finan_fraud_pipeline.joblib) |
+| Entradas y umbral | [finan_feature_schema.json](models/finan_feature_schema.json) |
+| Entrenamiento | [07_train_final_model.py](src/models/07_train_final_model.py), [metadatos](results/models/final_model_training_metadata.json) |
+| Test S9 | [Métricas](results/models/final_test_metrics.json), [metadatos de evaluación](results/models/final_test_evaluation_metadata.json) |
+| Inferencia | [predict_transaction.py](src/inference/predict_transaction.py) |
+| Aplicación | [app/Finan](app/Finan/README.md) |
 
-Los archivos oficiales se encuentran en `src/data`, `src/evaluation`, `src/models` y `src/inference`. Los scripts anteriores que se mantienen fuera de esas carpetas sirven como antecedente y no corresponden al flujo final.
+Configuración: 200 árboles, profundidad máxima 16, mínimo dos muestras por hoja, semilla 42, 22 entradas y 178 columnas procesadas. Umbral `0.07217143`. SHA-256 del pipeline: `3b7d4d0d0b557dddd4ff13fa2865ac32365efd5377da059a5cb96db1db1ad178`.
 
-## Requisitos
+| Evaluación original S9 | Resultado |
+|---|---:|
+| Transacciones / fraudes del test | 148.540 / 212 |
+| TP / FP / FN / TN | 87 / 31 / 125 / 148.297 |
+| Precisión / recall / F1 | 0,737288 / 0,410377 / 0,527273 |
+| PR-AUC / ROC-AUC | 0,478198 / 0,939748 |
 
-- Python y las bibliotecas enumeradas en `requirements.txt`.
-- SQL Server o LocalDB con acceso a la base utilizada por el proyecto.
-- Controlador ODBC para SQL Server.
-- .NET 10 para la aplicación WinForms.
+El test se evaluó una sola vez. Sus identificadores se excluyen del seguimiento. Los modelos y umbrales temporales no son intercambiables con el artefacto S9. El score no cuenta con un estudio de calibración para uso productivo.
 
-## Preparación preliminar de Python
+## Instalación y comprobación del predictor
+
+Desde la raíz del repositorio, en PowerShell:
 
 ```powershell
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install -r requirements.txt
+py -3.12 -m venv .venv-inferencia
+& .\.venv-inferencia\Scripts\python.exe -m pip install -r requirements-inference.txt
+& .\.venv-inferencia\Scripts\python.exe -m unittest discover -s tests -v
+& .\.venv-inferencia\Scripts\python.exe src/inference/predict_transaction.py --input-json tests/fixtures/transaccion_sintetica.json --explain
 ```
 
-## Datos
+En Linux/macOS, crear el entorno con `python3 -m venv .venv-inferencia` y utilizar `.venv-inferencia/bin/python`. La prueba JSON no necesita SQL Server y usa una transacción sintética.
 
-El procedimiento verificado de obtención, validación, carga y preparación analítica se describe en [`data/README.md`](data/README.md). Los datasets completos, respaldos SQL, credenciales y archivos comprimidos no deben incorporarse al repositorio.
+Inferencia utiliza scikit-learn 1.9.0, correspondiente al modelo. El seguimiento usa otro entorno con scikit-learn 1.8.0: [reproducción de experimentos](src/evaluation/seguimiento/README.md). `requirements.txt` conserva las dependencias históricas ML/DL; CUDA no es necesario para ejecutar el predictor.
 
-## Flujo del proyecto
+## Aplicación
 
-El orden seguido fue:
-
-1. preparar `FraudeDB` y crear las vistas analíticas;
-2. generar el EDA y revisar las variables candidatas;
-3. comparar variables, balanceos, tres modelos de ML y tres arquitecturas de DL;
-4. seleccionar y refinar Random Forest;
-5. entrenar el pipeline final sin utilizar el conjunto de prueba;
-6. evaluar una sola vez las 148.540 transacciones reservadas;
-7. generar explicaciones SHAP e integrar el modelo con FINAN.
-
-Cada carpeta de resultados contiene un README con las decisiones, métricas y archivos generados. Los comandos de datos están en [`data/README.md`](data/README.md), los resultados del modelamiento en [`results/models/README.md`](results/models/README.md) y la aplicación en [`app/Finan/README.md`](app/Finan/README.md).
-
-## Aplicación FINAN
-
-La aplicación consulta `FraudeDB`, muestra un resumen del conjunto etiquetado y permite evaluar una transacción existente o una nueva. La salida informa la probabilidad, el nivel de riesgo y los factores que más influyeron.
+Requiere Windows, .NET 10, ODBC y `FraudeDB` preparada según [data/README.md](data/README.md).
 
 ```powershell
-dotnet run --project ".\app\Finan\Proyecto_Deteccion_Fraude_ACIF104\Proyecto_Deteccion_Fraude_ACIF104\Proyecto_Deteccion_Fraude_ACIF104.csproj"
+dotnet run --project app/Finan/Proyecto_Deteccion_Fraude_ACIF104/Proyecto_Deteccion_Fraude_ACIF104/Proyecto_Deteccion_Fraude_ACIF104.csproj
 ```
 
-En la pestaña **Configuración** se registra la conexión a `FraudeDB` y la ruta del Python donde se instalaron las dependencias. El modelo, su esquema y las métricas finales se copian automáticamente a la carpeta de ejecución.
+En **Configuración**, indicar la conexión a `FraudeDB` y el ejecutable Python del entorno de inferencia. La aplicación copia predictor, pipeline, esquema y métricas al directorio de ejecución. Permite consultar, evaluar transacciones existentes/nuevas y mostrar factores SHAP.
 
-## Documentación
+La integración Windows/SQL tiene [evidencia manual histórica](results/app/VALIDACION_APLICACION.md). El cierre agrega diez pruebas automáticas del contrato y predictor y una microprueba de 36 solicitudes con SHAP; esta última no mide SQL, WinForms ni disponibilidad continua. Véase [requisitos y pruebas](docs/REQUISITOS_Y_PRUEBAS.md).
 
-- `docs/formativas/s2/`: problemática, requisitos y planificación inicial.
-- `docs/formativas/s3/`: EDA, técnicas candidatas y balanceo.
-- `docs/formativas/s4/`: arquitectura, resultados preliminares y despliegue.
-- `docs/informe_final/`: informe sumativo consolidado y PDF final.
+## Seguimiento de recall y costo
 
-## Trabajo colaborativo
+El [análisis consolidado](results/models/seguimiento/README.md) incluye tres estrategias reales frente al desbalance, validación temporal, matriz de costos, capacidad mensual, sensibilidad, variables de comportamiento e Isolation Forest.
 
-Cada cambio debe desarrollarse en una rama identificable, con evidencia verificable y revisión antes de integrarse a `main`. No deben publicarse credenciales, respaldos completos, entornos virtuales ni archivos personales del IDE.
+En el escenario principal de 2019, el RF temporal seleccionado detecta 12 de 123 fraudes con 160 FP. Una alternativa de mayor carga detecta 17, pero su ahorro calculado frente a no alertar es solo 2,07 u. m. y supera la capacidad en seis meses. Son resultados retrospectivos con costos hipotéticos; no demuestran una mejora del recall del modelo S9 ni viabilidad futura garantizada.
+
+## Organización
+
+| Ruta | Contenido |
+|---|---|
+| `src/data/`, `data/reference/` | Carga, vistas, diccionario y manifiesto de desarrollo |
+| `src/models/`, `results/models/` | Variables, balanceo, 3 ML, 3 MLP y RF final |
+| `src/evaluation/seguimiento/`, `results/models/seguimiento/` | Experimentos temporales y económicos |
+| `results/eda/`, `results/shap/` | EDA y explicaciones del modelo evaluado |
+| `app/Finan/`, `src/inference/`, `tests/` | Interfaz, predictor y pruebas |
+| [docs/METODOLOGIA.md](docs/METODOLOGIA.md) | Fases, iteraciones y planificación |
+| [docs/informe_final](docs/informe_final/README.md) | Estado de las entregas documentales |
+| [legacy/modelos](legacy/modelos/README.md) | Artefactos históricos fuera del flujo oficial |
+| `third_party/ronda1/` | Dependencia de balanceo de R1 con licencias y huellas |
+
+La recuperación del artefacto S9 mantiene la correspondencia entre modelo y métricas; no constituye una comparación predictiva contra el reentrenamiento de septiembre, que se conserva en `legacy`.
+
+Datasets completos, respaldos SQL, credenciales, entornos y archivos personales del IDE se mantienen fuera del repositorio. Cada cambio se realiza en una rama identificable y se revisa antes de integrarlo a `main`.
