@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "scope": "Propuesta académica retrospectiva de costos y capacidad sobre predicciones ya obtenidas. No se entrena ni se promueve un modelo oficial.",
+  "development_sha256": "1eea96761a6898694f57cae413e77e5a74b72256b93410873eced9a83a2a568a",
+  "development_rows": 841721,
+  "development_frauds": 1201,
+  "s9_test_excluded": true,
+  "independent_final_test": false,
+  "windows": [
+    {"year": 2015, "validation_start": "2014-01-01", "validation_end_exclusive": "2015-01-01"},
+    {"year": 2016, "validation_start": "2015-07-01", "validation_end_exclusive": "2016-01-01"},
+    {"year": 2019, "validation_start": "2018-07-01", "validation_end_exclusive": "2019-01-01"}
+  ],
+  "currency": "Unidades monetarias en la misma escala numérica que amount; sin conversión a CLP ni costos empresariales acreditados.",
+  "review_minutes": 6,
+  "base_hourly_review_cost": 30,
+  "base_avoidable_fraction": 0.5,
+  "base_review_hours_per_10000": 5,
+  "base_alert_capacity_per_10000": 50,
+  "loss_reference": "mean(max(amount,0)) among every fraud in the common training period before validation; includes negative-amount frauds with zero direct positive exposure, never removes their labels",
+  "primary_matrix": {"TN": "0", "FP": "review_minutes / 60 * hourly_review_cost", "FN": "avoidable_fraction * training_fraud_positive_exposure_mean", "TP": "review_minutes / 60 * hourly_review_cost"},
+  "cost_scope": "Incremental decision cost. The avoidable share is a scenario, not a measured recovery rate. Remaining unavoidable fraud loss is common across actions and omitted. No automatic blocking, customer-friction estimate, fixed infrastructure cost or future-card-loss estimate is assumed.",
+  "sensitivity_hourly_costs": [15,30,60],
+  "sensitivity_avoidable_fractions": [0.25,0.5,1.0],
+  "sensitivity_capacities_per_10000": [10,25,50,100,250],
+  "secondary_cost": "review_cost * (TP+FP) + avoidable_fraction * sum(max(amount,0) for FN); use base hourly cost and capacity, all three avoidable fractions",
+  "cost_selection": "Minimum validation cost subject to aggregate validation capacity; ties use fewer alerts, then candidate name, then highest threshold. Include no-alert policy.",
+  "recall_frontier": "Maximum validation TP subject to capacity, optionally requiring cost no larger than no-alert cost; ties use fewer FP, candidate name, higher threshold.",
+  "comparison": "Same evaluation IDs and labels across all candidates; compare base cost threshold with F1 threshold of same selected model, plus pool F1 winner and no-alert/0.5 references.",
+  "holdout_rule": "Serialize every threshold, candidate and cost parameter before reading evaluation predictions in this analysis. Past rounds have already explored evaluation years; this does not make them new independent holdouts.",
+  "operational_check": "Report aggregate and monthly observed alert loads. A validation capacity constraint is not a hard production queue limit; no alerts are silently removed on evaluation.",
+  "recommended_use": "Academic decision proposal for review, not approval for automatic financial blocking or replacement of the official S9 artifact."
+}

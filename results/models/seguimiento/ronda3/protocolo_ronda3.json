@@ -1,0 +1,104 @@
+{
+  "created_utc": "2026-09-09T00:16:31.620782+00:00",
+  "scope": "retrospective_exploratory_round3_on_already_explored_development",
+  "max_new_fits": 6,
+  "configs": [
+    {
+      "name": "rf_actualizado_contexto",
+      "reference": "rf_actualizado",
+      "revised": false
+    },
+    {
+      "name": "rf_revisado_contexto",
+      "reference": "rf_variables_revisadas",
+      "revised": true
+    }
+  ],
+  "new_features": [
+    "card_prior_count_log",
+    "card_prior_mean_abs_amount",
+    "card_prior_std_abs_amount",
+    "amount_over_card_prior_mean",
+    "amount_card_zscore",
+    "card_hours_since_previous_log",
+    "card_previous_24h_count_log",
+    "card_previous_7d_count_log",
+    "card_prior_online_share",
+    "card_new_merchant",
+    "card_new_city",
+    "user_prior_count_log",
+    "user_prior_mean_abs_amount",
+    "amount_over_user_prior_mean",
+    "merchant_prior_count_log",
+    "amount_over_merchant_prior_mean"
+  ],
+  "trees": 200,
+  "max_depth": 16,
+  "min_samples_leaf": 2,
+  "max_features": "sqrt",
+  "seed": 42,
+  "training_jobs": 8,
+  "prediction_jobs": 1,
+  "fraud_weight": 1,
+  "source_sha256": "1eea96761a6898694f57cae413e77e5a74b72256b93410873eced9a83a2a568a",
+  "context_sha256": "1bf6a4a06310cef9adacf052412db827fa840bc43f6cbaa2c0329c008a03c6a6",
+  "test_s9_excluded_by_exact_known_development_whitelist": true,
+  "history": "Only preceding timestamp blocks in the same verified development sample; no labels.",
+  "online_context_updates": "Previous validation/evaluation transactions may update unsupervised history before later events; no model refit or label updates.",
+  "same_timestamp_events_excluded_from_each_others_history": true,
+  "amount_history_uses_absolute_amount": true,
+  "ratio_denominator_floor": 1.0,
+  "new_attributes_from_user_card_snapshots": false,
+  "cost_fp": 1,
+  "cost_fn": [
+    5,
+    10,
+    25,
+    50,
+    100
+  ],
+  "costs_hypothetical": true,
+  "capacity_validation_per_10000": [
+    10,
+    25,
+    50,
+    100,
+    250
+  ],
+  "selection": "Minimum validation cost, then fewer validation alerts, then candidate name. Within candidate, fewer alerts then higher threshold.",
+  "capacity_selection": "Maximum validation recall within capacity, then fewer validation false alerts, then candidate name.",
+  "no_resampling_validation_or_evaluation": true,
+  "no_refit_after_selection": true,
+  "no_official_model_promotion": true,
+  "independent_final_test": false,
+  "windows": [
+    {
+      "evaluation_year": 2015,
+      "validation_start": "2014-01-01",
+      "validation_end_exclusive": "2015-01-01"
+    },
+    {
+      "evaluation_year": 2016,
+      "validation_start": "2015-07-01",
+      "validation_end_exclusive": "2016-01-01"
+    },
+    {
+      "evaluation_year": 2019,
+      "validation_start": "2018-07-01",
+      "validation_end_exclusive": "2019-01-01"
+    }
+  ],
+  "software": {
+    "python": "3.12.13",
+    "pandas": "2.2.3",
+    "numpy": "2.3.5",
+    "sklearn": "1.8.0",
+    "joblib": "1.5.3"
+  },
+  "code_hashes": {
+    "tercera_ronda.py": "53f14d8861b147a781c107da50b2e43b48af687896eb93a89817d6f5b100542e",
+    "comportamiento.py": "e71c32f0a464e59396dd8283fe8a407177359526a8fad1dcec9eb073d59e18a7",
+    "test_comportamiento.py": "cb9288877f472a3f09bb016b31f38ab004a62451b89191ed1b497510749866ab",
+    "ronda3_modeling.py": "0f27fc600633d1a144817f989a5d6f238bd10d343ff77a083203a7321992eb80"
+  }
+}

@@ -1,0 +1,4 @@
+evaluation_year,training_end_exclusive,training_frauds,negative_amount_frauds,positive_exposure_mean,positive_exposure_median,positive_exposure_sum
+2015,2014-01-01,453,33,125.67587196467991,72.98,56931.17
+2016,2015-07-01,563,34,124.92690941385436,73.13,70333.85
+2019,2018-07-01,1009,46,128.71391476709613,74.8,129872.34

@@ -1,0 +1,155 @@
+{
+  "created_utc": "2026-09-08T21:46:54.603150+00:00",
+  "scope": "exploratory_second_round_on_previously_observed_historical_development",
+  "rationale": "Auditoría identifica categorías nuevas en 2015 y cambio de fraude online a chip antes de 2019.",
+  "input_sha256": "1eea96761a6898694f57cae413e77e5a74b72256b93410873eced9a83a2a568a",
+  "original_test_excluded_as_declared_in_manifest": true,
+  "evaluation_years": [
+    2015,
+    2016,
+    2019
+  ],
+  "validation_rule": "Últimos seis meses del año previo; extender a doce si hay menos de 30 fraudes.",
+  "configs": [
+    {
+      "name": "rf_actualizado",
+      "recent_years": null,
+      "max_depth": 16,
+      "min_samples_leaf": 2,
+      "fraud_weight": 1,
+      "revised": false
+    },
+    {
+      "name": "rf_reciente_3a",
+      "recent_years": 3,
+      "max_depth": 16,
+      "min_samples_leaf": 2,
+      "fraud_weight": 1,
+      "revised": false
+    },
+    {
+      "name": "rf_profundo",
+      "recent_years": null,
+      "max_depth": null,
+      "min_samples_leaf": 1,
+      "fraud_weight": 1,
+      "revised": false
+    },
+    {
+      "name": "rf_reciente_profundo",
+      "recent_years": 3,
+      "max_depth": null,
+      "min_samples_leaf": 1,
+      "fraud_weight": 1,
+      "revised": false
+    },
+    {
+      "name": "rf_peso10_reciente",
+      "recent_years": 3,
+      "max_depth": 24,
+      "min_samples_leaf": 2,
+      "fraud_weight": 10,
+      "revised": false
+    },
+    {
+      "name": "rf_variables_revisadas",
+      "recent_years": null,
+      "max_depth": 16,
+      "min_samples_leaf": 2,
+      "fraud_weight": 1,
+      "revised": true
+    },
+    {
+      "name": "rf_revisado_reciente",
+      "recent_years": 3,
+      "max_depth": 24,
+      "min_samples_leaf": 2,
+      "fraud_weight": 10,
+      "revised": true
+    }
+  ],
+  "max_new_fits": 21,
+  "trees": 200,
+  "seed": 42,
+  "training_jobs": 8,
+  "prediction_jobs": 1,
+  "recent_window": "36 meses inmediatamente anteriores al inicio de validación",
+  "revised_features": {
+    "excluded": [
+      "card_account_age_years",
+      "months_to_card_expiration",
+      "years_since_pin_change"
+    ],
+    "use_chip_mapping": {
+      "Chip Transaction": "Presencial",
+      "Swipe Transaction": "Presencial",
+      "Online Transaction": "En linea"
+    }
+  },
+  "cost_fp": 1,
+  "cost_fn_scenarios": [
+    5,
+    10,
+    25,
+    50,
+    100
+  ],
+  "costs_are_hypothetical": true,
+  "hypothetical_alerts_per_10000": [
+    10,
+    25,
+    50,
+    100,
+    250
+  ],
+  "selection": "Costo mínimo en validación común a los 11 candidatos; desempate menos alertas y nombre. Umbral: menos alertas, mayor umbral.",
+  "unchanged_evaluation_ids": true,
+  "no_resampling_validation_or_evaluation": true,
+  "no_refit_after_selection": true,
+  "no_model_promotion": true,
+  "software": {
+    "python": "3.12.13",
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "sklearn": "1.8.0",
+    "joblib": "1.5.3"
+  },
+  "source_code_sha256": {
+    "segunda_ronda.py": "1cc83c5af5be3c366ad7517c513f46683af8d456af05f0ca5d6ee4bdfa75e15b",
+    "ronda2_modeling.py": "bc12622264311f2788d6b633a0ad43f488f3aa7855e5ce858392edf6d2072e97",
+    "test_ronda2.py": "ae3de138c798562ec7545a2bcf824ca82368174981e8a0fc149409cd27b01d6e",
+    "auditar_datos.py": "42fec6123db2848bd8f6c4d6226336bcf9e535af1e71e8414136b8f49785f2ba"
+  },
+  "windows": [
+    {
+      "evaluation_year": 2015,
+      "validation_start": "2014-01-01 00:00:00",
+      "validation_end_exclusive": "2015-01-01 00:00:00",
+      "validation_rows": 86663,
+      "validation_frauds": 53,
+      "evaluation_rows": 88070,
+      "evaluation_frauds": 190,
+      "extended_validation_for_support": true
+    },
+    {
+      "evaluation_year": 2016,
+      "validation_start": "2015-07-01 00:00:00",
+      "validation_end_exclusive": "2016-01-01 00:00:00",
+      "validation_rows": 44419,
+      "validation_frauds": 133,
+      "evaluation_rows": 87785,
+      "evaluation_frauds": 226,
+      "extended_validation_for_support": false
+    },
+    {
+      "evaluation_year": 2019,
+      "validation_start": "2018-07-01 00:00:00",
+      "validation_end_exclusive": "2019-01-01 00:00:00",
+      "validation_rows": 44356,
+      "validation_frauds": 69,
+      "evaluation_rows": 73448,
+      "evaluation_frauds": 123,
+      "extended_validation_for_support": false
+    }
+  ]
+}

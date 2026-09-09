@@ -1,154 +1,41 @@
-# Selección de la configuración de variables
+# Modelamiento y evidencia de FINAN
 
-Esta etapa comparó los conjuntos de variables definidos después del EDA. Su
-objetivo fue escoger una preparación común antes de realizar la comparación
-formal de modelos y de técnicas de balanceo.
+Esta carpeta conserva las etapas históricas y la evaluación final S9. Los `*_selected.json` anteriores al refinamiento son decisiones intermedias; sus umbrales no deben copiarse a la aplicación. La identidad vigente está en [MODELO_OFICIAL.json](../../models/MODELO_OFICIAL.json).
 
-Los datos se extrajeron una sola vez desde `dbo.vw_dataset_maestro`. Se utilizó
-la misma muestra determinística del EDA, formada por 990.261 transacciones y
-1.413 fraudes. Luego se realizó una división estratificada con semilla 42:
+## Comparaciones históricas
 
-- entrenamiento: 693.182 transacciones y 989 fraudes;
-- validación: 148.539 transacciones y 212 fraudes; y
-- prueba reservada: 148.540 transacciones y 212 fraudes.
+Las comparaciones S9 utilizaron 990.261 filas, semilla 42 y partición estratificada: 693.182 entrenamiento, 148.539 validación y 148.540 test. El test permaneció reservado durante selección y refinamiento.
 
-El conjunto de prueba fue separado y contabilizado, pero no fue transformado,
-predicho ni utilizado para escoger variables.
+| Etapa | Resultado y evidencia |
+|---|---|
+| Cuatro configuraciones de variables | `extended_amount_raw`; [tabla](feature_configuration_comparison.csv), [metadatos](feature_configuration_metadata.json). Los perfiles financieros son fotografías, no historiales demostrados. |
+| Balanceo inicial con XGBoost | Sin balanceo superó submuestreo y SMOTE en PR-AUC/F1; [tabla](balancing_strategy_comparison.csv). Sin balanceo es referencia, no una tercera técnica. |
+| Tres técnicas ML | [Tabla](ml_model_comparison.csv), [metadatos](ml_model_metadata.json). RF elegido por PR-AUC y métricas de positivos; XGBoost fue más rápido y obtuvo mayor ROC-AUC. |
+| Tres MLP | [Tabla](dl_architecture_comparison.csv), [historia por época](dl_training_history.csv), [parámetros y GPU](dl_architecture_metadata.json). La básica fue la mejor MLP; no superó RF. |
+| Comparación ML/DL | [Candidatos finales](final_candidate_comparison.csv). |
+| Refinamiento RF | [Tabla](rf_refinement_comparison.csv): 200 árboles/profundidad 16, PR-AUC de validación 0,5014, F1 0,5731. |
+| Entrenamiento final | Train + validación, 841.721 filas; [metadatos](final_model_training_metadata.json). |
+| Test único | [Métricas](final_test_metrics.json), [matriz](final_confusion_matrix.png), [PR](final_pr_curve.png), [metadatos](final_test_evaluation_metadata.json). |
 
-## Configuraciones comparadas
-
-Se compararon dos conjuntos de variables y dos tratamientos del monto. Para
-que la comparación fuera equivalente, las cuatro configuraciones utilizaron
-el mismo XGBoost de revisión, con ponderación de clase y los mismos datos de
-entrenamiento y validación. Este modelo se utilizó solamente para seleccionar
-la preparación; no reemplaza los experimentos finales de balanceo.
-
-| Configuración | Precision | Recall | F1 | ROC-AUC | PR-AUC |
+| Modelo S9 en validación | Precisión | Recall | F1 | PR-AUC | Ajuste (s) |
 |---|---:|---:|---:|---:|---:|
-| Principal, monto original | 0,1551 | 0,2217 | 0,1825 | 0,9420 | 0,0962 |
-| Principal, monto transformado | 0,1551 | 0,2217 | 0,1825 | 0,9420 | 0,0962 |
-| Ampliado, monto original | 0,1786 | 0,2830 | 0,2190 | 0,9445 | 0,1470 |
-| Ampliado, monto transformado | 0,1786 | 0,2830 | 0,2190 | 0,9445 | 0,1470 |
+| Regresión Logística | 0,1303 | 0,2028 | 0,1587 | 0,0704 | 251,06 |
+| RF inicial | 0,7500 | 0,4104 | 0,5305 | 0,4569 | 44,12 |
+| XGBoost | 0,6970 | 0,3255 | 0,4437 | 0,3803 | 6,03 |
+| MLP 64 | 0,2990 | 0,2877 | 0,2933 | 0,1657 | 281,56 |
+| MLP 128–64–32 | 0,0718 | 0,2170 | 0,1079 | 0,0503 | 160,86 |
+| MLP 256–128–64 | 0,1730 | 0,2594 | 0,2075 | 0,1290 | 299,58 |
 
-El conjunto ampliado mejoró todas las métricas frente al conjunto principal:
-aproximadamente 53 % en PR-AUC, 20 % en F1, 28 % en recall y 15 % en precisión.
-Por este motivo, se seleccionó para la etapa siguiente.
+Las redes emplearon ReLU, Adam y sigmoide binaria, hasta 15 épocas y restauración del mejor estado por PR-AUC. Mejores épocas: 15, 5 y 9. Se ejecutaron en GTX 970M/CUDA; sus tiempos no equivalen a los del entorno Linux de seguimiento. El bosque no tiene capas neuronales: se refinó número/profundidad de árboles según la evidencia.
 
-El monto original y su transformación logarítmica produjeron exactamente los
-mismos resultados en XGBoost. Esto es esperable porque la transformación
-conserva el orden de los montos y los árboles separan los datos mediante
-puntos de corte. Se mantendrá el monto original para simplificar la
-reproducción y la integración con la aplicación. Los modelos que necesiten
-escalamiento aplicarán su propio preprocesamiento dentro del pipeline.
+## Resultado oficial S9
 
-## Configuración seleccionada
+Umbral `0.07217143`, TP 87, FP 31, FN 125, TN 148.297. Precisión 73,73 %, recall 41,04 %, F1 52,73 %, PR-AUC 0,478198 y ROC-AUC 0,939748. La limitación principal es omitir 125 de 212 fraudes.
 
-La configuración seleccionada es `extended_amount_raw`. Incluye variables de
-la transacción, tiempo, modalidad, MCC, edad en la fecha de la compra,
-características de la tarjeta y variables financieras del perfil.
+SHA-256 del pipeline: `3b7d4d0d0b557dddd4ff13fa2865ac32365efd5377da059a5cb96db1db1ad178`. Las huellas históricas de JSON se calcularon con finales de línea Windows CRLF; las pruebas aceptan exclusivamente esa normalización al verificarlas. La huella del binario debe coincidir exactamente.
 
-Las variables financieras mejoraron la validación, pero la fuente no entrega
-un historial de sus cambios. El proyecto asume que estos datos están
-disponibles al evaluar una nueva transacción y registrará como limitación que
-los valores históricos pueden corresponder a una fotografía del perfil. No se
-utilizan identificadores, género, ubicación detallada, fecha completa ni la
-etiqueta de fraude como entradas del modelo.
+## Seguimiento
 
-El umbral registrado en esta prueba fue escogido únicamente para comparar las
-configuraciones en validación. No es todavía el umbral definitivo de FINAN y no
-debe copiarse a la aplicación hasta completar la comparación de modelos,
-balanceos y evaluación final.
+En [seguimiento](seguimiento/README.md) se documentan tres estrategias reales frente al desbalance, costos, capacidad, validación temporal, comportamiento e Isolation Forest. Se conserva el test S9 fuera de todos los ensayos. Es desarrollo retrospectivo previamente explorado, no un nuevo test final independiente.
 
-## Archivos de evidencia
-
-- `feature_configuration_comparison.csv`: métricas de las cuatro
-  configuraciones.
-- `feature_configuration_selected.json`: variables y configuración escogidas.
-- `feature_configuration_metadata.json`: muestra, división, política del test
-  y versiones utilizadas.
-
-## Comparación de estrategias de balanceo
-
-Con la configuración de variables seleccionada se compararon las tres
-estrategias solicitadas en la retroalimentación: datos sin balanceo,
-submuestreo aleatorio y SMOTE. Todas utilizaron el mismo conjunto de
-entrenamiento, la misma validación y el mismo XGBoost, por lo que la diferencia
-entre los resultados corresponde al tratamiento del desbalance.
-
-Para comparar las estrategias se ajustó el umbral solamente con los datos de
-validación. El conjunto de prueba continuó reservado.
-
-| Estrategia | Precision | Recall | F1 | ROC-AUC | PR-AUC |
-|---|---:|---:|---:|---:|---:|
-| Sin balanceo | 0,6970 | 0,3255 | 0,4437 | 0,9362 | 0,3803 |
-| Submuestreo aleatorio | 0,0986 | 0,1651 | 0,1235 | 0,9389 | 0,0543 |
-| SMOTE | 0,0815 | 0,2925 | 0,1274 | 0,9305 | 0,0685 |
-
-Se seleccionó el escenario sin balanceo porque presentó el mejor PR-AUC y el
-mejor F1 en validación. El submuestreo y SMOTE lograron detectar más fraudes
-al utilizar el umbral estándar de 0,5, pero también produjeron muchas más
-falsas alarmas. Después de ajustar el umbral de cada alternativa en
-validación, ninguna superó al entrenamiento con los datos originales.
-
-Esta elección no significa que el desbalance se haya ignorado. Las tres
-alternativas fueron implementadas y medidas bajo las mismas condiciones. En
-este conjunto de datos, conservar todos los casos normales entregó más
-información útil al modelo que eliminar registros o crear casos sintéticos.
-
-El umbral de 0,1442 pertenece a esta comparación y todavía no es el umbral
-definitivo de la aplicación. Primero se deben comparar las técnicas de ML y
-las arquitecturas de DL; recién después se seleccionará un modelo y se usará
-una sola vez el conjunto de prueba reservado.
-
-### Archivos de evidencia del balanceo
-
-- `balancing_strategy_comparison.csv`: métricas completas de las tres
-  estrategias, incluidos los errores y aciertos de cada una.
-- `balancing_strategy_comparison.png`: comparación gráfica de sus métricas.
-- `balancing_strategy_selected.json`: estrategia seleccionada y regla de
-  selección.
-- `balancing_strategy_metadata.json`: muestra, división, variables, versiones
-  y confirmación de que el conjunto de prueba no fue utilizado.
-
-## Comparación de técnicas de aprendizaje automático
-
-Se compararon las tres técnicas planteadas en los informes formativos:
-Regresión Logística, Random Forest y XGBoost. Todas recibieron las mismas
-693.182 filas de entrenamiento, las mismas 178 columnas preparadas y los
-mismos 148.539 casos de validación. No se aplicó balanceo y el conjunto de
-prueba permaneció reservado.
-
-| Modelo | Precisión | Recall | F1 | ROC-AUC | PR-AUC | Entrenamiento |
-|---|---:|---:|---:|---:|---:|---:|
-| Regresión Logística | 0,1303 | 0,2028 | 0,1587 | 0,9000 | 0,0704 | 251,06 s |
-| Random Forest | 0,7500 | 0,4104 | 0,5305 | 0,9224 | 0,4569 | 44,12 s |
-| XGBoost | 0,6970 | 0,3255 | 0,4437 | 0,9362 | 0,3803 | 6,03 s |
-
-Random Forest fue seleccionado como el mejor modelo de ML porque obtuvo el
-PR-AUC y el F1 más altos. Con el umbral ajustado en validación identificó 87 de
-los 212 fraudes, con 29 falsas alarmas. XGBoost fue más rápido y tuvo el mejor
-ROC-AUC, pero quedó por debajo de Random Forest en las métricas principales
-para esta clase minoritaria.
-
-La precisión, el recall y el F1 de la tabla utilizan el umbral que produjo el
-mejor F1 para cada modelo en validación. Esto evita juzgar los modelos solo con
-el umbral general de 0,5, que en un problema tan desbalanceado puede ocultar
-fraudes. PR-AUC se utilizó como criterio principal porque resume mejor el
-equilibrio entre detectar fraudes y evitar falsas alarmas cuando la clase de
-interés es muy pequeña.
-
-El umbral de 0,0633 de Random Forest todavía no corresponde a la aplicación.
-Primero se compararán las tres arquitecturas de Deep Learning. Después se
-confirmará el modelo final y se utilizará una sola vez el conjunto de prueba.
-
-### Archivos de evidencia de ML
-
-- `ml_model_comparison.csv`: métricas, tiempos y matrices de confusión de los
-  tres modelos.
-- `ml_model_comparison.png`: gráfico comparativo de las métricas principales.
-- `ml_model_selected.json`: modelo ML seleccionado y umbral de validación.
-- `ml_model_metadata.json`: variables, parámetros, división, versiones y
-  confirmación de que el test no fue utilizado.
-
-El siguiente paso es comparar tres arquitecturas de Deep Learning bajo la
-misma división y con el conjunto de prueba todavía reservado.
+Los scripts y gráficos de septiembre anteriores al estudio consolidado se preservan en [legacy/seguimiento_20260907](../../legacy/seguimiento_20260907/README.md). La aplicación continúa vinculada al artefacto S9; los umbrales temporales se aplican solo a los modelos y ventanas de sus protocolos.

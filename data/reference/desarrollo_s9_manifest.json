@@ -1,0 +1,28 @@
+{
+  "status": "development_only",
+  "file_sha256": "1eea96761a6898694f57cae413e77e5a74b72256b93410873eced9a83a2a568a",
+  "rows": 841721,
+  "frauds": 1201,
+  "original_split": {
+    "train": {
+      "rows": 693182,
+      "frauds": 989
+    },
+    "validation": {
+      "rows": 148539,
+      "frauds": 212
+    },
+    "test": {
+      "rows": 148540,
+      "frauds": 212
+    }
+  },
+  "test_excluded": true,
+  "excluded_test_ids_sha256": "3ef703a97097fe3f62d68220d894c2d89cd5a2f9bcfe8104e3cfe0259dfb4a08",
+  "split_procedure": "CHECKSUM(id,42)%9=0; ORDER BY id; stratified 70/15/15 seed42",
+  "sklearn_version": "1.9.0",
+  "numpy_version": "2.4.6",
+  "pandas_version": "3.0.5",
+  "source_commit": "deb64c1d630b4c97d1318ff9a727dc1e1c377c04",
+  "note": "Partición reconstruida con el procedimiento S9; no se entrenó ni evaluó ningún modelo."
+}

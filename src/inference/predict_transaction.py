@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
 import os
 from datetime import datetime
 from pathlib import Path
@@ -263,6 +264,8 @@ def validate_input(
         value = clean[name]
         if value is not None:
             clean[name] = float(value)
+            if not math.isfinite(clean[name]):
+                raise ValueError(f"La variable {name} debe ser finita o null")
     return clean
 
 
@@ -423,6 +426,7 @@ def main() -> int:
             response,
             ensure_ascii=False,
             indent=2 if args.pretty else None,
+            allow_nan=False,
         )
     )
     return 0

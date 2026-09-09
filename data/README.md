@@ -176,29 +176,9 @@ ejecutar en este orden:
 incorporar la etiqueta. `vw_dataset_maestro` mantiene la misma preparación y
 agrega `is_fraud` para las etapas que requieren datos etiquetados.
 
-La vista conserva `current_age` y `gender` para mantener trazabilidad con los
-análisis formativos. Su incorporación al modelo final no se asume: deberá
-decidirse después del perfilamiento de variables. También se incorpora
-`age_at_transaction`, que evita utilizar directamente una edad calculada en una
-fecha de referencia distinta de la transacción.
+La vista conserva `current_age` y `gender` para trazabilidad con los análisis formativos. El modelo S9 servido excluye ambos y utiliza `age_at_transaction`, junto con las otras 21 variables de [`models/finan_feature_schema.json`](../models/finan_feature_schema.json). El diccionario registra decisiones iniciales de EDA; el esquema del modelo identifica la selección efectivamente utilizada.
 
-Las vistas no exponen domicilio, coordenadas personales, número de tarjeta ni
-CVV. Tampoco incorporan `errors` como predictor porque aún debe verificarse si
-esa información está disponible antes de emitir una predicción.
-
-El diccionario de datos separa las variables candidatas de los identificadores,
-la etiqueta y los campos que requieren una revisión adicional. La marca
-`candidate` no significa que una variable ya esté aprobada para el modelo: su
-aporte predictivo, cardinalidad, completitud y riesgo de fuga temporal deben
-medirse durante el EDA. En particular, `current_age` se mantiene para comparar
-los resultados con los informes anteriores, pero se priorizará
-`age_at_transaction` si las pruebas confirman su calidad.
-
-El tratamiento de montos atípicos no se fija en esta etapa. Se definirá después
-de medir su distribución y su relación con `is_fraud`, comparando al menos la
-conservación del monto original y una transformación logarítmica. No se
-eliminarán transacciones únicamente por tener montos altos, porque podrían
-contener señal legítima de fraude.
+Las vistas no exponen domicilio, coordenadas personales, número de tarjeta ni CVV. `errors` tampoco se incorpora como predictor. Los importes altos no se eliminan automáticamente y el pipeline S9 conserva `amount`. Las variantes posteriores y su alcance temporal se documentan en [resultados del seguimiento](../results/models/seguimiento/README.md); no sustituyen el esquema de inferencia.
 
 Resultado esperado de la validación:
 
@@ -233,9 +213,9 @@ El flujo técnico del proyecto sigue esta secuencia:
 6. integrar el modelo y la base de datos con la aplicación FINAN.
 
 Este README documenta los dos primeros puntos. La vista
-`vw_dataset_maestro` proporciona la entrada etiquetada que se utilizará
-posteriormente para el análisis exploratorio y el modelamiento; la vista
-`vw_finan_features` entrega la misma preparación sin la etiqueta para la futura
+`vw_dataset_maestro` proporciona la entrada etiquetada utilizada
+para el análisis exploratorio y el modelamiento; la vista
+`vw_finan_features` entrega la misma preparación sin la etiqueta para la
 integración de inferencia.
 
 Las tablas fuente conservan los nombres originales: `transactions_data.id`,

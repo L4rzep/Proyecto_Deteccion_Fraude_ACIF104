@@ -1,0 +1,16 @@
+{
+  "status": "academic_proposal_not_promoted",
+  "model_file_in_R2_package": "finan_ronda2/experimento/modelo_2019_rf_actualizado.joblib",
+  "model_sha256": "f21fc6a7ac41dcd74e1e55130741e6727d340bb0e66eafa38e2ab5559423f4fe",
+  "threshold": 0.02046171411871807,
+  "decision_id": "D00196",
+  "trained_until": "2018-06-30 23:25:00",
+  "validation": "2018-07-01 <= date < 2019-01-01",
+  "review_cost": 3.0,
+  "fn_cost": 64.35695738354806,
+  "tp_cost": 3.0,
+  "tn_cost": 0,
+  "capacity_per_10000": 50,
+  "costs_are_assumptions": true,
+  "not_applicable_to_S9_model_without_separate_validation": true
+}

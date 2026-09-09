@@ -1,0 +1,392 @@
+[
+  {
+    "file": "predicciones_2015_r1_pesos_clase_validation.csv.gz",
+    "sha256": "76a734062c850db62b9825de3b84181e70b3c122dadf23055af259469132f0fc",
+    "rows": 86663
+  },
+  {
+    "file": "predicciones_2015_r1_pesos_clase_evaluation.csv.gz",
+    "sha256": "9bbbe04441247a71e4364b9307dc32a21c9dc61df9260a1ee8baab3b813707f1",
+    "rows": 88070
+  },
+  {
+    "file": "predicciones_2015_r1_sin_balanceo_validation.csv.gz",
+    "sha256": "d7a2928df223ffcca5b41f9b87dd2cc0131884be6ce66fea2cb0f8380c3d4055",
+    "rows": 86663
+  },
+  {
+    "file": "predicciones_2015_r1_sin_balanceo_evaluation.csv.gz",
+    "sha256": "0a0df9a08dcde28f682ee65395c496df120890d4b9669a4cbed401891f20f8f9",
+    "rows": 88070
+  },
+  {
+    "file": "predicciones_2015_r1_smotenc_validation.csv.gz",
+    "sha256": "67ad022ef15c6a12ee025e2b2869279122928ac063a066be10c779aae9261305",
+    "rows": 86663
+  },
+  {
+    "file": "predicciones_2015_r1_smotenc_evaluation.csv.gz",
+    "sha256": "0b3bcbf61245adec567c71418e5c5a211dc194e7a79b641d314f504958999edc",
+    "rows": 88070
+  },
+  {
+    "file": "predicciones_2015_r1_submuestreo_validation.csv.gz",
+    "sha256": "4cbc48b0c1ecd9836b629367a522ab20c7cbb059c992fef9c7ba2e339e9d29e2",
+    "rows": 86663
+  },
+  {
+    "file": "predicciones_2015_r1_submuestreo_evaluation.csv.gz",
+    "sha256": "fd4fc0d0d4315b55421bca566c609c82bcda85b70fa6ca34702d34cd56c245f5",
+    "rows": 88070
+  },
+  {
+    "file": "predicciones_2015_rf_actualizado_validation.csv.gz",
+    "sha256": "dee6db8c9665e9ffd1e830ad62459263656a556d4e14123255c3f6bd44205388",
+    "rows": 86663
+  },
+  {
+    "file": "predicciones_2015_rf_actualizado_evaluation.csv.gz",
+    "sha256": "1b9aa8cf3dbd6a0af3405354d30213fd013e797baaa55ba79032afd413880a40",
+    "rows": 88070
+  },
+  {
+    "file": "predicciones_2015_rf_peso10_reciente_validation.csv.gz",
+    "sha256": "29290f7c7b8a408fe5b139afae17e6cf2b63b3e4ee53606e52249ee3a904beb1",
+    "rows": 86663
+  },
+  {
+    "file": "predicciones_2015_rf_peso10_reciente_evaluation.csv.gz",
+    "sha256": "642fee1a5b5bbc08fee524eaec0a8329b5ae22e25018dc648e6359efb22c4b71",
+    "rows": 88070
+  },
+  {
+    "file": "predicciones_2015_rf_profundo_validation.csv.gz",
+    "sha256": "af748e398dd1ad15e784ed6d483463118ff910dd16703d7c949a5c3e1cda23be",
+    "rows": 86663
+  },
+  {
+    "file": "predicciones_2015_rf_profundo_evaluation.csv.gz",
+    "sha256": "f7dd4df41fccd6e35af17e2f2125e3a830a9ede7f7ec2469f0d56fab400d57c7",
+    "rows": 88070
+  },
+  {
+    "file": "predicciones_2015_rf_reciente_3a_validation.csv.gz",
+    "sha256": "d90464c0f21353ea2deea4f02dee6b1c4443cef081a69d268e0e7830a765e0dc",
+    "rows": 86663
+  },
+  {
+    "file": "predicciones_2015_rf_reciente_3a_evaluation.csv.gz",
+    "sha256": "81ee8c12f8921b5d757ca86f0e22aa9d2bdbb377c975c3ebd985eae6b19597c0",
+    "rows": 88070
+  },
+  {
+    "file": "predicciones_2015_rf_reciente_profundo_validation.csv.gz",
+    "sha256": "fcefe769286980c858e162d00bb9571d9a5142e2d78fb996596fec95738fd444",
+    "rows": 86663
+  },
+  {
+    "file": "predicciones_2015_rf_reciente_profundo_evaluation.csv.gz",
+    "sha256": "199b65ae506b4b857bbf7de00ca6f11941565236683df488854fe25ae3f52bcd",
+    "rows": 88070
+  },
+  {
+    "file": "predicciones_2015_rf_revisado_reciente_validation.csv.gz",
+    "sha256": "8e261ed9e3e3b3063825c2b4d6ce64bb796140ccca1eaac6c07a9f640494e25b",
+    "rows": 86663
+  },
+  {
+    "file": "predicciones_2015_rf_revisado_reciente_evaluation.csv.gz",
+    "sha256": "3ae5d275600f864e2be91d42809faff3e89b09ea6fa6806ecb072b2797c49082",
+    "rows": 88070
+  },
+  {
+    "file": "predicciones_2015_rf_variables_revisadas_validation.csv.gz",
+    "sha256": "04c2e8e3fce9b0e5de01c4cd3c30e59a6fbe2a40a7bebbfe4f0b97b6bbe73054",
+    "rows": 86663
+  },
+  {
+    "file": "predicciones_2015_rf_variables_revisadas_evaluation.csv.gz",
+    "sha256": "80b2e397442a0caba850a257610c2bcd247e42a4a8348fb023a7f49342b0bc06",
+    "rows": 88070
+  },
+  {
+    "file": "predicciones_2015_rf_actualizado_contexto_validation.csv.gz",
+    "sha256": "744431f78cf28b388d183249daf861beb17779f28ed6da710eacd508d5deeba6",
+    "rows": 86663
+  },
+  {
+    "file": "predicciones_2015_rf_actualizado_contexto_evaluation.csv.gz",
+    "sha256": "5a1bd3ba4d2e4d7d4f4809dae1c9d961ecaf1076c79cd0e1379888560111ec9b",
+    "rows": 88070
+  },
+  {
+    "file": "predicciones_2015_rf_revisado_contexto_validation.csv.gz",
+    "sha256": "c17a36fbb0932156f00cede0a16190b58af98fc1a93bab02c7c1fed5950814e9",
+    "rows": 86663
+  },
+  {
+    "file": "predicciones_2015_rf_revisado_contexto_evaluation.csv.gz",
+    "sha256": "ebb2e56408ecc3a0f2d2bc3316ec1701db0e3ee565912a3d3c0f5a9c5282d27f",
+    "rows": 88070
+  },
+  {
+    "file": "predicciones_2016_r1_pesos_clase_validation.csv.gz",
+    "sha256": "42afbc5b7f6c2ebbc793e1769f582779362bbf54b098a1a01a7c9c67495e5e6a",
+    "rows": 44419
+  },
+  {
+    "file": "predicciones_2016_r1_pesos_clase_evaluation.csv.gz",
+    "sha256": "7140cbf06c0e4e64fbe1321101265381801012c1e074cfd9b1f0c240e3517a90",
+    "rows": 87785
+  },
+  {
+    "file": "predicciones_2016_r1_sin_balanceo_validation.csv.gz",
+    "sha256": "e77191708f5b0af2c04e9ae4602017b934a5be530112ae73e6676a9de573d78d",
+    "rows": 44419
+  },
+  {
+    "file": "predicciones_2016_r1_sin_balanceo_evaluation.csv.gz",
+    "sha256": "10c0d947a44b5b654514e34ae1f5e56bb664ecd77361432ab51426282f8ad86d",
+    "rows": 87785
+  },
+  {
+    "file": "predicciones_2016_r1_smotenc_validation.csv.gz",
+    "sha256": "bb4bcd487dd4228d588c255afd6726522d392f2e716516030949168b063791ad",
+    "rows": 44419
+  },
+  {
+    "file": "predicciones_2016_r1_smotenc_evaluation.csv.gz",
+    "sha256": "6462bcf61fd09b6b72f98d8e3afcfdaf613197813aca1672898cf488aa271d45",
+    "rows": 87785
+  },
+  {
+    "file": "predicciones_2016_r1_submuestreo_validation.csv.gz",
+    "sha256": "3f58f605c1688dd21e235c5a1ad6db9c065fa47bdcb630d9ac7dfa3ce9338036",
+    "rows": 44419
+  },
+  {
+    "file": "predicciones_2016_r1_submuestreo_evaluation.csv.gz",
+    "sha256": "ea05935392091a850a617e8dc86cf6abd0810719742eb889dc3f7f38ac1f1080",
+    "rows": 87785
+  },
+  {
+    "file": "predicciones_2016_rf_actualizado_validation.csv.gz",
+    "sha256": "9167b075478c4bc568f337e58e1d8ed9ba64a1a226cf81bb7e38ef8e75788b5c",
+    "rows": 44419
+  },
+  {
+    "file": "predicciones_2016_rf_actualizado_evaluation.csv.gz",
+    "sha256": "b85949768031defdb853fd9843964618c4ec3fe70ac0280b8233bee7f79ed251",
+    "rows": 87785
+  },
+  {
+    "file": "predicciones_2016_rf_peso10_reciente_validation.csv.gz",
+    "sha256": "3709c1fdf7c9b50e12256ed363a2e3a90907b31a9ea5435cd91101d11402f0d1",
+    "rows": 44419
+  },
+  {
+    "file": "predicciones_2016_rf_peso10_reciente_evaluation.csv.gz",
+    "sha256": "c62039b2d1a777b80d25627c3da117e8534e5e3fd62fea9981ab94fa6e9ee0f5",
+    "rows": 87785
+  },
+  {
+    "file": "predicciones_2016_rf_profundo_validation.csv.gz",
+    "sha256": "f3de2abb612d3a40f83d327b9cee87ef4e50777ba356b28a6d3c9abee76858e9",
+    "rows": 44419
+  },
+  {
+    "file": "predicciones_2016_rf_profundo_evaluation.csv.gz",
+    "sha256": "31b7d1139581c7e20ba74e2216772525ec1f31c85c8eaafd4ddd22f29fc4fd9b",
+    "rows": 87785
+  },
+  {
+    "file": "predicciones_2016_rf_reciente_3a_validation.csv.gz",
+    "sha256": "f2d9bc49d7d3569226db4610390a7a559c81c23b4ef122d3f50c0d6959b22beb",
+    "rows": 44419
+  },
+  {
+    "file": "predicciones_2016_rf_reciente_3a_evaluation.csv.gz",
+    "sha256": "1d39ff1cb3551eb25f2740e5176839b694cc529e32cce621a8150d508b62808e",
+    "rows": 87785
+  },
+  {
+    "file": "predicciones_2016_rf_reciente_profundo_validation.csv.gz",
+    "sha256": "a8e6067c63c9f0df82d4ddd4e7634f4d0413a5c858d4f58d16524db4db11b505",
+    "rows": 44419
+  },
+  {
+    "file": "predicciones_2016_rf_reciente_profundo_evaluation.csv.gz",
+    "sha256": "a042a621c99c0755945e787b78089511012d9a0e6220cad14606d13c248c1959",
+    "rows": 87785
+  },
+  {
+    "file": "predicciones_2016_rf_revisado_reciente_validation.csv.gz",
+    "sha256": "91c883dd489fc7091b47f5c426872bc0d18bd2f228f4ebc96561733769e0336f",
+    "rows": 44419
+  },
+  {
+    "file": "predicciones_2016_rf_revisado_reciente_evaluation.csv.gz",
+    "sha256": "c32683fe349c5d06c3ebaf74a087ccc94a7934908be1a5b4544400485d20e00a",
+    "rows": 87785
+  },
+  {
+    "file": "predicciones_2016_rf_variables_revisadas_validation.csv.gz",
+    "sha256": "094a4b7a38de3b87356a7fad09c7aa345f4e57aaf80c5e30cebe526bb1420627",
+    "rows": 44419
+  },
+  {
+    "file": "predicciones_2016_rf_variables_revisadas_evaluation.csv.gz",
+    "sha256": "8a36bd4cea6e4689a58ed4e5535e3ffe444896f6deb1b515d5d9b58b17b5cc57",
+    "rows": 87785
+  },
+  {
+    "file": "predicciones_2016_rf_actualizado_contexto_validation.csv.gz",
+    "sha256": "8542b5babe9a3203bf8ac84d87a2e1fecd8f65de2a65b724968aadd935f48e6e",
+    "rows": 44419
+  },
+  {
+    "file": "predicciones_2016_rf_actualizado_contexto_evaluation.csv.gz",
+    "sha256": "9b09f443ded359a6fee225925c017a352437cf7f2061f86e65caf4eec734687b",
+    "rows": 87785
+  },
+  {
+    "file": "predicciones_2016_rf_revisado_contexto_validation.csv.gz",
+    "sha256": "d89ae0bdec71a7857fe2253fc410b7eb076e2fedbe8423f3a2bb0ba565592c5e",
+    "rows": 44419
+  },
+  {
+    "file": "predicciones_2016_rf_revisado_contexto_evaluation.csv.gz",
+    "sha256": "c0cc8461e6ba5aec87b42230534e0791b3c77be00f67b864df5645a1e16bf043",
+    "rows": 87785
+  },
+  {
+    "file": "predicciones_2019_r1_pesos_clase_validation.csv.gz",
+    "sha256": "ed85905632dabb366ab3d8e64a5da98a13bd3b9e0620867f9978281459ead6f5",
+    "rows": 44356
+  },
+  {
+    "file": "predicciones_2019_r1_pesos_clase_evaluation.csv.gz",
+    "sha256": "6312ccd556bde18f4d1937363a0aaa1f887623b6bf9e42cdd60e299742ec47d5",
+    "rows": 73448
+  },
+  {
+    "file": "predicciones_2019_r1_sin_balanceo_validation.csv.gz",
+    "sha256": "53056c487104b9fb8d8fafeee14dc6724f249666cd2f1c569fb7741e995d5442",
+    "rows": 44356
+  },
+  {
+    "file": "predicciones_2019_r1_sin_balanceo_evaluation.csv.gz",
+    "sha256": "809d6aecdeaf58af0a000ec369a10b6e1ca94f653903461db0b6fe0786ca0d6f",
+    "rows": 73448
+  },
+  {
+    "file": "predicciones_2019_r1_smotenc_validation.csv.gz",
+    "sha256": "395c4059e0a7ecf5b4815fe84bd2c493da3e7ecb05fd1e5cffd44883e595411e",
+    "rows": 44356
+  },
+  {
+    "file": "predicciones_2019_r1_smotenc_evaluation.csv.gz",
+    "sha256": "5d26b516831ace454db3a8fa58d5c76bc97293872a13e35f44864040f76505c7",
+    "rows": 73448
+  },
+  {
+    "file": "predicciones_2019_r1_submuestreo_validation.csv.gz",
+    "sha256": "263a121e7d2a2c995ba1cd2ef283ea410c256aac12ca715081b1e04604fb6d42",
+    "rows": 44356
+  },
+  {
+    "file": "predicciones_2019_r1_submuestreo_evaluation.csv.gz",
+    "sha256": "04032bfbdc34ab9acac622f5f258d33e1bda994591b98a0054428628a00d0feb",
+    "rows": 73448
+  },
+  {
+    "file": "predicciones_2019_rf_actualizado_validation.csv.gz",
+    "sha256": "faa37b8709885e8358732c061b516feb2aac652f38df2423f4da3f631890a7cd",
+    "rows": 44356
+  },
+  {
+    "file": "predicciones_2019_rf_actualizado_evaluation.csv.gz",
+    "sha256": "34312c715e5ac473ac027e05463cb53d7a42bb2e7a5b85ec808f26437c5928a8",
+    "rows": 73448
+  },
+  {
+    "file": "predicciones_2019_rf_peso10_reciente_validation.csv.gz",
+    "sha256": "f198e5c8d500f1447e173c2f28f180d2d083c740d7d2eb4f343e25a71dc45ad9",
+    "rows": 44356
+  },
+  {
+    "file": "predicciones_2019_rf_peso10_reciente_evaluation.csv.gz",
+    "sha256": "f8ec2d0a6eec0ddab0a9b51ba60076257ecee5557af852433e368e872c204bc3",
+    "rows": 73448
+  },
+  {
+    "file": "predicciones_2019_rf_profundo_validation.csv.gz",
+    "sha256": "909ade43deae86913b33c42984c3628ded68ce0ba76bc5f52be35c1ea99d7eb1",
+    "rows": 44356
+  },
+  {
+    "file": "predicciones_2019_rf_profundo_evaluation.csv.gz",
+    "sha256": "cfbc7c37b4cd94ea451875fb4faa87dd3db2d12246dc51280be611831e491c2a",
+    "rows": 73448
+  },
+  {
+    "file": "predicciones_2019_rf_reciente_3a_validation.csv.gz",
+    "sha256": "6b5fc0001908f14db176ef010344bf0fb9373fc91ae207f49142e65b5d49b002",
+    "rows": 44356
+  },
+  {
+    "file": "predicciones_2019_rf_reciente_3a_evaluation.csv.gz",
+    "sha256": "e66d39649db97fe7db248c4c3cac2239e597f13ed9b3deae191346e7e9ee6e2f",
+    "rows": 73448
+  },
+  {
+    "file": "predicciones_2019_rf_reciente_profundo_validation.csv.gz",
+    "sha256": "f7374291b986907087dbf3a56b72f7b44a0ede376bb54f5ed71dab684bac9876",
+    "rows": 44356
+  },
+  {
+    "file": "predicciones_2019_rf_reciente_profundo_evaluation.csv.gz",
+    "sha256": "3a29a4a3868f45f9f8867e6648ce312045a51f423a58a3c62b0aec33714f70f9",
+    "rows": 73448
+  },
+  {
+    "file": "predicciones_2019_rf_revisado_reciente_validation.csv.gz",
+    "sha256": "775be3282995d5361c3c5133172a7e09c37b1ea81bd443362efcd50c5769b777",
+    "rows": 44356
+  },
+  {
+    "file": "predicciones_2019_rf_revisado_reciente_evaluation.csv.gz",
+    "sha256": "e76c987be3411e693cf8d15f2ca489d97cdcdf33c24ffabe7a1afcc8f74a0058",
+    "rows": 73448
+  },
+  {
+    "file": "predicciones_2019_rf_variables_revisadas_validation.csv.gz",
+    "sha256": "a3e4c23256a7d03ac55eff672f9ff4812c4b5a303cc4f8e6a31e2811d74e04a0",
+    "rows": 44356
+  },
+  {
+    "file": "predicciones_2019_rf_variables_revisadas_evaluation.csv.gz",
+    "sha256": "9826bad81e688e142d8ec35de87bbf08cec31d828f78fbc1a4535ef798abfb12",
+    "rows": 73448
+  },
+  {
+    "file": "predicciones_2019_rf_actualizado_contexto_validation.csv.gz",
+    "sha256": "7c88fdfe3aff4e43d2aed43a82a27395db3ebb98be947ef043b719f068efd117",
+    "rows": 44356
+  },
+  {
+    "file": "predicciones_2019_rf_actualizado_contexto_evaluation.csv.gz",
+    "sha256": "c1909afca1cb27098a88f216a6ef73c6ec604338d4d7ab0e4b136fa61b4de1c7",
+    "rows": 73448
+  },
+  {
+    "file": "predicciones_2019_rf_revisado_contexto_validation.csv.gz",
+    "sha256": "306933a2233fd2207b3cf4afb473228f5ff5a0ec96b04cc2636ee990958ec83b",
+    "rows": 44356
+  },
+  {
+    "file": "predicciones_2019_rf_revisado_contexto_evaluation.csv.gz",
+    "sha256": "599400496beeaacc4e47e738ea493c30eea144219449437daf8267e121c6aac4",
+    "rows": 73448
+  }
+]

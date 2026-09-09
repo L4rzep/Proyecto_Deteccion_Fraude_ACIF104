@@ -1,0 +1,19 @@
+{
+  "model": "RandomForestClassifier",
+  "artifact": "models/finan_fraud_pipeline.joblib",
+  "sha256": "3b7d4d0d0b557dddd4ff13fa2865ac32365efd5377da059a5cb96db1db1ad178",
+  "threshold": 0.07217143,
+  "schema": "models/finan_feature_schema.json",
+  "training_script": "src/models/07_train_final_model.py",
+  "training_metadata": "results/models/final_model_training_metadata.json",
+  "evaluation_script": "src/models/08_evaluate_final_test_once.py",
+  "evaluation_metadata": "results/models/final_test_evaluation_metadata.json",
+  "metrics": "results/models/final_test_metrics.json",
+  "inference_script": "src/inference/predict_transaction.py",
+  "application": "app/Finan",
+  "origin_commit": "deb64c1d630b4c97d1318ff9a727dc1e1c377c04",
+  "scope": "Academic S9 reference already evaluated; later temporal experiments have not replaced this artifact",
+  "score_calibrated": false,
+  "later_retraining_preserved": "legacy/modelos/reentrenamiento_20260907",
+  "no_test_reexecution_in_this_update": true
+}

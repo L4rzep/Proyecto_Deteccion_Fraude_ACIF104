@@ -50,6 +50,6 @@
     "has_chip"
   ],
   "threshold": 0.07217143,
-  "model_sha256": "ad1bfd2ad89194edbbfcadcd64877d05d95235a944ddf19f555e6d4e6a5ae4a6",
+  "model_sha256": "3b7d4d0d0b557dddd4ff13fa2865ac32365efd5377da059a5cb96db1db1ad178",
   "test_used": false
 }

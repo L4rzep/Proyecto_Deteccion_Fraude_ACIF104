@@ -1,0 +1,10 @@
+{
+  "selected_utc": "2026-09-09T01:05:11.559940+00:00",
+  "protocol_sha256": "bb47dc8cb332dd7fb12ead50cab14864ca61657813ff2a0fffadb27d4ca5dbc6",
+  "decision_sha256": "baabf5690e928f6c7af895bb7df83b2a7f5a2ecc19fd587b787db58d9bdc4dcb",
+  "decisions": 225,
+  "selection_inputs": "validation predictions and earlier training-amount statistics only",
+  "prior_evaluation_exploration_acknowledged": true,
+  "independent_final_test": false,
+  "new_fits": 0
+}
