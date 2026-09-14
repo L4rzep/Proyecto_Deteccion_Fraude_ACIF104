@@ -1,0 +1,9 @@
+﻿control,filas_detectadas,interpretacion
+cuentas_previas_inconsistentes,214,Cuenta abierta después de la transacción
+edades_fuera_rango,0,Edad calculada menor que 0 o mayor que 120
+ingresos_no_positivos,0,Ingreso anual igual o menor que cero
+limites_no_positivos,35689,Límite de crédito igual o menor que cero
+montos_cero,7193,Revisar su significado operativo
+montos_negativos,442779,Revisar como posibles devoluciones; no eliminar automáticamente
+puntajes_fuera_rango,0,Puntaje fuera del intervalo 300 a 850
+tarjetas_vencidas,60,Vencimiento anterior a la transacción; requiere revisión

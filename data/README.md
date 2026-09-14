@@ -233,10 +233,13 @@ Se incluyen en el repositorio:
 - el diccionario de variables; y
 - la documentación necesaria para repetir el procedimiento.
 
-No se incluyen los CSV y JSON completos, los archivos locales de SQL Server
-(`*.mdf` y `*.ldf`), respaldos `*.bak`, archivos comprimidos ni `.venv`, porque
-son archivos locales o de gran tamaño. Los datos se obtienen desde el enlace
-público indicado al comienzo y se cargan mediante los scripts versionados.
+La política excluye nuevas cargas de CSV y JSON completos, archivos locales
+de SQL Server (`*.mdf` y `*.ldf`), respaldos `*.bak`, comprimidos y `.venv`.
+Se conservan como archivos heredados `FraudeDB.part01.rar`,
+`FraudeDB.part02.rar` y `FraudeDB.part03.rar`; por ello no corresponde afirmar
+que el repositorio carece de respaldos comprimidos. La reproducción documentada
+obtiene los datos desde el enlace público indicado al comienzo y los carga
+mediante los scripts versionados.
 
 Tampoco se incorporan credenciales ni rutas personales. Los resultados
 agregados y artefactos necesarios para evaluar las etapas siguientes se
