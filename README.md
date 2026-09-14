@@ -60,6 +60,10 @@ El [análisis consolidado](results/models/seguimiento/README.md) incluye tres es
 
 En el escenario principal de 2019, el RF temporal seleccionado detecta 12 de 123 fraudes con 160 FP. Una alternativa de mayor carga detecta 17, pero su ahorro calculado frente a no alertar es solo 2,07 u. m. y supera la capacidad en seis meses. Son resultados retrospectivos con costos hipotéticos; no demuestran una mejora del recall del modelo S9 ni viabilidad futura garantizada.
 
+## Evidencia de calidad de datos
+
+El [perfil completo de las 38 variables](results/eda/calidad_datos_20260913/README.md) contiene resumen, completitud, controles de calidad y registro de ejecución del 13 de septiembre de 2026. Su [anexo para el informe](docs/informe_final/anexo_calidad_datos_38_variables.md) distingue las 8.914.963 transacciones etiquetadas de la muestra histórica del EDA.
+
 ## Organización
 
 | Ruta | Contenido |
@@ -76,4 +80,4 @@ En el escenario principal de 2019, el RF temporal seleccionado detecta 12 de 123
 
 La recuperación del artefacto S9 mantiene la correspondencia entre modelo y métricas; no constituye una comparación predictiva contra el reentrenamiento de septiembre, que se conserva en `legacy`.
 
-Datasets completos, respaldos SQL, credenciales, entornos y archivos personales del IDE se mantienen fuera del repositorio. Cada cambio se realiza en una rama identificable y se revisa antes de integrarlo a `main`.
+La política de versionado excluye nuevos datasets completos, respaldos SQL, credenciales, entornos y archivos personales del IDE. Permanecen archivos heredados, incluidos `data/FraudeDB.part01.rar`, `data/FraudeDB.part02.rar`, `data/FraudeDB.part03.rar` y archivos de `.vs`; su presencia no debe confundirse con esa política. Cada cambio se realiza en una rama identificable y se revisa antes de integrarlo a `main`.

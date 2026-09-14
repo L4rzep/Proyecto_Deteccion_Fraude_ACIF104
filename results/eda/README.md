@@ -13,6 +13,12 @@ El análisis se dividió en tres partes:
 Los archivos utilizados para repetir el análisis se encuentran en
 `src/evaluation/`.
 
+## Evidencia completa de calidad
+
+La [ejecución del 13 de septiembre de 2026](calidad_datos_20260913/README.md) contiene los tres resultados completos del perfil SQL: resumen de 8.914.963 transacciones, completitud de las 38 variables y ocho controles de calidad. Incluye los siete campos que no tenían una medición de nulos en la evaluación histórica de candidatos. Sus cantidades coinciden con los resultados generales descritos a continuación.
+
+Esta evidencia corresponde a toda la vista etiquetada. La evaluación histórica de candidatos conserva su muestra de 990.261 transacciones y sus decisiones provisionales de esa etapa; sus porcentajes no se sustituyen por los de otra población. El [anexo de calidad](../../docs/informe_final/anexo_calidad_datos_38_variables.md) presenta la tabla completa para el informe.
+
 ## Datos revisados
 
 La base contiene 8.914.963 transacciones con una etiqueta conocida. De ellas,
@@ -190,9 +196,9 @@ entrenar los modelos.
 | `feature_category_rates.csv` | Cantidad y tasa de fraude de las categorías analizadas. |
 | `feature_assessment_metadata.json` | Parámetros utilizados para repetir la evaluación de variables. |
 
-Las capturas de SQL Server y VS Code se mantienen como respaldo interno de la
-revisión, pero no forman parte de los resultados oficiales que se propone
-publicar en el repositorio.
+Las capturas de SQL Server y VS Code se mantienen como respaldo interno. Los
+tres resultados completos del perfil SQL y su registro de ejecución están
+versionados en [calidad_datos_20260913](calidad_datos_20260913/README.md).
 
 ## Conclusión de esta etapa
 

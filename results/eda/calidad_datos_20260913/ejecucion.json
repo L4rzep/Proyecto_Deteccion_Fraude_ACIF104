@@ -1,0 +1,113 @@
+{
+  "tipo": "Nueva ejecución del SQL original; no transcripción de la captura histórica",
+  "fecha_ejecucion": "2026-09-13",
+  "inicio_con_zona_horaria": "2026-09-13T17:22:57.999388-03:00",
+  "fin_consultas_con_zona_horaria": "2026-09-13T17:29:55.632364-03:00",
+  "zona_horaria": "America/Santiago",
+  "servidor": "(localdb)\\MSSQLLocalDB",
+  "base_de_datos": "FraudeDB",
+  "consulta_original": "src/evaluation/sql/01_profile_data_quality.sql",
+  "sha256_sql": "f5bcb191c68d27376364d94e53dbf8edb3cc4014c18bae9683304360734cbee5",
+  "vista": "dbo.vw_dataset_maestro",
+  "alcance": "Solo lotes del archivo SQL solicitado. Sin modificaciones de tablas, vistas ni modelos. Sin operaciones remotas de Git.",
+  "captura_historica_localizada": "EDA/evidencia_01_calidad_datos_ssms.png (respaldo privado)",
+  "limitacion_captura": "Muestra resumen y ocho controles, pero solo 8 de las 38 variables. No se encontraron los tres CSV completos en las ubicaciones revisadas.",
+  "formato_csv": {
+    "codificacion": "UTF-8 con BOM",
+    "separador": ",",
+    "decimal": ".",
+    "fechas": "ISO 8601",
+    "columnas": "Nombres y valores originales del SQL, sin columnas añadidas"
+  },
+  "fases": [
+    {
+      "fase": "Configuración de sesión",
+      "inicio": "2026-09-13T17:23:02.128933-03:00",
+      "fin": "2026-09-13T17:23:02.133925-03:00",
+      "segundos": 0.0
+    },
+    {
+      "fase": "Comprobación de vista",
+      "inicio": "2026-09-13T17:23:02.133925-03:00",
+      "fin": "2026-09-13T17:23:02.138905-03:00",
+      "segundos": 0.016
+    },
+    {
+      "fase": "Resumen general",
+      "inicio": "2026-09-13T17:23:02.138905-03:00",
+      "fin": "2026-09-13T17:24:10.781847-03:00",
+      "segundos": 68.64
+    },
+    {
+      "fase": "Completitud de 38 variables",
+      "inicio": "2026-09-13T17:24:10.781847-03:00",
+      "fin": "2026-09-13T17:28:05.819612-03:00",
+      "segundos": 235.032
+    },
+    {
+      "fase": "Controles de calidad",
+      "inicio": "2026-09-13T17:28:05.819612-03:00",
+      "fin": "2026-09-13T17:29:55.628235-03:00",
+      "segundos": 109.812
+    }
+  ],
+  "archivos": [
+    {
+      "archivo": "01_resumen_general.csv",
+      "filas": 1,
+      "columnas": [
+        "total_etiquetadas",
+        "fraudes",
+        "no_fraudes",
+        "porcentaje_fraude",
+        "primera_transaccion",
+        "ultima_transaccion"
+      ],
+      "sha256": "d2179f1b5368c7eb4064b924e596fb4a059c0dfced44a949ccfc5a1a4faacf7c",
+      "bytes": 170
+    },
+    {
+      "archivo": "02_completitud_38_variables.csv",
+      "filas": 38,
+      "columnas": [
+        "variable",
+        "total_filas",
+        "filas_nulas",
+        "porcentaje_nulo"
+      ],
+      "sha256": "3368ef305274227ac025a8b91d9a9e329dc9412c40894bfe7028ba26bb2ef207",
+      "bytes": 1387
+    },
+    {
+      "archivo": "03_controles_calidad.csv",
+      "filas": 8,
+      "columnas": [
+        "control",
+        "filas_detectadas",
+        "interpretacion"
+      ],
+      "sha256": "0c7d5b93c8da6fa8aeac8ce6110f990e2fb21551190c68a3ac20b512b64f2974",
+      "bytes": 605
+    }
+  ],
+  "verificacion": {
+    "tres_resultados": true,
+    "38_variables": true,
+    "8_controles": true,
+    "cantidades_y_porcentajes_conciliados": true,
+    "csv_releidos_sin_diferencias": true,
+    "sql_sin_cambios": true,
+    "git_status_antes": "",
+    "git_status_despues": "",
+    "git_head": "deb64c1d630b4c97d1318ff9a727dc1e1c377c04"
+  },
+  "publicacion": {
+    "fecha_preparacion": "2026-09-14",
+    "sha256_registro_original": "34d495dd07273aed6bbd29e0be6673d8be914b00092729952945d3d3a9542e49",
+    "ajustes": [
+      "Se sustituyeron dos rutas absolutas locales por referencias relativas. Los resultados, fechas, duraciones, parámetros y huellas de los tres CSV se conservaron."
+    ],
+    "commit_revisado": "546371beadd74b9a85df885f380e9299213d7502",
+    "sql_identico_al_commit_revisado": true
+  }
+}

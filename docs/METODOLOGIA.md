@@ -28,7 +28,7 @@ El test S9 no se reutiliza. El seguimiento usa desarrollo histórico previamente
 | Repositorio e informe | Juan | Semanas 2–9 | Trazabilidad |
 | QA y revisión formal | Sebastián / equipo | Semana 9 | Confiabilidad de entrega |
 
-Esta asignación procede del informe S9; no atribuye retroactivamente tareas posteriores. Los protocolos registran las ejecuciones del seguimiento del 8–9 de septiembre de 2026. La revisión Windows/SQL del paquete final y la integración de la rama se mantienen como pasos de cierre, sin declararlos completados antes de su comprobación.
+Esta asignación procede del informe S9; no atribuye retroactivamente tareas posteriores. Los protocolos registran las ejecuciones del seguimiento del 8–9 de septiembre de 2026. La actualización de S12 quedó integrada mediante el [PR12](https://github.com/L4rzep/Proyecto_Deteccion_Fraude_ACIF104/pull/12) el 9 de septiembre de 2026, en el commit `546371beadd74b9a85df885f380e9299213d7502`. Se conserva la evidencia manual histórica de Windows/SQL; no se ha acreditado una nueva revisión integral de la aplicación sobre el paquete final. La ejecución SQL de calidad del 13 de septiembre comprueba datos y no constituye una prueba de la aplicación.
 
 ## Aplicabilidad y mejoras
 
